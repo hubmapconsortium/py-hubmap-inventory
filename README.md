@@ -38,3 +38,8 @@ Each ∎ represents a count of 1
 [   other] [19] ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
 [filetype] [ 1] ∎
 ```
+
+## Dependencies
+
+* `py-hubmapbags`
+* `lowcharts`
