@@ -542,6 +542,8 @@ provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', tok
 if compute_uuids:
 	if provenance['dataset_data_types'][0].find('snRNA-seq [Salmon]') >= 0:
 		print('This derived dataset is the result from running Salmon. Avoiding computation of UUIDs since zarr files may be present.')
+	elif provenance['dataset_data_types'][0].find('CODEX [Cytokit + SPRM]') >= 0:
+		print('This derived dataset is the result from running Cytokit+SPRM. Avoiding computation of UUIDs since zarr files may be present.')
 	else:
 		pprint('Generating or pulling UUIDs from HuBMAP UUID service')
 		if not 'file_uuid' in df.keys():
@@ -581,7 +583,7 @@ from numpyencoder import NumpyEncoder
 def generate_dataset_uuid(directory):
 	if directory[-1] == '/':
 		directory = directory[:-1]
-    
+
 	return str(uuid.uuid5(uuid.NAMESPACE_DNS, directory))
 
 dataset = {}
