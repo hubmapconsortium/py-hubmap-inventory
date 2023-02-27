@@ -36,11 +36,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-i','--hubmapid',dest='hubmap_id',help='HuBMAP')
 parser.add_argument('-t', '--token',dest='token', help='Token')
 parser.add_argument('-n', '--ncores',dest='ncores', help='Number of cores')
+parser.add_argument('--compute-uuids', dest='compute_uuids', action=argparse.BooleanOptionalAction, help='Compute UUIDS')
+
 args = parser.parse_args()
 
 hubmap_id = args.hubmap_id
 pprint(f'Attempting to process dataset with dataset ID {hubmap_id}')
 token = args.token
+compute_uuids = args.compute_uuids
 ncores = int(args.ncores)
 print(f'Number of cores to be used in this run is {str(ncores)}.')
 
@@ -239,30 +242,33 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get download link for each file')
 def __update_dataframe(dataset, temp):
-        for index, datum in chunk.iterrows():
+        for index, datum in temp.iterrows():
                 dataset.loc[index,'mime-type'] = temp.loc[index,'download_url']
 
 def get_url(filename):
 	filename = str(filename)
 	return filename.replace('/hive/hubmap/data/public','https://g-d00e7b.09193a.5898.dn.glob.us')
 
-if 'download_url' not in df.keys():
-	print(f'Processing {str(len(df))} files in directory')
-	if is_protected:
-		df['download_url']=None
+if not hubmapbags.apis.is_protected( hubmap_id, instance='prod', token=token ):
+	if 'download_url' not in df.keys():
+		print(f'Processing {str(len(df))} files in directory')
+		if is_protected:
+			df['download_url']=None
+		else:
+			df['download_url'] = df['fullpath'].parallel_apply(get_url)
+		df.to_csv( output_filename, sep='\t', index=False )
 	else:
-		df['download_url'] = df['fullpath'].parallel_apply(get_url)
+		temp = df[df['download_url'].isnull()]
+		print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+		if len(temp) < ncores:
+			temp['download_url'] = temp['fullpath'].apply(get_url)
+		else:
+			temp['download_url'] = temp['fullpath'].parallel_apply(get_url)
+			__update_dataframe(df, temp)
+
 	df.to_csv( output_filename, sep='\t', index=False )
 else:
-	temp = df[df['download_url'].isnull()]
-	print(f'Processing {str(len(temp))} files of {str(len(df))} files')
-	if len(temp) < ncores:
-		temp['download_url'] = temp['fullpath'].apply(get_url)
-	else:
-		temp['download_url'] = temp['fullpath'].parallel_apply(get_url)
-		__update_dataframe(df, temp)
-
-df.to_csv( output_filename, sep='\t', index=False )
+	print('Dataset is protected. Avoiding computation of download URLs.')
 
 ###############################################################################################################
 import warnings
@@ -416,7 +422,7 @@ else:
 			for chunk in chunks:
 				print(f'\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}')
 				chunk['sha256'] = chunk['fullpath'].parallel_apply(compute_sha256sum)
-				__update_dataframe(df, chunk)
+				_update_dataframe(df, chunk)
 				chunk_counter = chunk_counter + 1
 
 				if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
@@ -430,88 +436,87 @@ if Path(temp_directory + output_filename).exists():
 	Path(temp_directory + output_filename).unlink()
 
 ###############################################################################################################
-pprint('Generating or pulling UUIDs from HuBMAP UUID service')
 import requests
 
 def generate( hubmap_id, df, instance='prod', token=None, debug=False ):
-    '''
-    Main function that generates UUIDs using the uuid-api.
-    '''
+	'''
+	Main function that generates UUIDs using the uuid-api.
+	'''
 
-    df = df[df['file_uuid'].isnull()]
-    if df.empty:
-        print('Nothing left to generate.')
-        return None
+	df = df[df['file_uuid'].isnull()]
+	if df.empty:
+		print('Nothing left to generate.')
+		return None
     
-    metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance=instance, token=token, overwrite=False)
+	metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance=instance, token=token, overwrite=False)
 
-    URL = 'https://uuid.api.hubmapconsortium.org/hmuuid/'
-    #URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
-    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0','Authorization':'Bearer '+token, 'Content-Type':'application/json'}
+	URL = 'https://uuid.api.hubmapconsortium.org/hmuuid/'
+	#URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
+	headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0','Authorization':'Bearer '+token, 'Content-Type':'application/json'}
 
-    if len(df) <= 1000:
-        if df['file_uuid'].isnull().all():
-            file_info = []
+	if len(df) <= 1000:
+		if df['file_uuid'].isnull().all():
+			file_info = []
 
-            for index, datum in df.iterrows():
-                filename = datum['relativepath']
-                file_info.append({'path':filename, \
-                    'size':datum['size'], \
-                    'checksum':datum['sha256'], \
-                    'base_dir':'DATA_UPLOAD'})
+			for index, datum in df.iterrows():
+				filename = datum['relativepath']
+				file_info.append({'path':filename, \
+					'size':datum['size'], \
+					'checksum':datum['sha256'], \
+					'base_dir':'DATA_UPLOAD'})
 
-            payload = {}
-            payload['parent_ids']=[metadata['uuid']]
-            payload['entity_type']='FILE'
-            payload['file_info']=file_info
-            params = {'entity_count':len(file_info)}
+			payload = {}
+			payload['parent_ids']=[metadata['uuid']]
+			payload['entity_type']='FILE'
+			payload['file_info']=file_info
+			params = {'entity_count':len(file_info)}
+			print('Generating UUIDs')
+			r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
+			j = json.loads(r.text)
+	else:
+		print('Data frame has ' + str(len(df)) + ' items. Partitioning into smaller chunks.')
 
-            if debug:
-                print('Generating UUIDs')
-            r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
-            j = json.loads(r.text)
-    else:
-        if debug:
-            print('Data frame has ' + str(len(df)) + ' items. Partitioning into smaller chunks.')
+		n = 100  #chunk row size
+		dfs = [df[i:i+n] for i in range(0,df.shape[0],n)]
 
-        n = 100  #chunk row size
-        dfs = [df[i:i+n] for i in range(0,df.shape[0],n)]
+		print('Generating UUIDs')
+		counter = 0
+		for frame in dfs:
+			counter=counter+1
+			print('Generating UUIDs for partition ' + str(counter) + ' of ' + str(len(dfs)) + '.')
 
-        counter = 0
-        for frame in dfs:
-            counter=counter+1
-            if debug:
-                print('Generating UUIDs for partition ' + str(counter) + ' of ' + str(len(dfs)) + '.')
+			file_info = []
+			for index, datum in frame.iterrows():
+				filename = datum['relativepath']
+				file_info.append({'path':filename, \
+					'size':datum['size'], \
+					'checksum':datum['sha256'], \
+					'base_dir':'DATA_UPLOAD'})
 
-            file_info = []
-            for index, datum in frame.iterrows():
-                filename = datum['relativepath']
-                file_info.append({'path':filename, \
-                    'size':datum['size'], \
-                    'checksum':datum['sha256'], \
-                    'base_dir':'DATA_UPLOAD'})
+			payload = {}
+			payload['parent_ids']=[metadata['uuid']]
+			payload['entity_type']='FILE'
+			payload['file_info']=file_info
+			params = {'entity_count':len(file_info)}
 
-            payload = {}
-            payload['parent_ids']=[metadata['uuid']]
-            payload['entity_type']='FILE'
-            payload['file_info']=file_info
-            params = {'entity_count':len(file_info)}
-
-            if frame['file_uuid'].isnull().all():
-                if debug:
-                    print('Generating UUIDs')
-
-                r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
-                j = json.loads(r.text)
-            else:
-                if debug:
-                    print('HuBMAP UUIDs chunk is populated. Skipping recomputation.')
+			if frame['file_uuid'].isnull().all():
+				r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
+				j = json.loads(r.text)
+			else:
+				print('HuBMAP UUIDs chunk is populated. Skipping recomputation.')
 
 def get_relative_path( fullpath ):
-    directory2 = directory
-    if directory2[-1] != '/':
-        directory2 += '/'
-    return fullpath.replace( directory2, '' )
+	directory2 = directory
+	if directory2[-1] != '/':
+		directory2 += '/'
+
+	try:
+		answer =fullpath.replace( directory2, '' )
+		return answer
+	except Exception as e:
+		print(e)
+		print(fullpath)
+		return ''
 
 def populate_local_file_with_remote_uuids( df, uuids ):
 	'''
@@ -528,24 +533,27 @@ def populate_local_file_with_remote_uuids( df, uuids ):
 		uuids = uuids[uuids['base_dir'] == 'DATA_UPLOAD']
 		uuids = uuids[['file_uuid','path']]
 		uuids.rename(columns = {'path':'relativepath'}, inplace = True)
-		df = df.merge(uuids, on='relativepath', how='outer')
-		df.loc[df.file_uuid.astype(str).isin(uuids.file_uuid), 'file_uuid'] = uuids.file_uuid
-
+		df = df.merge(uuids, on='relativepath', how='left')
+		df.rename(columns = {'file_uuid_y':'file_uuid'}, inplace = True)
 		df = df[['file_uuid','fullpath','relativepath','filename','extension','filetype','size','mime-type','modification_time','md5','sha256','download_url']]
-	
 	return df
 
-if len(df[df['file_uuid'].isnull()]) > 0:
-	uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
-	df = populate_local_file_with_remote_uuids( df, uuids )
+if compute_uuids:
+	pprint('Generating or pulling UUIDs from HuBMAP UUID service')
+	if not 'file_uuid' in df.keys():
+		df['file_uuid'] = None
 
-	if not df[df['file_uuid'].isnull()].empty:
-		generate( hubmap_id, df, instance='prod', token=token, debug=True)
+	if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+		uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
 		df = populate_local_file_with_remote_uuids( df, uuids )
-else:
-	print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
 
-df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+		if not df[df['file_uuid'].isnull()].empty:
+			generate( hubmap_id, df, instance='prod', token=token, debug=True)
+			df = populate_local_file_with_remote_uuids( df, uuids )
+	else:
+		print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
+
+	df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 
 ###############################################################################################################
 pprint('Computing dataset level statistics')
