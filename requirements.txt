@@ -1,0 +1,10 @@
+numpyencoder
+python-magic
+Pillow
+tabulate
+pathlib
+numpy
+pandas
+hashlib
+pandarallel
+tqdm
