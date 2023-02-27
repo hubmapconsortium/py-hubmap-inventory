@@ -538,22 +538,26 @@ def populate_local_file_with_remote_uuids( df, uuids ):
 		df = df[['file_uuid','fullpath','relativepath','filename','extension','filetype','size','mime-type','modification_time','md5','sha256','download_url']]
 	return df
 
+provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', token=token)
 if compute_uuids:
-	pprint('Generating or pulling UUIDs from HuBMAP UUID service')
-	if not 'file_uuid' in df.keys():
-		df['file_uuid'] = None
-
-	if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
-		uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
-		df = populate_local_file_with_remote_uuids( df, uuids )
-
-		if not df[df['file_uuid'].isnull()].empty:
-			generate( hubmap_id, df, instance='prod', token=token, debug=True)
-			df = populate_local_file_with_remote_uuids( df, uuids )
+	if provenance['dataset_data_types'][0].find('snRNA-seq [Salmon]') >= 0:
+		print('This derived dataset is the result from running Salmon. Avoiding computation of UUIDs since zarr files may be present.')
 	else:
-		print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
+		pprint('Generating or pulling UUIDs from HuBMAP UUID service')
+		if not 'file_uuid' in df.keys():
+			df['file_uuid'] = None
 
-	df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+		if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+			uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
+			df = populate_local_file_with_remote_uuids( df, uuids )
+
+			if not df[df['file_uuid'].isnull()].empty:
+				generate( hubmap_id, df, instance='prod', token=token, debug=True)
+				df = populate_local_file_with_remote_uuids( df, uuids )
+		else:
+			print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
+
+		df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 
 ###############################################################################################################
 pprint('Computing dataset level statistics')
