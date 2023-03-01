@@ -148,7 +148,6 @@ else:
 		__update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
-sys.exit()
 ###############################################################################################################
 pprint('Get file names')
 def __update_dataframe(dataset, filenames):
