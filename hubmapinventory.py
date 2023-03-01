@@ -110,7 +110,8 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     temp_directory = '/local/'
     if not Path(temp_directory).exists():
         temp_directory = '.tmp/'
-        Path(temp_directory).mkdir()
+        if not Path(temp_directory).exists():
+            Path(temp_directory).mkdir()
     print(f'Temp directory set to {temp_directory}.')
 
     if Path(temp_directory + output_filename).exists():
