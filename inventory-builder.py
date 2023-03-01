@@ -33,8 +33,8 @@ def pprint(msg):
     print(result)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--hubmapid',dest='hubmap_id',help='HuBMAP')
-parser.add_argument('--token',dest='token', help='Token')
+parser.add_argument('--hubmap-id',dest='hubmap_id',help='HuBMAP ID')
+parser.add_argument('--token',dest='token', help='Valid HuBMAP token')
 parser.add_argument('--ncores',dest='ncores', help='Number of cores')
 parser.add_argument('--dbgap-study-id',dest='dbgap_study_id', help='dbGaP study ID')
 parser.set_defaults(dbgap_study_id=None)
