@@ -40,7 +40,7 @@ def __update_dataframe(dataset, temp, key):
 	return dataset
 
 def __get_relative_path( fullpath ):
-    answer = str(fullpath).replace( directory, '' )
+    answer = str(fullpath).replace( f'{directory}/', '' )
     return answer
 
 def __get_file_extension(filename):
