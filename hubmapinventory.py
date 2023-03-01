@@ -80,7 +80,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         Path(data_directory).mkdir()
 
     file = directory.replace('/', '_')
-    output_filename = metadata['uuid'] + '.tsv'
+    output_filename = f'{data_directory}/{metadata["uuid"]}.tsv'
 
     temp_directory = '/local/'
     if not Path(temp_directory).exists():
@@ -102,7 +102,9 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         files = [x for x in Path(directory).glob('**/*') if (x.is_file() or x.is_symlink()) and not x.is_dir()]
         df = pd.DataFrame()
         df['fullpath']= files
-        print(f'Populating dataframe with {str(len(df))} files.')
+        print(f'Populating dataframe with {str(len(df))} files')
+    
+    df.to_csv( output_filename, sep='\t', index=False )
 
     df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
@@ -119,4 +121,5 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
         df = __update_dataframe(df, temp)
 
+    print(df)
     df.to_csv( output_filename, sep='\t', index=False )
