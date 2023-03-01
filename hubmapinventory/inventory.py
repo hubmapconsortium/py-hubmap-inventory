@@ -109,7 +109,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     df.to_csv( output_filename, sep='\t', index=False )
     
     ###############################################################################################################
-    pprint('Get file extensions')
+    __pprint('Get file extensions')
     df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
     if 'extension' not in df.keys():
