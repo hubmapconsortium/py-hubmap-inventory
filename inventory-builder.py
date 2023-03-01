@@ -25,6 +25,7 @@ from pandarallel import pandarallel
 from tqdm import tqdm
 import json
 import argparse
+import sys
 
 def pprint(msg):
     row = len(msg)
@@ -145,7 +146,7 @@ else:
 		__update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
-
+sys.exit()
 ###############################################################################################################
 pprint('Get file names')
 def __update_dataframe(dataset, filenames):
