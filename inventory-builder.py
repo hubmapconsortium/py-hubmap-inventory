@@ -152,8 +152,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get file names')
 def __update_dataframe(dataset, temp):
-        for index, datum in temp.iterrows():
-                dataset.loc[index,'filename'] = temp.loc[index,'filename']
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'filename'] = temp.loc[index,'filename']
 	return dataset
 
 def get_filename(filename):
@@ -177,8 +177,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get file types')
 def __update_dataframe(dataset, temp):
-        for index, datum in chunk.iterrows():
-                dataset.loc[index,'filetype'] = temp.loc[index,'filetype']
+	for index, datum in chunk.iterrows():
+		dataset.loc[index,'filetype'] = temp.loc[index,'filetype']
 	return dataset
 
 def get_filetype( extension ):
@@ -207,8 +207,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get file creation date')
 def __update_dataframe(dataset, temp):
-        for index, datum in chunk.iterrows():
-                dataset.loc[index,'modification_time'] = temp.loc[index,'modification_time']
+	for index, datum in chunk.iterrows():
+		dataset.loc[index,'modification_time'] = temp.loc[index,'modification_time']
 	return dataset
 
 def get_file_creation_date(filename):
@@ -233,8 +233,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get file size')
 def __update_dataframe(dataset, temp):
-        for index, datum in temp.iterrows():
-                dataset.loc[index,'size'] = temp.loc[index,'size']
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'size'] = temp.loc[index,'size']
 	return dataset
 
 def get_file_size(filename):
@@ -260,8 +260,8 @@ pprint('Get mime-type')
 import magic
 
 def __update_dataframe(dataset, temp):
-        for index, datum in temp.iterrows():
-                dataset.loc[index,'mime-type'] = temp.loc[index,'mime-type']
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'mime-type'] = temp.loc[index,'mime-type']
 	return dataset
 
 def get_mime_type(filename):
@@ -286,8 +286,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 ###############################################################################################################
 pprint('Get download link for each file')
 def __update_dataframe(dataset, temp):
-        for index, datum in temp.iterrows():
-                dataset.loc[index,'download_url'] = temp.loc[index,'download_url']
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'download_url'] = temp.loc[index,'download_url']
 	return dataset
 
 def get_url(filename):
