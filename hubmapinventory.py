@@ -81,7 +81,6 @@ def get_file_extensions(df):
 
         df = __update_dataframe(df, temp)
 
-    df.to_csv( output_filename, sep='\t', index=False )
     return df
 
 ###############################################################################################################
@@ -128,3 +127,6 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap-study-id
         df = pd.DataFrame()
         df['fullpath']= files
         print(f'Populating dataframe with {str(len(df))} files.')
+
+    df = get_file_extensions(df)
+    df.to_csv( output_filename, sep='\t', index=False )
