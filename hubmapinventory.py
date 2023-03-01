@@ -39,7 +39,6 @@ def __update_dataframe(dataset, temp, key):
 		dataset.loc[index,key] = temp.loc[index,key]
 	return dataset
 
-###############################################################################################################
 def __get_relative_path( fullpath ):
     answer = str(fullpath).replace( directory, '' )
     return answer
@@ -57,24 +56,6 @@ def __get_file_extension(filename):
 			extension = 'fastq.gz'
 
 	return extension
-
-def get_file_extensions(df):
-    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
-
-    if 'extension' not in df.keys():
-        print(f'Processing {str(len(df))} files in directory')
-        df['extension'] = df['relativepath'].parallel_apply(__get_file_extension)
-    else:
-        temp = df[df['extension'].isnull()]
-        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
-        if len(temp) < ncores:
-            temp['extension'] = temp['fullpath'].apply(__get_file_extension)
-        else:
-            temp['extension'] = temp['fullpath'].parallel_apply(__get_file_extension)
-
-        df = __update_dataframe(df, temp)
-
-    return df
 
 ###############################################################################################################
 def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id=None, debug=False ):
@@ -123,5 +104,19 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         df['fullpath']= files
         print(f'Populating dataframe with {str(len(df))} files.')
 
-    df = get_file_extensions(df)
+    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
+
+    if 'extension' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['extension'] = df['relativepath'].parallel_apply(__get_file_extension)
+    else:
+        temp = df[df['extension'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['extension'] = temp['fullpath'].apply(__get_file_extension)
+        else:
+            temp['extension'] = temp['fullpath'].parallel_apply(__get_file_extension)
+
+        df = __update_dataframe(df, temp)
+
     df.to_csv( output_filename, sep='\t', index=False )
