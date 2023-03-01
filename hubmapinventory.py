@@ -95,6 +95,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     print(f'Number of cores to be used in this run is {str(ncores)}.')
 
     metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance='prod', token=token )
+    global directory
     directory = hubmapbags.get_directory( hubmap_id, instance='prod', token=token )
     is_protected = hubmapbags.apis.is_protected( hubmap_id, instance='prod', token=token )
 
