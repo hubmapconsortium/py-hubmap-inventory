@@ -146,3 +146,28 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         df = __update_dataframe(df, temp,'filename')
 
     df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    __pprint('Get file types')
+    def get_filetype( extension ):
+        images = {'.tiff', '.png', '.tif', '.ome.tif', '.jpeg', '.gif', '.ome.tiff', 'jpg', '.jp2'}
+        if extension in images:
+            return 'images'
+        elif extension.find('fast') > 0:
+            return 'sequence'
+        else:
+            return 'other'
+
+    if 'filetype' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['filetype'] = df['extension'].parallel_apply(get_filetype)
+    else:
+        temp = df[df['filetype'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['filetype'] = temp['extension'].apply(get_filetype)
+        else:
+            temp['filename'] = temp['extension'].parallel_apply(get_filetype)
+        df = __update_dataframe(df, temp,'filename')
+
+    df.to_csv( output_filename, sep='\t', index=False )
