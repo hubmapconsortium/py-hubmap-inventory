@@ -141,7 +141,6 @@ else:
 	print(f'Processing {str(len(temp))} files of {str(len(df))} files')
 	if len(temp) < ncores:
 		temp['extension'] = temp['fullpath'].apply(get_file_extension)
-		__update_dataframe(df, temp)
 	else:
 		temp['extension'] = temp['fullpath'].parallel_apply(get_file_extension)
 		__update_dataframe(df, temp)
