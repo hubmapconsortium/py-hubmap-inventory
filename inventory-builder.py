@@ -36,8 +36,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-i','--hubmapid',dest='hubmap_id',help='HuBMAP')
 parser.add_argument('-t', '--token',dest='token', help='Token')
 parser.add_argument('-n', '--ncores',dest='ncores', help='Number of cores')
-parser.add_argument('--compute-uuids', dest='compute_uuids', action=argparse.BooleanOptionalAction, help='Compute UUIDS')
 
+try:
+	parser.add_argument('--compute-uuids', dest='compute_uuids', action=argparse.BooleanOptionalAction, help='Compute UUIDS')
+except:
+	parser.add_argument('--compute-uuids', dest='compute_uuids', action='store_true')
+
+parser.set_defaults(compute_uuids=False)
 args = parser.parse_args()
 
 hubmap_id = args.hubmap_id
