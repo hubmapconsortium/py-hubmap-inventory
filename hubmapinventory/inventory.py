@@ -26,6 +26,8 @@ from tqdm import tqdm
 import json
 import argparse
 import sys
+from pandas.core.common import SettingWithCopyWarning
+warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 ###############################################################################################################
 def __pprint(msg):
