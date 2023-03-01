@@ -50,9 +50,11 @@ args = parser.parse_args()
 hubmap_id = args.hubmap_id
 pprint(f'Attempting to process dataset with dataset ID {hubmap_id}')
 token = args.token
+
 dbgap_study_id = args.dbgap_study_id
-if not dbgap_study_id:
+if dbgap_study_id:
 	print(f'Setting dbGaP study ID to {dbgap_study_id}')
+
 compute_uuids = args.compute_uuids
 ncores = int(args.ncores)
 print(f'Number of cores to be used in this run is {str(ncores)}.')
