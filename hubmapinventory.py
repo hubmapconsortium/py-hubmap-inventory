@@ -53,6 +53,18 @@ def __get_relative_path( fullpath ):
 		print(fullpath)
 		return ''
 
+def __get_relative_path( fullpath ):
+	if directory[-1] != '/':
+		directory += '/'
+
+	try:
+		answer =fullpath.replace( directory, '' )
+		return answer
+	except Exception as e:
+		print(e)
+		print(fullpath)
+		return ''
+
 def __get_file_extension(filename):
 	extension = None
 	if Path(filename).is_file() or Path(filename).is_symlink():
