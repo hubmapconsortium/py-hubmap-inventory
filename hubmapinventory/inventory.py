@@ -65,6 +65,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         print(f'Setting dbGaP study ID to {dbgap_study_id}')
 
     print(f'Number of cores to be used in this run is {str(ncores)}.')
+    pandarallel.initialize(progress_bar=True,nb_workers=ncores)
 
     metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance='prod', token=token )
     global directory
