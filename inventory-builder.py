@@ -127,9 +127,11 @@ def get_file_extension(filename):
 		if extension == '.tiff' or extension == '.tif':
 			if str(filename).find('ome.tif') >= 0:
 				extension = '.ome.tif'
+				return extension
 
 		if str(filename).find('fastq.gz') >= 0:
 			extension = 'fastq.gz'
+			return extension
 
 	return extension
 
