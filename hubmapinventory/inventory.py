@@ -82,6 +82,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
     file = directory.replace('/', '_')
     output_filename = f'{data_directory}/{metadata["uuid"]}.tsv'
+    print(f'Saving results to {output_filename}')
 
     temp_directory = '/local/'
     if not Path(temp_directory).exists():
@@ -106,7 +107,9 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         print(f'Populating dataframe with {str(len(df))} files')
     
     df.to_csv( output_filename, sep='\t', index=False )
-
+    
+    ###############################################################################################################
+    pprint('Get file extensions')
     df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
     if 'extension' not in df.keys():
@@ -120,7 +123,26 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         else:
             temp['extension'] = temp['fullpath'].parallel_apply(__get_file_extension)
 
-        df = __update_dataframe(df, temp)
+        df = __update_dataframe(df, temp, 'extension')
 
-    print(df)
+    df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    pprint('Get file names')
+    def get_filename(filename):
+        return Path(filename).stem + Path(filename).suffix
+
+    if 'filename' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['filename'] = df['fullpath'].parallel_apply(get_filename)
+    else:
+        temp = df[df['filename'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['filename'] = temp['fullpath'].apply(get_filename)
+        else:
+            temp['filename'] = temp['fullpath'].parallel_apply(get_filename)
+
+        df = __update_dataframe(df, temp,'filename')
+
     df.to_csv( output_filename, sep='\t', index=False )
