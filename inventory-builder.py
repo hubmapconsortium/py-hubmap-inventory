@@ -103,6 +103,21 @@ def __update_dataframe(dataset, temp):
         for index, datum in temp.iterrows():
                 dataset.loc[index,'extension'] = temp.loc[index,'extension']
 
+def get_relative_path( fullpath ):
+	directory2 = directory
+	if directory2[-1] != '/':
+		directory2 += '/'
+
+	try:
+		answer =fullpath.replace( directory2, '' )
+		return answer
+	except Exception as e:
+		print(e)
+		print(fullpath)
+		return ''
+
+df['relativepath'] = df['fullpath'].apply(get_relative_path)
+
 def get_file_extension(filename):
 	if Path(filename).is_file() or Path(filename).is_symlink():
 		extension = Path(filename).suffix
@@ -117,14 +132,14 @@ def get_file_extension(filename):
 
 if 'extension' not in df.keys():
 	print(f'Processing {str(len(df))} files in directory')
-	df['extension'] = df['fullpath'].parallel_apply(get_file_extension)
+	df['extension'] = df['relativepath'].parallel_apply(get_file_extension)
 else:
 	temp = df[df['extension'].isnull()]
 	print(f'Processing {str(len(temp))} files of {str(len(df))} files')
 	if len(temp) < ncores:
-		temp['extension'] = temp['fullpath'].apply(get_file_extension)
+		temp['extension'] = temp['relativepath'].apply(get_file_extension)
 	else:
-		temp['extension'] = temp['fullpath'].parallel_apply(get_file_extension)
+		temp['extension'] = temp['relativepath'].parallel_apply(get_file_extension)
 		__update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
@@ -392,7 +407,7 @@ def compute_sha256sum(filename):
 def __update_dataframe(dataset, chunk):
 	for index, datum in chunk.iterrows():
 		dataset.loc[index,'sha256'] = chunk.loc[index,'sha256']
-        
+
 def __get_chunk_size(dataframe):
 	if len(dataframe) < 1000:
 		return 10
@@ -520,25 +535,11 @@ def generate( hubmap_id, df, instance='prod', token=None, debug=False ):
 			else:
 				print('HuBMAP UUIDs chunk is populated. Skipping recomputation.')
 
-def get_relative_path( fullpath ):
-	directory2 = directory
-	if directory2[-1] != '/':
-		directory2 += '/'
-
-	try:
-		answer =fullpath.replace( directory2, '' )
-		return answer
-	except Exception as e:
-		print(e)
-		print(fullpath)
-		return ''
-
 def populate_local_file_with_remote_uuids( df, uuids ):
 	'''
 	Helper function that populates (but does not generate) a local pickle file with remote UUIDs.
 	'''
 
-	df['relativepath'] = df['fullpath'].apply(get_relative_path)
 	uuids = pd.DataFrame.from_dict(uuids)
 
 	if uuids.empty:
