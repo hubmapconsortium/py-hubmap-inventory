@@ -101,8 +101,8 @@ else:
 ###############################################################################################################
 pprint('Get file extensions')
 def __update_dataframe(dataset, temp):
-        for index, datum in temp.iterrows():
-                dataset.loc[index,'extension'] = temp.loc[index,'extension']
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'extension'] = temp.loc[index,'extension']
 	return dataset
 
 def get_relative_path( fullpath ):
