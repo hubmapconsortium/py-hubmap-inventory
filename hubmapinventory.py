@@ -40,7 +40,7 @@ def __update_dataframe(dataset, temp, key):
 	return dataset
 
 ###############################################################################################################
-def get_relative_path( fullpath ):
+def __get_relative_path( fullpath ):
 	directory2 = directory
 	if directory2[-1] != '/':
 		directory2 += '/'
@@ -68,6 +68,8 @@ def __get_file_extension(filename):
 	return extension
 
 def get_file_extensions(df):
+    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
+
     if 'extension' not in df.keys():
         print(f'Processing {str(len(df))} files in directory')
         df['extension'] = df['relativepath'].parallel_apply(__get_file_extension)
@@ -75,7 +77,7 @@ def get_file_extensions(df):
         temp = df[df['extension'].isnull()]
         print(f'Processing {str(len(temp))} files of {str(len(df))} files')
         if len(temp) < ncores:
-            temp['extension'] = temp['fullpath'].apply(__et_file_extension)
+            temp['extension'] = temp['fullpath'].apply(__get_file_extension)
         else:
             temp['extension'] = temp['fullpath'].parallel_apply(__get_file_extension)
 
