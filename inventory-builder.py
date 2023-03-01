@@ -103,6 +103,7 @@ pprint('Get file extensions')
 def __update_dataframe(dataset, temp):
         for index, datum in temp.iterrows():
                 dataset.loc[index,'extension'] = temp.loc[index,'extension']
+	return dataset
 
 def get_relative_path( fullpath ):
 	directory2 = directory
@@ -143,14 +144,17 @@ else:
 		temp['extension'] = temp['fullpath'].apply(get_file_extension)
 	else:
 		temp['extension'] = temp['fullpath'].parallel_apply(get_file_extension)
-		__update_dataframe(df, temp)
+
+	df = __update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
+
 ###############################################################################################################
 pprint('Get file names')
-def __update_dataframe(dataset, filenames):
-        for index, datum in chunk.iterrows():
-                dataset.loc[index,'filename'] = chunk.loc[index,'filename']
+def __update_dataframe(dataset, temp):
+        for index, datum in temp.iterrows():
+                dataset.loc[index,'filename'] = temp.loc[index,'filename']
+	return dataset
 
 def get_filename(filename):
 	return Path(filename).stem + Path(filename).suffix
@@ -165,7 +169,8 @@ else:
 		temp['filename'] = temp['fullpath'].apply(get_filename)
 	else:
 		temp['filename'] = temp['fullpath'].parallel_apply(get_filename)
-		__update_dataframe(df, temp)
+
+	df = __update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
 
@@ -174,6 +179,7 @@ pprint('Get file types')
 def __update_dataframe(dataset, temp):
         for index, datum in chunk.iterrows():
                 dataset.loc[index,'filetype'] = temp.loc[index,'filetype']
+	return dataset
 
 def get_filetype( extension ):
 	images = {'.tiff', '.png', '.tif', '.ome.tif', '.jpeg', '.gif', '.ome.tiff', 'jpg', '.jp2'}
@@ -203,6 +209,7 @@ pprint('Get file creation date')
 def __update_dataframe(dataset, temp):
         for index, datum in chunk.iterrows():
                 dataset.loc[index,'modification_time'] = temp.loc[index,'modification_time']
+	return dataset
 
 def get_file_creation_date(filename):
 	t = os.path.getmtime(str(filename))
@@ -218,15 +225,17 @@ else:
 		temp['modification_time'] = temp['fullpath'].apply(get_file_creation_date)
 	else:
 		temp['modification_time'] = temp['fullpath'].parallel_apply(get_file_creation_date)
-		__update_dataframe(df, temp)
+
+	df = __update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
 
 ###############################################################################################################
 pprint('Get file size')
 def __update_dataframe(dataset, temp):
-        for index, datum in chunk.iterrows():
+        for index, datum in temp.iterrows():
                 dataset.loc[index,'size'] = temp.loc[index,'size']
+	return dataset
 
 def get_file_size(filename):
 	return Path(filename).stat().st_size
@@ -241,7 +250,8 @@ else:
 		temp['size'] = temp['fullpath'].apply(get_file_size)
 	else:
 		temp['size'] = temp['fullpath'].parallel_apply(get_file_size)
-		__update_dataframe(df, temp)
+
+	df = __update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
 
@@ -250,8 +260,9 @@ pprint('Get mime-type')
 import magic
 
 def __update_dataframe(dataset, temp):
-        for index, datum in chunk.iterrows():
+        for index, datum in temp.iterrows():
                 dataset.loc[index,'mime-type'] = temp.loc[index,'mime-type']
+	return dataset
 
 def get_mime_type(filename):
 	mime = magic.Magic(mime=True)
@@ -267,7 +278,8 @@ else:
 		temp['mime-type'] = temp['fullpath'].apply(get_mime_type)
 	else:
 		temp['mime-type'] = temp['fullpath'].parallel_apply(get_mime_type)
-		__update_dataframe(df, temp)
+
+	df = __update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
 
@@ -275,7 +287,8 @@ df.to_csv( output_filename, sep='\t', index=False )
 pprint('Get download link for each file')
 def __update_dataframe(dataset, temp):
         for index, datum in temp.iterrows():
-                dataset.loc[index,'mime-type'] = temp.loc[index,'download_url']
+                dataset.loc[index,'download_url'] = temp.loc[index,'download_url']
+	return dataset
 
 def get_url(filename):
 	filename = str(filename)
@@ -296,7 +309,8 @@ if not hubmapbags.apis.is_protected( hubmap_id, instance='prod', token=token ):
 			temp['download_url'] = temp['fullpath'].apply(get_url)
 		else:
 			temp['download_url'] = temp['fullpath'].parallel_apply(get_url)
-			__update_dataframe(df, temp)
+
+		df = __update_dataframe(df, temp)
 
 	df.to_csv( output_filename, sep='\t', index=False )
 else:
@@ -325,9 +339,10 @@ def compute_md5sum(filename):
 
 	return md5.hexdigest()
 
-def __update_dataframe(dataset, chunk):
-	for index, datum in chunk.iterrows():
-		dataset.loc[index,'md5'] = chunk.loc[index,'md5']
+def __update_dataframe(dataset, temp):
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'md5'] = temp.loc[index,'md5']
+	return dataset
 
 def __get_chunk_size(dataframe):
 	if len(dataframe) < 1000:
@@ -350,7 +365,7 @@ if len(df) < 100:
 
 	if len(files) > 0:
 		files['md5'] = files['fullpath'].parallel_apply(compute_md5sum)
-		__update_dataframe(df, files)
+		df = __update_dataframe(df, files)
 		df.to_csv(output_filename, sep='\t', index=False)
 else:
 	if 'md5' in df.keys():
@@ -363,7 +378,7 @@ else:
 		print(f'Number of files to process is {str(len(files))}')
 		if n < 25:
 			files['md5'] = files['fullpath'].parallel_apply(compute_md5sum)
-			__update_dataframe(df, files)
+			df = __update_dataframe(df, files)
 			df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 		else:
 			chunks = np.array_split(files, n)
@@ -371,7 +386,7 @@ else:
 			for chunk in chunks:
 				print(f'\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}')
 				chunk['md5'] = chunk['fullpath'].parallel_apply(compute_md5sum)
-				__update_dataframe(df, chunk)
+				df = __update_dataframe(df, chunk)
 				chunk_counter = chunk_counter + 1
 
 				if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
@@ -406,9 +421,10 @@ def compute_sha256sum(filename):
 
 	return sha256.hexdigest()
 
-def __update_dataframe(dataset, chunk):
-	for index, datum in chunk.iterrows():
-		dataset.loc[index,'sha256'] = chunk.loc[index,'sha256']
+def __update_dataframe(dataset, temp):
+	for index, datum in temp.iterrows():
+		dataset.loc[index,'sha256'] = temp.loc[index,'sha256']
+	return dataset
 
 def __get_chunk_size(dataframe):
 	if len(dataframe) < 1000:
@@ -431,7 +447,7 @@ if len(df) < 100:
 
 	if len(files) > 0:
 		files['sha256'] = files['fullpath'].parallel_apply(compute_sha256sum)
-		__update_dataframe(df, files)
+		df = __update_dataframe(df, files)
 		df.to_csv(output_filename, sep='\t', index=False)
 else:
 	if 'sha256' in df.keys():
@@ -445,7 +461,7 @@ else:
 
 		if n < 25:
 			files['sha256'] = files['fullpath'].parallel_apply(compute_sha256sum)
-			__update_dataframe(df, files)
+			df = __update_dataframe(df, files)
 			df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 		else:
 			chunks = np.array_split(files, n)
@@ -454,7 +470,7 @@ else:
 			for chunk in chunks:
 				print(f'\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}')
 				chunk['sha256'] = chunk['fullpath'].parallel_apply(compute_sha256sum)
-				_update_dataframe(df, chunk)
+				df = _update_dataframe(df, chunk)
 				chunk_counter = chunk_counter + 1
 
 				if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
