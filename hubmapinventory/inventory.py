@@ -128,7 +128,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     df.to_csv( output_filename, sep='\t', index=False )
 
     ###############################################################################################################
-    pprint('Get file names')
+    __pprint('Get file names')
     def get_filename(filename):
         return Path(filename).stem + Path(filename).suffix
 
