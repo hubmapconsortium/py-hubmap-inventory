@@ -84,7 +84,7 @@ def get_file_extensions(df):
     return df
 
 ###############################################################################################################
-def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap-study-id=None, debug=False ):
+def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id=None, debug=False ):
     __pprint(f'Attempting to process dataset with dataset ID {hubmap_id}')
 
     if dbgap_study_id:
