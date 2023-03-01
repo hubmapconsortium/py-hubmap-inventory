@@ -127,11 +127,9 @@ def get_file_extension(filename):
 		if extension == '.tiff' or extension == '.tif':
 			if str(filename).find('ome.tif') >= 0:
 				extension = '.ome.tif'
-				return extension
 
 		if str(filename).find('fastq.gz') >= 0:
 			extension = 'fastq.gz'
-			return extension
 
 	return extension
 
@@ -142,10 +140,10 @@ else:
 	temp = df[df['extension'].isnull()]
 	print(f'Processing {str(len(temp))} files of {str(len(df))} files')
 	if len(temp) < ncores:
-		temp['extension'] = temp['relativepath'].apply(get_file_extension)
+		temp['extension'] = temp['fullpath'].apply(get_file_extension)
 		__update_dataframe(df, temp)
 	else:
-		temp['extension'] = temp['relativepath'].parallel_apply(get_file_extension)
+		temp['extension'] = temp['fullpath'].parallel_apply(get_file_extension)
 		__update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
