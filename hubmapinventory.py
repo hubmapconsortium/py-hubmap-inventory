@@ -41,29 +41,8 @@ def __update_dataframe(dataset, temp, key):
 
 ###############################################################################################################
 def __get_relative_path( fullpath ):
-	directory2 = directory
-	if directory2[-1] != '/':
-		directory2 += '/'
-
-	try:
-		answer =fullpath.replace( directory2, '' )
-		return answer
-	except Exception as e:
-		print(e)
-		print(fullpath)
-		return ''
-
-def __get_relative_path( fullpath ):
-	if directory[-1] != '/':
-		directory += '/'
-
-	try:
-		answer =fullpath.replace( directory, '' )
-		return answer
-	except Exception as e:
-		print(e)
-		print(fullpath)
-		return ''
+    answer =fullpath.replace( directory, '' )
+    return answer
 
 def __get_file_extension(filename):
 	extension = None
