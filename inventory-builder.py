@@ -579,7 +579,7 @@ if compute_uuids:
 
 ###############################################################################################################
 if dbgap_study_id:
-	pprint(f'Populating dbGap study ID {dbgap-study-id}')
+	pprint(f'Populating dbGap study ID {dbgap_study_id}')
 
 ###############################################################################################################
 pprint('Computing dataset level statistics')
