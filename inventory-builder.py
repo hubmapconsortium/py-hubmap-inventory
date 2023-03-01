@@ -119,13 +119,15 @@ def get_relative_path( fullpath ):
 df['relativepath'] = df['fullpath'].apply(get_relative_path)
 
 def get_file_extension(filename):
+	extension = None
 	if Path(filename).is_file() or Path(filename).is_symlink():
 		extension = Path(filename).suffix
+
 		if extension == '.tiff' or extension == '.tif':
-			if str(filename).find('ome.tif') > 0:
+			if str(filename).find('ome.tif') >= 0:
 				extension = '.ome.tif'
 
-		if str(filename).find('fastq.gz') > 0:
+		if str(filename).find('fastq.gz') >= 0:
 			extension = 'fastq.gz'
 
 	return extension
