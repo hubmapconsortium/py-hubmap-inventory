@@ -80,7 +80,7 @@ output_filename = metadata['uuid'] + '.tsv'
 
 temp_directory = '/local/'
 if not Path(temp_directory).exists():
-	temp_directory = '/tmp/'
+	temp_directory = './tmp/'
 print(f'Temp directory set to {temp_directory}.')
 
 if Path(temp_directory + output_filename).exists():
