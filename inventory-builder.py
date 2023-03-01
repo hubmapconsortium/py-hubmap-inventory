@@ -110,6 +110,10 @@ def get_file_extension(filename):
 			if str(filename).find('ome.tif') > 0:
 				extension = '.ome.tif'
 
+		if extension == '.gz':
+			if str(filename).find('fastq') > 0:
+				extension = 'fastq.gz'
+
 	return extension
 
 if 'extension' not in df.keys():
@@ -144,7 +148,7 @@ else:
 	if len(temp) < ncores:
 		temp['filename'] = temp['fullpath'].apply(get_filename)
 	else:
-		temp['filename'] = temp['fullpath'].parallel_apply(get_filename)	
+		temp['filename'] = temp['fullpath'].parallel_apply(get_filename)
 		__update_dataframe(df, temp)
 
 df.to_csv( output_filename, sep='\t', index=False )
@@ -308,7 +312,7 @@ def compute_md5sum(filename):
 def __update_dataframe(dataset, chunk):
 	for index, datum in chunk.iterrows():
 		dataset.loc[index,'md5'] = chunk.loc[index,'md5']
-        
+
 def __get_chunk_size(dataframe):
 	if len(dataframe) < 1000:
 		return 10
@@ -320,7 +324,7 @@ def __get_chunk_size(dataframe):
 		return 500
 	else:
 		return 500
-    
+
 if len(df) < 100:
 	if 'md5' in df.keys():
 		files = df[df['md5'].isnull()]
@@ -337,7 +341,7 @@ else:
 		files = df[df['md5'].isnull()]
 	else:
 		files = df
-    
+
 	if len(files) != 0:
 		n = __get_chunk_size(files)
 		print(f'Number of files to process is {str(len(files))}')
@@ -359,7 +363,7 @@ else:
 					df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 	else:
 		print('No files left to process')
-        
+
 if Path(temp_directory + output_filename).exists():
 	shutil.copyfile(temp_directory + output_filename, output_filename)
 	Path(temp_directory + output_filename).unlink()
@@ -401,7 +405,7 @@ def __get_chunk_size(dataframe):
 		return 500
 	else:
 		return 500
-    
+
 if len(df) < 100:
 	if 'sha256' in df.keys():
 		files = df[df['sha256'].isnull()]
@@ -418,7 +422,7 @@ else:
 		files = df[df['sha256'].isnull()]
 	else:
 		files = df
- 
+
 	if not files.empty:
 		n = __get_chunk_size(files)
 		print(f'Number of files to process is {str(len(files))}')
@@ -442,7 +446,7 @@ else:
 					df.to_csv(temp_directory + output_filename, sep='\t', index=False)
 	else:
 		print('No files left to process')
-                
+
 if Path(temp_directory + output_filename).exists():
 	shutil.copyfile(temp_directory + output_filename, output_filename)
 	Path(temp_directory + output_filename).unlink()
@@ -459,7 +463,7 @@ def generate( hubmap_id, df, instance='prod', token=None, debug=False ):
 	if df.empty:
 		print('Nothing left to generate.')
 		return None
-    
+
 	metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance=instance, token=token, overwrite=False)
 
 	URL = 'https://uuid.api.hubmapconsortium.org/hmuuid/'
@@ -572,6 +576,11 @@ if compute_uuids:
 			print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
 
 		df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+
+###############################################################################################################
+if dbgap_study_id:
+	pprint('Computing dataset level statistics')
+
 
 ###############################################################################################################
 pprint('Computing dataset level statistics')
