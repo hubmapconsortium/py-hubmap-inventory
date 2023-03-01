@@ -33,9 +33,11 @@ def pprint(msg):
     print(result)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-i','--hubmapid',dest='hubmap_id',help='HuBMAP')
-parser.add_argument('-t', '--token',dest='token', help='Token')
-parser.add_argument('-n', '--ncores',dest='ncores', help='Number of cores')
+parser.add_argument('--hubmapid',dest='hubmap_id',help='HuBMAP')
+parser.add_argument('--token',dest='token', help='Token')
+parser.add_argument('--ncores',dest='ncores', help='Number of cores')
+parser.add_argument('--dbgap-study-id',dest='dbgap_study_id', help='dbGaP study ID')
+parser.set_defaults(dbgap_study_id=None)
 
 try:
 	parser.add_argument('--compute-uuids', dest='compute_uuids', action=argparse.BooleanOptionalAction, help='Compute UUIDS')
@@ -48,6 +50,9 @@ args = parser.parse_args()
 hubmap_id = args.hubmap_id
 pprint(f'Attempting to process dataset with dataset ID {hubmap_id}')
 token = args.token
+dbgap_study_id = args.dbgap_study_id
+if not dbgap_study_id:
+	print(f'Setting dbGaP study ID to {dbgap_study_id}')
 compute_uuids = args.compute_uuids
 ncores = int(args.ncores)
 print(f'Number of cores to be used in this run is {str(ncores)}.')
