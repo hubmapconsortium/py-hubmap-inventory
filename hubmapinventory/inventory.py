@@ -155,12 +155,15 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     ###############################################################################################################
     __pprint('Get file types')
     def __get_filetype( extension ):
-        images = {'.tiff', '.png', '.tif', '.ome.tif', '.jpeg', '.gif', '.ome.tiff', 'jpg', '.jp2'}
-        if extension in images:
-            return 'images'
-        elif extension.find('fast') > 0:
-            return 'sequence'
-        else:
+        try:
+            images = {'.tiff', '.png', '.tif', '.ome.tif', '.jpeg', '.gif', '.ome.tiff', 'jpg', '.jp2'}
+            if extension in images:
+                return 'images'
+            elif extension.find('fast') > 0:
+                return 'sequence'
+            else:
+                return 'other'
+        except:
             return 'other'
 
     if 'filetype' not in df.keys():
@@ -513,7 +516,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             temp =df[~df['relativepath'].str.contains('zarr')]
             uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='test', token=token )
 
-            if len(temp) == len(uuids):
+            if len(temp) == len(uuids) or len(temp) < len(uuids):
                 print('This dataset is populated with UUIDs for non-zarr files. Skipping recomputation.')
                 df = __update_dataframe(df, temp,'file_uuid')
             else:
