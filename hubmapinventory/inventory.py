@@ -323,7 +323,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             n = __get_chunk_size(files)
             print(f'Number of files to process is {str(len(files))}')
             if n < 25:
-                files['md5'] = files['fullpath'].parallel_apply(compute_md5sum)
+                files['md5'] = files['fullpath'].parallel_apply(__compute_md5sum)
                 df = __update_dataframe(df, files, 'md5')
                 df.to_csv(temp_directory + output_filename, sep='\t', index=False)
             else:
