@@ -340,3 +340,73 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                         df.to_csv(output_filename, sep='\t', index=False)
         else:
             print('No files left to process')
+
+    ###############################################################################################################
+    ___pprint('Computing sha256 checksum')
+    def compute_sha256sum(filename):
+        # BUF_SIZE is totally arbitrary, change for your app!
+        BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
+
+        sha256 = hashlib.sha256()
+        if Path(filename).is_file() or Path(filename).is_symlink():
+            with open(filename, 'rb') as f:
+                while True:
+                    data = f.read(BUF_SIZE)
+                    if not data:
+                        break
+                    sha256.update(data)
+
+        return sha256.hexdigest()
+
+    def __get_chunk_size(dataframe):
+        if len(dataframe) < 1000:
+            return 10
+        elif len(dataframe) < 10000:
+            return 100
+        elif len(dataframe) < 100000:
+            return 250
+        elif len(dataframe) < 500000:
+            return 500
+        else:
+            return 500
+
+    if len(df) < 100:
+        if 'sha256' in df.keys():
+            files = df[df['sha256'].isnull()]
+        else:
+            files = df
+        print(f'Number of files to process is {str(len(files))}')
+
+        if len(files) > 0:
+            files['sha256'] = files['fullpath'].parallel_apply(__compute_sha256sum)
+            df = __update_dataframe(df, files, 'sha256')
+            df.to_csv(output_filename, sep='\t', index=False)
+    else:
+        if 'sha256' in df.keys():
+            files = df[df['sha256'].isnull()]
+        else:
+            files = df
+
+        if not files.empty:
+            n = __get_chunk_size(files)
+            print(f'Number of files to process is {str(len(files))}')
+
+            if n < 25:
+                files['sha256'] = files['fullpath'].parallel_apply(__compute_sha256sum)
+                df = __update_dataframe(df, files, 'sha256')
+                df.to_csv(output_filename, sep='\t', index=False)
+            else:
+                chunks = np.array_split(files, n)
+
+                chunk_counter = 1
+                for chunk in chunks:
+                    print(f'\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}')
+                    chunk['sha256'] = chunk['fullpath'].parallel_apply(__compute_sha256sum)
+                    df = __update_dataframe(df, chunk,'sha256')
+                    chunk_counter = chunk_counter + 1
+
+                    if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
+                        print('\nSaving chunks to disk')
+                        df.to_csv(output_filename, sep='\t', index=False)
+        else:
+            print('No files left to process')
