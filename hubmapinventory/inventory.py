@@ -1,4 +1,5 @@
 import os.path
+from numpyencoder import NumpyEncoder
 import glob
 import subprocess
 from PIL import Image
@@ -522,3 +523,67 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                 print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
 
         df.to_csv(output_filename, sep='\t', index=False)
+
+    ###############################################################################################################
+    if dbgap_study_id:
+        __pprint(f'Populating dbGap study ID {dbgap_study_id}')
+
+    ###############################################################################################################
+    __pprint('Computing dataset level statistics')
+    import humanize
+
+    def get_url(filename):
+        return filename.replace('/bil/data/','https://download.brainimagelibrary.org/')
+
+    def get_dataset_type( hubmap_id, instance='prod', token=None ):
+        metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance='prod', token=token)
+
+        if metadata['direct_ancestors'][0]['entity_type'] == 'Sample':
+            return 'Primary'
+        elif metadata['direct_ancestors'][0]['entity_type'] == 'Dataset':
+            return 'Derived'
+        else:
+            return 'Unknown'
+
+    def generate_dataset_uuid(directory):
+        if directory[-1] == '/':
+            directory = directory[:-1]
+
+        return str(uuid.uuid5(uuid.NAMESPACE_DNS, directory))
+
+    dataset = {}
+    dataset['hubmap_id'] = hubmap_id
+    dataset['uuid'] = metadata['uuid']
+    dataset['status'] = metadata['status']
+    dataset['dataset_type'] = get_dataset_type(hubmap_id, instance='prod', token=token)
+
+    if is_protected == 'true' and dataset['dataset_type'] == 'Primary':
+        dataset['is_protected'] = 'True'
+    else:
+        dataset['is_protected'] = 'False'
+
+    dataset['directory'] = directory
+
+    if 'doi_url' in metadata.keys():
+        dataset['doi_url'] = metadata['doi_url']
+
+    dataset['number_of_files'] = len(df)
+    dataset['size'] = df['size'].sum()
+    dataset['pretty_size'] = humanize.naturalsize(dataset['size'], gnu=True)
+    dataset['frequencies'] = df['extension'].value_counts().to_dict()
+
+    provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', token=token)
+    dataset['data_type']=provenance['dataset_data_types'][0]
+    dataset['creation_date']=provenance['dataset_date_time_created']
+    dataset['group_name']=provenance['dataset_group_name']
+
+    df['fullpath'] = df['fullpath'].astype(str)
+    files = df.to_dict('records')
+    dataset['manifest'] = files
+
+    output_filename = metadata['uuid'] + '.json'
+    print(f'Saving results to {output_filename}')
+    with open(output_filename, "w") as ofile:
+        json.dump(dataset, ofile, indent=4, sort_keys=True, ensure_ascii=False, cls=NumpyEncoder)
+
+    print('\nDone\n')
