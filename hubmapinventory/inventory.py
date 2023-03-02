@@ -8,6 +8,7 @@ import tabulate
 import pathlib
 import numpy as np
 import os
+import magic
 import pickle
 import pandas as pd
 import hashlib
@@ -41,24 +42,6 @@ def __update_dataframe(dataset, temp, key):
 	for index, datum in temp.iterrows():
 		dataset.loc[index,key] = temp.loc[index,key]
 	return dataset
-
-def __get_relative_path( fullpath ):
-    answer = str(fullpath).replace( f'{directory}/', '' )
-    return answer
-
-def __get_file_extension(filename):
-	extension = None
-	if Path(filename).is_file() or Path(filename).is_symlink():
-		extension = Path(filename).suffix
-
-		if extension == '.tiff' or extension == '.tif':
-			if str(filename).find('ome.tif') >= 0:
-				extension = '.ome.tif'
-
-		if str(filename).find('fastq.gz') >= 0:
-			extension = 'fastq.gz'
-
-	return extension
 
 ###############################################################################################################
 def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id=None, debug=False ):
@@ -114,6 +97,24 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     ###############################################################################################################
     __pprint('Get file extensions')
     df['relativepath'] = df['fullpath'].apply(__get_relative_path)
+
+    def __get_relative_path( fullpath ):
+        answer = str(fullpath).replace( f'{directory}/', '' )
+        return answer
+
+    def __get_file_extension(filename):
+        extension = None
+        if Path(filename).is_file() or Path(filename).is_symlink():
+            extension = Path(filename).suffix
+
+            if extension == '.tiff' or extension == '.tif':
+                if str(filename).find('ome.tif') >= 0:
+                    extension = '.ome.tif'
+
+            if str(filename).find('fastq.gz') >= 0:
+                extension = 'fastq.gz'
+
+        return extension
 
     if 'extension' not in df.keys():
         print(f'Processing {str(len(df))} files in directory')
@@ -219,7 +220,6 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
     ###############################################################################################################
     __pprint('Get mime-type')
-    import magic
 
     def __get_mime_type(filename):
         mime = magic.Magic(mime=True)
@@ -581,7 +581,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     files = df.to_dict('records')
     dataset['manifest'] = files
 
-    output_filename = metadata['uuid'] + '.json'
+    output_filename = f'{data_directory}/{metadata["uuid"]}.json'
     print(f'Saving results to {output_filename}')
     with open(output_filename, "w") as ofile:
         json.dump(dataset, ofile, indent=4, sort_keys=True, ensure_ascii=False, cls=NumpyEncoder)
