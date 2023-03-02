@@ -325,7 +325,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             if n < 25:
                 files['md5'] = files['fullpath'].parallel_apply(__compute_md5sum)
                 df = __update_dataframe(df, files, 'md5')
-                df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+                df.to_csv(output_filename, sep='\t', index=False)
             else:
                 chunks = np.array_split(files, n)
                 chunk_counter = 1
@@ -337,10 +337,6 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
                     if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
                         print('\nSaving chunks to disk')
-                        df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+                        df.to_csv(output_filename, sep='\t', index=False)
         else:
             print('No files left to process')
-
-    if Path(temp_directory + output_filename).exists():
-        shutil.copyfile(temp_directory + output_filename, output_filename)
-        Path(temp_directory + output_filename).unlink()
