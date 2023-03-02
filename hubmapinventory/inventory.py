@@ -347,7 +347,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             print('No files left to process')
 
     ###############################################################################################################
-    __pprint('Computing sha256 checksum')
+    __pprint('Computing SHA256 checksums')
     def __compute_sha256sum(filename):
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
@@ -509,16 +509,17 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
     provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', token=token)
     if compute_uuids:
+        __pprint('Generating or pulling UUIDs from HuBMAP UUID service')
         if provenance['dataset_data_types'][0].find('[Salmon]') >= 0:
             print('This derived dataset is the result from running Salmon. Avoiding computation of zarr files.')
         elif provenance['dataset_data_types'][0].find('[Cytokit + SPRM]') >= 0:
             print('This derived dataset is the result from running Cytokit + SPRM. Avoiding computation of zarr files.')
         else:
-            __pprint('Generating or pulling UUIDs from HuBMAP UUID service')
             if not 'file_uuid' in df.keys():
                 df['file_uuid'] = None
 
             if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+                print('There are missing UUIDs from this data frame. Generating or pulling UUIDs.')
                 uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
                 df = __populate_local_file_with_remote_uuids( df, uuids )
 
