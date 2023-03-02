@@ -195,3 +195,74 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         df = __update_dataframe(df, temp, 'modification_time')
 
     df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    __pprint('Get file size')
+    def __get_file_size(filename):
+        return Path(filename).stat().st_size
+
+    if 'size' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['size'] = df['fullpath'].parallel_apply(__get_file_size)
+    else:
+        temp = df[df['size'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['size'] = temp['fullpath'].apply(__get_file_size)
+        else:
+            temp['size'] = temp['fullpath'].parallel_apply__(get_file_size)
+
+        df = __update_dataframe(df, temp,'size')
+
+    df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    __pprint('Get mime-type')
+    import magic
+
+    def __get_mime_type(filename):
+        mime = magic.Magic(mime=True)
+        return mime.from_file(filename)
+
+    if 'mime-type' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['mime-type'] = df['fullpath'].parallel_apply(__get_mime_type)
+    else:
+        temp = df[df['mime-type'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['mime-type'] = temp['fullpath'].apply(__get_mime_type)
+        else:
+            temp['mime-type'] = temp['fullpath'].parallel_apply(__get_mime_type)
+
+        df = __update_dataframe(df, temp,'mime-type')
+
+    df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    __pprint('Get download link for each file')
+    def __get_url(filename):
+        filename = str(filename)
+        return filename.replace('/hive/hubmap/data/public','https://g-d00e7b.09193a.5898.dn.glob.us')
+
+    if not hubmapbags.apis.is_protected( hubmap_id, instance='prod', token=token ):
+        if 'download_url' not in df.keys():
+            print(f'Processing {str(len(df))} files in directory')
+            if is_protected:
+                df['download_url']=None
+            else:
+                df['download_url'] = df['fullpath'].parallel_apply(__get_url)
+            df.to_csv( output_filename, sep='\t', index=False )
+        else:
+            temp = df[df['download_url'].isnull()]
+            print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+            if len(temp) < ncores:
+                temp['download_url'] = temp['fullpath'].apply(__get_url)
+            else:
+                temp['download_url'] = temp['fullpath'].parallel_apply(__get_url)
+
+            df = __update_dataframe(df, temp, 'download_url')
+
+        df.to_csv( output_filename, sep='\t', index=False )
+    else:
+        print('Dataset is protected. Avoiding computation of download URLs.')
