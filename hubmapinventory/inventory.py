@@ -520,10 +520,13 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         elif provenance['dataset_data_types'][0].find('CODEX [Cytokit + SPRM]') >= 0:
             print('This derived dataset is the result from running Cytokit+SPRM. Avoiding computation of zarr files.')
             temp =df[~df['relativepath'].str.contains('zarr')]
+            print(temp)
 
             if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
                 uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
                 df = __populate_local_file_with_remote_uuids( df, uuids )
+
+                print(df)
 
                 if not temp[temp['file_uuid'].isnull()].empty:
                     __generate( hubmap_id, temp, instance='prod', token=token, debug=True)
