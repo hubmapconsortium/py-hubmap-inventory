@@ -77,7 +77,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     if directory[-1] == '/':
         directory = directory[:-1]
 
-    data_directory = '.data'
+    data_directory = 'data'
     print(f'Data directory set to {data_directory}.')
     if not Path(data_directory).exists():
         Path(data_directory).mkdir()
