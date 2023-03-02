@@ -28,8 +28,12 @@ from tqdm import tqdm
 import json
 import argparse
 import sys
-from pandas.core.common import SettingWithCopyWarning
-warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+
+try:
+    from pandas.core.common import SettingWithCopyWarning
+    warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+except:
+    warnings.filterwarnings("ignore")
 
 ###############################################################################################################
 def __pprint(msg):
