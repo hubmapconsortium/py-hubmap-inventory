@@ -96,7 +96,6 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     
     ###############################################################################################################
     __pprint('Get file extensions')
-    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
     def __get_relative_path( fullpath ):
         answer = str(fullpath).replace( f'{directory}/', '' )
@@ -115,6 +114,8 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                 extension = 'fastq.gz'
 
         return extension
+
+    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
     if 'extension' not in df.keys():
         print(f'Processing {str(len(df))} files in directory')
