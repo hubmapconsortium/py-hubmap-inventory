@@ -410,3 +410,115 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                         df.to_csv(output_filename, sep='\t', index=False)
         else:
             print('No files left to process')
+    
+    ###############################################################################################################
+    import requests
+
+    def __generate( hubmap_id, df, instance='prod', token=None, debug=False ):
+        '''
+        Main function that generates UUIDs using the uuid-api.
+        '''
+
+        df = df[df['file_uuid'].isnull()]
+        if df.empty:
+            print('Nothing left to generate.')
+            return None
+
+        metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance=instance, token=token, overwrite=False)
+
+        URL = 'https://uuid.api.hubmapconsortium.org/hmuuid/'
+        #URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
+        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0','Authorization':'Bearer '+token, 'Content-Type':'application/json'}
+
+        if len(df) <= 1000:
+            if df['file_uuid'].isnull().all():
+                file_info = []
+
+                for index, datum in df.iterrows():
+                    filename = datum['relativepath']
+                    file_info.append({'path':filename, \
+                        'size':datum['size'], \
+                        'checksum':datum['sha256'], \
+                        'base_dir':'DATA_UPLOAD'})
+
+                payload = {}
+                payload['parent_ids']=[metadata['uuid']]
+                payload['entity_type']='FILE'
+                payload['file_info']=file_info
+                params = {'entity_count':len(file_info)}
+                print('Generating UUIDs')
+                r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
+                j = json.loads(r.text)
+        else:
+            print('Data frame has ' + str(len(df)) + ' items. Partitioning into smaller chunks.')
+
+            n = 100  #chunk row size
+            dfs = [df[i:i+n] for i in range(0,df.shape[0],n)]
+
+            print('Generating UUIDs')
+            counter = 0
+            for frame in dfs:
+                counter=counter+1
+                print('Generating UUIDs for partition ' + str(counter) + ' of ' + str(len(dfs)) + '.')
+
+                file_info = []
+                for index, datum in frame.iterrows():
+                    filename = datum['relativepath']
+                    file_info.append({'path':filename, \
+                        'size':datum['size'], \
+                        'checksum':datum['sha256'], \
+                        'base_dir':'DATA_UPLOAD'})
+
+                payload = {}
+                payload['parent_ids']=[metadata['uuid']]
+                payload['entity_type']='FILE'
+                payload['file_info']=file_info
+                params = {'entity_count':len(file_info)}
+
+                if frame['file_uuid'].isnull().all():
+                    r = requests.post(URL, params=params, headers=headers, data=json.dumps(payload), allow_redirects=True, timeout=120)
+                    j = json.loads(r.text)
+                else:
+                    print('HuBMAP UUIDs chunk is populated. Skipping recomputation.')
+
+    def __populate_local_file_with_remote_uuids( df, uuids ):
+        '''
+        Helper function that populates (but does not generate) a local pickle file with remote UUIDs.
+        '''
+
+        uuids = pd.DataFrame.from_dict(uuids)
+
+        if uuids.empty:
+            print('There are no UUIDs for this dataset in UUID service')
+            df['file_uuid'] = None
+        else:
+            uuids = uuids[uuids['base_dir'] == 'DATA_UPLOAD']
+            uuids = uuids[['file_uuid','path']]
+            uuids.rename(columns = {'path':'relativepath'}, inplace = True)
+            df = df.merge(uuids, on='relativepath', how='left')
+            df.rename(columns = {'file_uuid_y':'file_uuid'}, inplace = True)
+            df = df[['file_uuid','fullpath','relativepath','filename','extension','filetype','size','mime-type','modification_time','md5','sha256','download_url']]
+        return df
+
+    provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', token=token)
+    if compute_uuids:
+        if provenance['dataset_data_types'][0].find('snRNA-seq [Salmon]') >= 0:
+            print('This derived dataset is the result from running Salmon. Avoiding computation of UUIDs since zarr files may be present.')
+        elif provenance['dataset_data_types'][0].find('CODEX [Cytokit + SPRM]') >= 0:
+            print('This derived dataset is the result from running Cytokit+SPRM. Avoiding computation of UUIDs since zarr files may be present.')
+        else:
+            __pprint('Generating or pulling UUIDs from HuBMAP UUID service')
+            if not 'file_uuid' in df.keys():
+                df['file_uuid'] = None
+
+            if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+                uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
+                df = __populate_local_file_with_remote_uuids( df, uuids )
+
+                if not df[df['file_uuid'].isnull()].empty:
+                    __generate( hubmap_id, df, instance='prod', token=token, debug=True)
+                    df = __populate_local_file_with_remote_uuids( df, uuids )
+            else:
+                print('Dataframe is populated with UUIDs. Avoiding generation or retrieval.')
+
+        df.to_csv(output_filename, sep='\t', index=False)
