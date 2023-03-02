@@ -174,3 +174,24 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         df = __update_dataframe(df, temp,'filetype')
 
     df.to_csv( output_filename, sep='\t', index=False )
+
+    ###############################################################################################################
+    __pprint('Get file creation date')
+    def __get_file_creation_date(filename):
+        t = os.path.getmtime(str(filename))
+        return str(datetime.datetime.fromtimestamp(t))
+
+    if 'modification_time' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['modification_time'] = df['fullpath'].parallel_apply(__get_file_creation_date)
+    else:
+        temp = df[df['modification_time'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['modification_time'] = temp['fullpath'].apply(__get_file_creation_date)
+        else:
+            temp['modification_time'] = temp['fullpath'].parallel_apply(__get_file_creation_date)
+
+        df = __update_dataframe(df, temp, 'modification_time')
+
+    df.to_csv( output_filename, sep='\t', index=False )
