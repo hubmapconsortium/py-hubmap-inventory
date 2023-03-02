@@ -342,7 +342,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             print('No files left to process')
 
     ###############################################################################################################
-    ___pprint('Computing sha256 checksum')
+    __pprint('Computing sha256 checksum')
     def compute_sha256sum(filename):
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
