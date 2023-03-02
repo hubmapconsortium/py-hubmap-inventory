@@ -266,3 +266,81 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         df.to_csv( output_filename, sep='\t', index=False )
     else:
         print('Dataset is protected. Avoiding computation of download URLs.')
+
+    ###############################################################################################################
+    import warnings
+    import shutil
+
+    warnings.filterwarnings("ignore")
+
+    __pprint('Computing MD5 checksums')
+    def __compute_md5sum(filename):
+        # BUF_SIZE is totally arbitrary, change for your app!
+        BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
+
+        md5 = hashlib.md5()
+
+        if Path(filename).is_file() or Path(filename).is_symlink():
+            with open(filename, 'rb') as f:
+                while True:
+                    data = f.read(BUF_SIZE)
+                    if not data:
+                        break
+                    md5.update(data)
+
+        return md5.hexdigest()
+
+    def __get_chunk_size(dataframe):
+        if len(dataframe) < 1000:
+            return 10
+        elif len(dataframe) < 10000:
+            return 100
+        elif len(dataframe) < 100000:
+            return 250
+        elif len(dataframe) < 500000:
+            return 500
+        else:
+            return 500
+
+    if len(df) < 100:
+        if 'md5' in df.keys():
+            files = df[df['md5'].isnull()]
+        else:
+            files = df
+        print(f'Number of files to process is {str(len(files))}')
+
+        if len(files) > 0:
+            files['md5'] = files['fullpath'].parallel_apply(__compute_md5sum)
+            df = __update_dataframe(df, files,'md5')
+            df.to_csv(output_filename, sep='\t', index=False)
+    else:
+        if 'md5' in df.keys():
+            files = df[df['md5'].isnull()]
+        else:
+            files = df
+
+        if len(files) != 0:
+            n = __get_chunk_size(files)
+            print(f'Number of files to process is {str(len(files))}')
+            if n < 25:
+                files['md5'] = files['fullpath'].parallel_apply(compute_md5sum)
+                df = __update_dataframe(df, files, 'md5')
+                df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+            else:
+                chunks = np.array_split(files, n)
+                chunk_counter = 1
+                for chunk in chunks:
+                    print(f'\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}')
+                    chunk['md5'] = chunk['fullpath'].parallel_apply(__compute_md5sum)
+                    df = __update_dataframe(df, chunk, 'md5')
+                    chunk_counter = chunk_counter + 1
+
+                    if chunk_counter % 10 == 0 or chunk_counter == len(chunks):
+                        print('\nSaving chunks to disk')
+                        df.to_csv(temp_directory + output_filename, sep='\t', index=False)
+        else:
+            print('No files left to process')
+
+    if Path(temp_directory + output_filename).exists():
+        shutil.copyfile(temp_directory + output_filename, output_filename)
+        Path(temp_directory + output_filename).unlink()
