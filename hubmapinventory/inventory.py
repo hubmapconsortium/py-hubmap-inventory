@@ -588,3 +588,5 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         json.dump(dataset, ofile, indent=4, sort_keys=True, ensure_ascii=False, cls=NumpyEncoder)
 
     print('\nDone\n')
+    
+    return df
