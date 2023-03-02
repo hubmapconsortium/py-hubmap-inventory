@@ -429,7 +429,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         metadata = hubmapbags.apis.get_dataset_info( hubmap_id, instance=instance, token=token, overwrite=False)
 
         URL = 'https://uuid.api.hubmapconsortium.org/hmuuid/'
-        #URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
+        URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
         headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0','Authorization':'Bearer '+token, 'Content-Type':'application/json'}
 
         if len(df) <= 1000:
@@ -505,9 +505,28 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     provenance = hubmapbags.apis.get_provenance_info(hubmap_id, instance='prod', token=token)
     if compute_uuids:
         if provenance['dataset_data_types'][0].find('snRNA-seq [Salmon]') >= 0:
-            print('This derived dataset is the result from running Salmon. Avoiding computation of UUIDs since zarr files may be present.')
+            print('This derived dataset is the result from running Salmon. Avoiding computation of zarr files.')
+            temp =df[~df['relativepath'].str.contains('zarr')]
+
+            if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+                uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
+                df = __populate_local_file_with_remote_uuids( df, uuids )
+
+                if not temp[temp['file_uuid'].isnull()].empty:
+                    __generate( hubmap_id, temp, instance='prod', token=token, debug=True)
+                    df = __populate_local_file_with_remote_uuids( df, uuids )
+
         elif provenance['dataset_data_types'][0].find('CODEX [Cytokit + SPRM]') >= 0:
-            print('This derived dataset is the result from running Cytokit+SPRM. Avoiding computation of UUIDs since zarr files may be present.')
+            print('This derived dataset is the result from running Cytokit+SPRM. Avoiding computation of zarr files.')
+            temp =df[~df['relativepath'].str.contains('zarr')]
+
+            if 'file_uuid' in df.keys() and len(df[df['file_uuid'].isnull()]) > 0:
+                uuids = hubmapbags.uuids.get_uuids( hubmap_id, instance='prod', token=token )
+                df = __populate_local_file_with_remote_uuids( df, uuids )
+
+                if not temp[temp['file_uuid'].isnull()].empty:
+                    __generate( hubmap_id, temp, instance='prod', token=token, debug=True)
+                    df = __populate_local_file_with_remote_uuids( df, uuids )
         else:
             __pprint('Generating or pulling UUIDs from HuBMAP UUID service')
             if not 'file_uuid' in df.keys():
@@ -588,5 +607,5 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         json.dump(dataset, ofile, indent=4, sort_keys=True, ensure_ascii=False, cls=NumpyEncoder)
 
     print('\nDone\n')
-    
+
     return df
