@@ -119,7 +119,8 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
         return extension
 
-    df['relativepath'] = df['fullpath'].apply(__get_relative_path)
+    if 'relativepath' not in df.keys():
+        df['relativepath'] = df['fullpath'].apply(__get_relative_path)
 
     if 'extension' not in df.keys():
         print(f'Processing {str(len(df))} files in directory')
