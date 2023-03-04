@@ -569,7 +569,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                 '.xml':'http://edamontology.org/format_2332'}
 
         if 'extension' in fileformats.keys():
-            return fileformats['extension']
+            return fileformats[extension]
         else:
             return None
             
