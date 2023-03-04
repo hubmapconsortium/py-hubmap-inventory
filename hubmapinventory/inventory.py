@@ -158,7 +158,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     df.to_csv( output_filename, sep='\t', index=False )
 
     ###############################################################################################################
-    __pprint('Get file types')
+    __pprint('Computing file types')
     def __get_filetype( extension ):
         try:
             images = {'.tiff', '.png', '.tif', '.ome.tif', '.jpeg', '.gif', '.ome.tiff', 'jpg', '.jp2'}
@@ -171,18 +171,9 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         except:
             return 'other'
 
-    if 'filetype' not in df.keys():
-        print(f'Processing {str(len(df))} files in directory')
-        df['filetype'] = df['extension'].parallel_apply(__get_filetype)
-    else:
-        temp = df[df['filetype'].isnull()]
-        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
-        if len(temp) < ncores:
-            temp['filetype'] = temp['extension'].apply(__get_filetype)
-        else:
-            temp['filetype'] = temp['extension'].parallel_apply(__get_filetype)
-
-        df = __update_dataframe(df, temp,'filetype')
+    print(f'Processing {str(len(df))} files in directory')
+    df['filetype'] = df['extension'].parallel_apply(__get_filetype)
+    df = __update_dataframe(df, temp,'filetype')
 
     df.to_csv( output_filename, sep='\t', index=False )
 
@@ -546,6 +537,42 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     __pprint(f'Populating file format with EDAM ontology')
     print('This has not been implemented yet.')
     df['file_format'] = None
+
+    def get_file_format( extension ):
+        fileformats = {'.ome.tiff':'http://edamontology.org/format_3727', \
+                '.ome.tif':'http://edamontology.org/format_3727', \
+                '.tif':'http://edamontology.org/format_3591', \
+                '.tiff':'http://edamontology.org/format_3591', \
+                '.hdf5':'http://edamontology.org/format_3590', \
+                '.hdf':'http://edamontology.org/format_3873', \
+                '.jpg':'http://edamontology.org/format_3579', \
+                '.png':'http://edamontology.org/format_3873', \
+                '.tar':'http://edamontology.org/format_3981', \
+                '.tgz':'http://edamontology.org/format_3989', \
+                '.gz':'http://edamontology.org/format_3989', \
+                '.fastq.gz':'http://edamontology.org/format_3989', \
+                '.pdf':'http://edamontology.org/format_3508', \
+                '.ibd':'http://edamontology.org/format_3839', \
+                '.gif':'http://edamontology.org/format_3467', \
+                '.zip':'http://edamontology.org/format_3987', \
+                '.xls':'http://edamontology.org/format_3468', \
+                '.xlsx':'http://edamontology.org/format_3620', \
+                '.tex':'http://edamontology.org/format_3817', \
+                '.json':'http://edamontology.org/format_3464', \
+                '.yaml':'http://edamontology.org/format_3750', \
+                '.yml':'http://edamontology.org/format_3750', \
+                '.log':'http://edamontology.org/data_3671', \
+                '.txt':'http://edamontology.org/data_3671', \
+                '.csv':'http://edamontology.org/format_3752', \
+                '.tsv':'http://edamontology.org/format_3475', \
+                '.mtx':'http://edamontology.org/format_3916', \
+                '.xml':'http://edamontology.org/format_2332'}
+
+        if 'extension' in fileformats.keys()
+            return fileformats['extension']
+        else:
+            return None
+            
 
     ###############################################################################################################
     __pprint(f'Populating file format with EDAM ontology')
