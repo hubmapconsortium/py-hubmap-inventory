@@ -538,7 +538,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     print('This has not been implemented yet.')
     df['file_format'] = None
 
-    def __get_file_format( extension ):
+    def __get_file_format(extension):
         fileformats = {'.ome.tiff':'http://edamontology.org/format_3727', \
                 '.ome.tif':'http://edamontology.org/format_3727', \
                 '.tif':'http://edamontology.org/format_3591', \
@@ -568,7 +568,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
                 '.mtx':'http://edamontology.org/format_3916', \
                 '.xml':'http://edamontology.org/format_2332'}
 
-        if 'extension' in fileformats.keys():
+        if extension in fileformats.keys():
             return fileformats[extension]
         else:
             return None
