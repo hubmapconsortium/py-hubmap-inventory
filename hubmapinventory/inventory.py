@@ -172,9 +172,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             return 'other'
 
     print(f'Processing {str(len(df))} files in directory')
-    df['filetype'] = df['extension'].parallel_apply(__get_filetype)
-    df = __update_dataframe(df, temp,'filetype')
-
+    df['filetype'] = df['extension'].apply(__get_filetype)
     df.to_csv( output_filename, sep='\t', index=False )
 
     ###############################################################################################################
