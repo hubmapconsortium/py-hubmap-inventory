@@ -575,7 +575,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
             
     if 'fileformat' not in df.keys():
         print(f'Processing {str(len(df))} files in directory')
-        df['fileformat'] = df['extension'].parallel_apply(__get_mime_type)
+        df['fileformat'] = df['extension'].parallel_apply(__get_file_format)
     else:
         temp = df[df['fileformat'].isnull()]
         print(f'Processing {str(len(temp))} files of {str(len(df))} files')
