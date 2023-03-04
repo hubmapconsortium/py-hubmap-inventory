@@ -538,7 +538,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     print('This has not been implemented yet.')
     df['file_format'] = None
 
-    def get_file_format( extension ):
+    def __get_file_format( extension ):
         fileformats = {'.ome.tiff':'http://edamontology.org/format_3727', \
                 '.ome.tif':'http://edamontology.org/format_3727', \
                 '.tif':'http://edamontology.org/format_3591', \
@@ -573,6 +573,20 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
         else:
             return None
             
+    if 'fileformat' not in df.keys():
+        print(f'Processing {str(len(df))} files in directory')
+        df['fileformat'] = df['extension'].parallel_apply(__get_mime_type)
+    else:
+        temp = df[df['fileformat'].isnull()]
+        print(f'Processing {str(len(temp))} files of {str(len(df))} files')
+        if len(temp) < ncores:
+            temp['fileformat'] = temp['fullpath'].apply(__get_file_format)
+        else:
+            temp['fileformat'] = temp['fullpath'].parallel_apply(__get_file_format)
+
+        df = __update_dataframe(df, temp, 'fileformat')
+
+    df.to_csv( output_filename, sep='\t', index=False )
 
     ###############################################################################################################
     __pprint(f'Populating file format with EDAM ontology')
