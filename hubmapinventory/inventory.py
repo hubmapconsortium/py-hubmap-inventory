@@ -535,7 +535,6 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
 
     ###############################################################################################################
     __pprint(f'Populating file format with EDAM ontology')
-    print('This has not been implemented yet.')
     df['file_format'] = None
 
     def __get_file_format(extension):
