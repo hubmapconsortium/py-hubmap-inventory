@@ -586,7 +586,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     df.to_csv( output_filename, sep='\t', index=False )
 
     ###############################################################################################################
-    __pprint(f'Populating file format with EDAM ontology')
+    __pprint(f'Populating data format with EDAM ontology')
     print('This has not been implemented yet.')
     df['data_format'] = None
 
