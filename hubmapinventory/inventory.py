@@ -1,34 +1,35 @@
-import os.path
-from numpyencoder import NumpyEncoder
-import glob
-import subprocess
-from PIL import Image
-import fnmatch
-import tabulate
-import pathlib
-import numpy as np
-import os
-import magic
-import pickle
-import pandas as pd
-import hashlib
-import math
-import hubmapbags
+import argparse
 import datetime
+import fnmatch
+import glob
+import hashlib
+import json
+import math
+import os
+import os.path
+import pathlib
+import pickle
+import shutil
+import subprocess
+import sys
 import time
 import uuid
-import shutil
-from datetime import date
 import warnings
+from datetime import date
 from pathlib import Path
-from warnings import resetwarnings, warn as warning
-from pandarallel import pandarallel
+from warnings import resetwarnings
+from warnings import warn as warning
 
+import hubmapbags
+import magic
+import numpy as np
+import pandas as pd
+import tabulate
+from numpyencoder import NumpyEncoder
+from pandarallel import pandarallel
+from PIL import Image
 # from joblib import Parallel, delayed
 from tqdm import tqdm
-import json
-import argparse
-import sys
 
 try:
     from pandas.core.common import SettingWithCopyWarning
@@ -306,8 +307,8 @@ def create(
         print("Dataset is protected. Avoiding computation of download URLs.")
 
     ###############################################################################################################
-    import warnings
     import shutil
+    import warnings
 
     warnings.filterwarnings("ignore")
 
