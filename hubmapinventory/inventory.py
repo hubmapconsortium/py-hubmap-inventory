@@ -618,12 +618,7 @@ def create( hubmap_id, token=None, ncores=2, compute_uuids=False, dbgap_study_id
     dataset['uuid'] = metadata['uuid']
     dataset['status'] = metadata['status']
     dataset['dataset_type'] = get_dataset_type(hubmap_id, instance='prod', token=token)
-
-    if is_protected == 'true' and dataset['dataset_type'] == 'Primary':
-        dataset['is_protected'] = 'True'
-    else:
-        dataset['is_protected'] = 'False'
-
+    dataset['is_protected'] = is_protected
     dataset['directory'] = directory
 
     if 'doi_url' in metadata.keys():
