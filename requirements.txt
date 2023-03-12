@@ -8,3 +8,7 @@ pandas
 hashlib
 pandarallel
 tqdm
+isort
+flake8
+coverage
+
