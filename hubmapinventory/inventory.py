@@ -64,7 +64,7 @@ def create(
     global directory
     directory = hubmapbags.get_directory(hubmap_id, instance="prod", token=token)
     is_protected = hubmapbags.apis.is_protected(hubmap_id, instance="prod", token=token)
-    hubmap_uuid = metadata["hubmap_uuid"]
+    hubmap_uuid = metadata["uuid"]
 
     if directory[-1] == "/":
         directory = directory[:-1]
