@@ -16,17 +16,20 @@ for assay_type in assay_types:
     datasets = hubmapbags.apis.get_hubmap_ids(assay_type, token=token)
 
     for dataset in datasets:
-        if (
-            dataset["status"] == "Published"
-            and not dataset["is_protected"]
-            and dataset["is_primary"]
-        ):
-            df = hubmapinventory.inventory.create(
-                dataset["hubmap_id"],
-                token=token,
-                ncores=ncores,
-                compute_uuids=compute_uuids,
-                recompute_file_extension=True,
-            )
-        else:
-            print(f'Avoiding computation of dataset {dataset["hubmap_id"]}')
+        try:
+            if (
+                dataset["status"] == "Published"
+                and not dataset["is_protected"]
+                and dataset["is_primary"]
+            ):
+                df = hubmapinventory.inventory.create(
+                    dataset["hubmap_id"],
+                    token=token,
+                    ncores=ncores,
+                    compute_uuids=compute_uuids,
+                    recompute_file_extension=True,
+                )
+            else:
+                print(f'Avoiding computation of dataset {dataset["hubmap_id"]}.')
+        except:
+            print(f'Failed to process dataset {dataset["hubmap_id"]}.')
