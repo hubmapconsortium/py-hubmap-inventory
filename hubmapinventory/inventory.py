@@ -1,24 +1,12 @@
-import argparse
 import datetime
-import fnmatch
-import glob
 import hashlib
 import json
-import math
 import os
 import os.path
-import pathlib
-import pickle
 import shutil
-import subprocess
-import sys
-import time
 import uuid
 import warnings
-from datetime import date
 from pathlib import Path
-from warnings import resetwarnings
-from warnings import warn as warning
 
 import hubmapbags
 import magic
@@ -338,7 +326,6 @@ def create(
         print("Dataset is protected. Avoiding computation of download URLs.")
 
     ###############################################################################################################
-    import shutil
     import warnings
 
     warnings.filterwarnings("ignore")
