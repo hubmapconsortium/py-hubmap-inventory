@@ -64,6 +64,7 @@ def create(
     global directory
     directory = hubmapbags.get_directory(hubmap_id, instance="prod", token=token)
     is_protected = hubmapbags.apis.is_protected(hubmap_id, instance="prod", token=token)
+    hubmap_uuid = metadata["hubmap_uuid"]
 
     if directory[-1] == "/":
         directory = directory[:-1]
@@ -721,6 +722,14 @@ def create(
     __pprint(f"Populating data format with EDAM ontology")
     print("This has not been implemented yet.")
     df["data_format"] = None
+    df.to_csv(output_filename, sep="\t", index=False)
+
+    ###############################################################################################################
+    __pprint(f"Populating HuBMAP ID and UUID")
+    df["dataset_id"] = hubmap_id
+    df["dataset_uuid"] = hubmap_uuid
+    df.to_csv(output_filename, sep="\t", index=False)
+    df = df.drop(["dataset_id", "dataset_uuid"], axis=1)
 
     ###############################################################################################################
     __pprint("Computing dataset level statistics")
