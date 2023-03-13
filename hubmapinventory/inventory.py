@@ -729,6 +729,7 @@ def create(
     df["dataset_id"] = hubmap_id
     df["dataset_uuid"] = hubmap_uuid
     df.to_csv(output_filename, sep="\t", index=False)
+    print("Done populating dataframe.")
     df = df.drop(["dataset_id", "dataset_uuid"], axis=1)
 
     ###############################################################################################################
