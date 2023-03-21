@@ -16,7 +16,6 @@ import tabulate
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
 from PIL import Image
-
 # from joblib import Parallel, delayed
 from tqdm import tqdm
 
@@ -795,6 +794,10 @@ def create(
             ensure_ascii=False,
             cls=NumpyEncoder,
         )
+
+    # compressed
+    with gzip.open(f"{output_filename}.gz", "wt") as f:
+        f.write(str(dataset))
 
     print("\nDone\n")
 
