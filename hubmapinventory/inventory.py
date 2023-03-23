@@ -7,7 +7,6 @@ import shutil
 import uuid
 import warnings
 from pathlib import Path
-
 import hubmapbags
 import magic
 import numpy as np
@@ -324,6 +323,7 @@ def create(
         df.to_csv(output_filename, sep="\t", index=False)
     else:
         print("Dataset is protected. Avoiding computation of download URLs.")
+        df["download_url"] = None
 
     ###############################################################################################################
     import warnings
@@ -659,8 +659,15 @@ def create(
     ###############################################################################################################
     if dbgap_study_id:
         __pprint(f"Populating dbGap study ID {dbgap_study_id}")
+        if not "dbgap_study_id" in df.keys():
+            print("Populating dataframe")
+            df.loc[df["extension"] == ".fastq.gz", "dbgap_study_id"] = dbgap_study_id
+        else:
+            print("Column already populated. Skipping computation.")
     else:
         df["dbgap_study_id"] = None
+
+    df.to_csv(output_filename, sep="\t", index=False)
 
     ###############################################################################################################
     __pprint(f"Populating file format with EDAM ontology")
