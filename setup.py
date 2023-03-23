@@ -8,4 +8,5 @@ setup(
     author="Ivan Cao-Berg",
     author_email="icaoberg@psc.edu",
     install_requires=["pandas", "numpy", "tabulate", "pandarallel", "tqdm"],
+    packages=["hubmapinventory"],
 )
