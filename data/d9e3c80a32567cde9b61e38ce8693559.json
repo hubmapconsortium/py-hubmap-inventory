@@ -18,9 +18,13 @@
     "is_protected": "False",
     "manifest": [
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/IMS-positive-metadata.tsv",
             "extension": ".tsv",
+            "file_format": null,
             "file_uuid": "ffff6188db8f4de80776e938182e4127",
+            "fileformat": "http://edamontology.org/format_3475",
             "filename": "IMS-positive-metadata.tsv",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/IMS-positive-metadata.tsv",
@@ -32,9 +36,13 @@
             "size": 956
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/csv/VAN0005-RK-4-172-IMS_PosMode_columnar.csv",
             "extension": ".csv",
+            "file_format": null,
             "file_uuid": "ffff949ca02828e61ae13d7fce784ad6",
+            "fileformat": "http://edamontology.org/format_3752",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_columnar.csv",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/csv/VAN0005-RK-4-172-IMS_PosMode_columnar.csv",
@@ -46,9 +54,13 @@
             "size": 107033869
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/metadata/VAN0005-RK-4-172-IMS_PosMode_meta.json",
             "extension": ".json",
+            "file_format": null,
             "file_uuid": "ffff9d6a8a1588d972169a47435b1458",
+            "fileformat": "http://edamontology.org/format_3464",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_meta.json",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/metadata/VAN0005-RK-4-172-IMS_PosMode_meta.json",
@@ -60,9 +72,13 @@
             "size": 2917
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/metadata/VAN0005-RK-4-172-IMS_PosMode_tform_to_microscopy.txt",
             "extension": ".txt",
+            "file_format": null,
             "file_uuid": "ffff0d2d5fbe80371661c65710b539f2",
+            "fileformat": "http://edamontology.org/data_3671",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_tform_to_microscopy.txt",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/metadata/VAN0005-RK-4-172-IMS_PosMode_tform_to_microscopy.txt",
@@ -74,9 +90,13 @@
             "size": 34
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/VAN0005-RK-4-172-IMS_PosMode_multilayer.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffbff1b12dd19819a887f9262a798e",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_multilayer.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/VAN0005-RK-4-172-IMS_PosMode_multilayer.ome.tiff",
@@ -88,9 +108,13 @@
             "size": 983708212
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz731.606.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff23b1c8355f0de0db4e49196d4884",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz731.606.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz731.606.ome.tiff",
@@ -102,9 +126,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz835.666.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffe76b6ae5102ee32d1c05b71cf5cd",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz835.666.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz835.666.ome.tiff",
@@ -116,9 +144,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz822.541.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffbf2c97e66992aa81cdc31461c382",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz822.541.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz822.541.ome.tiff",
@@ -130,9 +162,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz753.588.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff01f121b2018be908f4e79e5d4324",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz753.588.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz753.588.ome.tiff",
@@ -144,9 +180,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz701.559.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff7a5c0d8146aacaaea5c8d39cab2e",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz701.559.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz701.559.ome.tiff",
@@ -158,9 +198,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz762.483.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffc32a1427e408e82131ebaf75d77a",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz762.483.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz762.483.ome.tiff",
@@ -172,9 +216,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz760.585.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "fffff3bd0e6c75341987ce0ced34ddc8",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz760.585.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz760.585.ome.tiff",
@@ -186,9 +234,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz805.679.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff4370efbfd2adee2c631620922622",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz805.679.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz805.679.ome.tiff",
@@ -200,9 +252,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz748.585.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff4732e90c1c10ef603d145b8d6c86",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz748.585.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz748.585.ome.tiff",
@@ -214,9 +270,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz759.638.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff13ebef6c2d71e74dcd14cf022779",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz759.638.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz759.638.ome.tiff",
@@ -228,9 +288,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz826.572.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff8542d12c544c08efb2abfdecb6c4",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz826.572.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz826.572.ome.tiff",
@@ -242,9 +306,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz818.546.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffdc1694fb3b21986a6ff3fbdd2e79",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz818.546.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz818.546.ome.tiff",
@@ -256,9 +324,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz729.591.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffacbba8473a50adc66abc65da534b",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz729.591.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz729.591.ome.tiff",
@@ -270,9 +342,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz725.557.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff4e80a01f8cf6ae5f6dd58ef067da",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz725.557.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz725.557.ome.tiff",
@@ -284,9 +360,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz796.585.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffde041845b7b6cbe6ec5757a4ba69",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz796.585.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz796.585.ome.tiff",
@@ -298,9 +378,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz741.531.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff21f25419bdfc46e55b39bccff987",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz741.531.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz741.531.ome.tiff",
@@ -312,9 +396,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz834.601.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff97db3de3de54b770bf56c32d3efa",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz834.601.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz834.601.ome.tiff",
@@ -326,9 +414,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz810.601.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffa3783457f32a144bf477dff0c3b1",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz810.601.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz810.601.ome.tiff",
@@ -340,9 +432,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz782.569.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff23a79a67e20a75493fb0e3aa5a34",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz782.569.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz782.569.ome.tiff",
@@ -354,9 +450,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz797.593.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "fffffcaaaf39c9c12e1e811b5466a41c",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz797.593.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz797.593.ome.tiff",
@@ -368,9 +468,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz853.656.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff2a3b91bcc12b5c815471fb13c388",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz853.656.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz853.656.ome.tiff",
@@ -382,9 +486,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz734.569.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff7fbdd3d4331bfb991727a864d716",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz734.569.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz734.569.ome.tiff",
@@ -396,9 +504,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz833.711.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff51731901f25350dcb3017d1c4dfb",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz833.711.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz833.711.ome.tiff",
@@ -410,9 +522,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz787.669.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff80a14eab7a59ce20b4c3c692646b",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz787.669.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz787.669.ome.tiff",
@@ -424,9 +540,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz754.538.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff83b54ccc3795be4ff9fbc8ec20d6",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz754.538.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz754.538.ome.tiff",
@@ -438,9 +558,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz756.551.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffdd46bf4f8633cf38b90c9a3939b1",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz756.551.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz756.551.ome.tiff",
@@ -452,9 +576,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz730.538.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffd901fa4aaa35321cc16091cb2b5c",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz730.538.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz730.538.ome.tiff",
@@ -466,9 +594,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz837.682.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff9c144e13b9195758c85a4400195d",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz837.682.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz837.682.ome.tiff",
@@ -480,9 +612,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz808.585.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "fffff759ab7e48ad3dfd8f305d93e7b0",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz808.585.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz808.585.ome.tiff",
@@ -494,9 +630,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz801.684.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffcccba3f5a9b88aadec7b067c9a0e",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz801.684.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz801.684.ome.tiff",
@@ -508,9 +648,13 @@
             "size": 16127434
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz846.541.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffa00a8dc909a797f1b9fc1c7fd232",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz846.541.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz846.541.ome.tiff",
@@ -522,9 +666,13 @@
             "size": 16127425
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz784.585.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffba5943002694a782a10d52f1f92b",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz784.585.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz784.585.ome.tiff",
@@ -536,9 +684,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz804.554.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff2ddae9dd7845fce5a9a3aa12e178",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz804.554.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz804.554.ome.tiff",
@@ -550,9 +702,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz824.557.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff23cacc448de8dec5031050f3663d",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz824.557.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz824.557.ome.tiff",
@@ -564,9 +720,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz799.669.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff340dfb4faf18279be68175f6ae59",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz799.669.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz799.669.ome.tiff",
@@ -578,9 +738,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz848.557.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff29449449ad1ab5b7602d82464f2f",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz848.557.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz848.557.ome.tiff",
@@ -592,9 +756,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz809.651.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffd899c19c4bcabb8a738c22cdc20a",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz809.651.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz809.651.ome.tiff",
@@ -606,9 +774,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz806.569.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffda87e7594b84910fdd70d9c1bcef",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz806.569.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz806.569.ome.tiff",
@@ -620,9 +792,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz746.569.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffad978af38111ca0178454dbf6ae1",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz746.569.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz746.569.ome.tiff",
@@ -634,9 +810,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz772.525.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff06ce94363266c016aecc155fb30c",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz772.525.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz772.525.ome.tiff",
@@ -648,9 +828,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz758.569.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffe1eee66075e7563aed1b6cd5dc4a",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz758.569.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz758.569.ome.tiff",
@@ -662,9 +846,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz744.554.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffd1f5d04150bb7fe05f819097620b",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz744.554.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz744.554.ome.tiff",
@@ -676,9 +864,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz774.601.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff9387c330ae11cc02f8b4e00c4525",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz774.601.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz774.601.ome.tiff",
@@ -690,9 +882,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz732.554.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffb835f15f669590808983be8962f0",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz732.554.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz732.554.ome.tiff",
@@ -704,9 +900,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz757.622.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff6d23d6d928183e71b510513841b2",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz757.622.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz757.622.ome.tiff",
@@ -718,9 +918,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz825.625.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff5c8cd314b9c2f5d03fc12c9d47f4",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz825.625.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz825.625.ome.tiff",
@@ -732,9 +936,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz813.684.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffa3d1a1b403d21f68693d42fa261a",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz813.684.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz813.684.ome.tiff",
@@ -746,9 +954,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz717.591.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff69bc0eb1080a4df60ff9c671cb13",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz717.591.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz717.591.ome.tiff",
@@ -760,9 +972,13 @@
             "size": 16127434
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz820.525.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff77a173bab0478468abf7564aca2e",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz820.525.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz820.525.ome.tiff",
@@ -774,9 +990,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz794.606.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff18518429727d386372695af85f23",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz794.606.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz794.606.ome.tiff",
@@ -788,9 +1008,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz798.541.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff2a400b2c95571ee6de0f31df5da4",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz798.541.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz798.541.ome.tiff",
@@ -802,9 +1026,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz780.551.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffc0f2e1a8e0a314d53984e35030ef",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz780.551.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz780.551.ome.tiff",
@@ -816,9 +1044,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz703.575.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff72a360164c22bb4896fa0fb553df",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz703.575.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz703.575.ome.tiff",
@@ -830,9 +1062,13 @@
             "size": 16127430
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz786.601.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffffaa4b40d39d085604ef09e9d6543d",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz786.601.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz786.601.ome.tiff",
@@ -844,9 +1080,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz720.554.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff2da7b9dfdf9af22ed0cf0a59dc9a",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz720.554.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz720.554.ome.tiff",
@@ -858,9 +1098,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz706.538.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff563958a38389ef69b6d55ea84e12",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz706.538.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz706.538.ome.tiff",
@@ -872,9 +1116,13 @@
             "size": 16127429
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz781.619.ome.tiff",
             "extension": ".ome.tif",
+            "file_format": null,
             "file_uuid": "ffff8312813dee3c17353eae04528abe",
+            "fileformat": "http://edamontology.org/format_3727",
             "filename": "VAN0005-RK-4-172-IMS_PosMode_mz781.619.ome.tiff",
             "filetype": "images",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/ometiffs/separate/VAN0005-RK-4-172-IMS_PosMode_mz781.619.ome.tiff",
@@ -886,9 +1134,13 @@
             "size": 16127431
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/imzML/VAN0005-RK-4-172-IMS_PosMode.imzML",
             "extension": ".imzML",
+            "file_format": null,
             "file_uuid": "ffffb3a12f6e9e339c51ba4ff576b3e6",
+            "fileformat": null,
             "filename": "VAN0005-RK-4-172-IMS_PosMode.imzML",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/imzML/VAN0005-RK-4-172-IMS_PosMode.imzML",
@@ -900,9 +1152,13 @@
             "size": 593113186
         },
         {
+            "data_format": null,
+            "dbgap_study_id": null,
             "download_url": "https://g-d00e7b.09193a.5898.dn.glob.us/d9e3c80a32567cde9b61e38ce8693559/imzML/VAN0005-RK-4-172-IMS_PosMode.ibd",
             "extension": ".ibd",
+            "file_format": null,
             "file_uuid": "ffff5f327605bd975f600fab95f03be9",
+            "fileformat": "http://edamontology.org/format_3839",
             "filename": "VAN0005-RK-4-172-IMS_PosMode.ibd",
             "filetype": "other",
             "fullpath": "/hive/hubmap/data/public/d9e3c80a32567cde9b61e38ce8693559/imzML/VAN0005-RK-4-172-IMS_PosMode.ibd",
