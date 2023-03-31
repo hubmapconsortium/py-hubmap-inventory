@@ -14,6 +14,7 @@ setup(
         "pandarallel",
         "tqdm",
         "numpyencoder",
+        "python-magic",
     ],
     packages=["hubmapinventory"],
 )
