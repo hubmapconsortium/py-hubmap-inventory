@@ -7,6 +7,13 @@ setup(
     url="https://github.com/hubmapconsortium/hubmap-inventory",
     author="Ivan Cao-Berg",
     author_email="icaoberg@psc.edu",
-    install_requires=["pandas", "numpy", "tabulate", "pandarallel", "tqdm"],
+    install_requires=[
+        "pandas",
+        "numpy",
+        "tabulate",
+        "pandarallel",
+        "tqdm",
+        "numpyencoder",
+    ],
     packages=["hubmapinventory"],
 )
