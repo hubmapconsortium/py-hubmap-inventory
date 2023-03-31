@@ -8,14 +8,13 @@ import uuid
 import warnings
 from pathlib import Path
 import hubmapbags
-import magic
+import magic  # pyton-magic
+import gzip
 import numpy as np
 import pandas as pd
 import tabulate
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
-from PIL import Image
-# from joblib import Parallel, delayed
 from tqdm import tqdm
 
 try:
@@ -659,11 +658,8 @@ def create(
     ###############################################################################################################
     if dbgap_study_id:
         __pprint(f"Populating dbGap study ID {dbgap_study_id}")
-        if not "dbgap_study_id" in df.keys():
-            print("Populating dataframe")
-            df.loc[df["extension"] == ".fastq.gz", "dbgap_study_id"] = dbgap_study_id
-        else:
-            print("Column already populated. Skipping computation.")
+        print("Populating dataframe")
+        df.loc[df["extension"] == ".fastq.gz", "dbgap_study_id"] = dbgap_study_id
     else:
         df["dbgap_study_id"] = None
 
