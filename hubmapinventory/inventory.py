@@ -49,6 +49,25 @@ def create(
     recompute_file_extension=False,
     debug=False,
 ):
+    """
+    Main function that creates an inventory.
+
+    :param hubmap_id: valid HuBMAP ID
+    :rtype hubmap_id: string
+    :param token: a valid HuBMAP token
+    :rtype token: string
+    :param ncores: Number of cores (number of workers)
+    :rtype ncores: int
+    :param compute_uuids: True if file UUIDs are to be computed
+    :rtype compute_uuids: bool
+    :param dbgap_study_id: a valid dbGaP study ID
+    :rtype dbgap_study_id: string
+    :param recompute_file_extension: True if file extensions are to be recomputed
+    :rtype recompute_file_extension: bool
+    :param debug: debug flag
+    :rtype debug: bool
+    """
+
     __pprint(f"Attempting to process dataset with dataset ID {hubmap_id}")
 
     if dbgap_study_id:
