@@ -6,6 +6,14 @@ The inventory is composed of three files
 * a TSV with all file level features
 * a JSON file with basic metadata information and file manifest
 * a compressed JSON file
+
+## Before you continue...
+Read this
+
+* this package needs access to the file system.
+* protected and public published datasets can be processed on `HIVE` by the `hive` user
+* public published datasets can be processed on `Bridges2` by any user (data is public)
+* there is a bottleneck associated with the maximum number of files that can be processed at once. The magic number is `ncores = 25`.
 ## About the JSON file
 The JSON file is a dictionary style structure with dataset and file level information. The keys of this dictionary are
 
