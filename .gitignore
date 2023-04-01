@@ -5,7 +5,8 @@ data/
 *.out
 *.error
 dist/
-build
+build/
 hubmap_inventory.egg-info/
 hubmapbaginventory.egg-info/
 .ipynb_checkpoints/
+hubmapinventory/__pycache__/
