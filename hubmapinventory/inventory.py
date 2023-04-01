@@ -6,6 +6,7 @@ import os.path
 import shutil
 import uuid
 import warnings
+import typing
 from pathlib import Path
 import hubmapbags
 import magic  # pyton-magic
@@ -26,14 +27,16 @@ except:
 
 
 ###############################################################################################################
-def __pprint(msg):
+def __pprint(msg: str):
     row = len(msg)
     h = "".join(["+"] + ["-" * row] + ["+"])
     result = "\n" + h + "\n" "|" + msg + "|" "\n" + h
     print(result)
 
 
-def __update_dataframe(dataset, temp, key):
+def __update_dataframe(
+    dataset: pd.DataFrame, temp: pd.DataFrame, key: str
+) -> pd.DataFrame:
     for index, datum in temp.iterrows():
         dataset.loc[index, key] = temp.loc[index, key]
     return dataset
@@ -41,14 +44,14 @@ def __update_dataframe(dataset, temp, key):
 
 ###############################################################################################################
 def create(
-    hubmap_id,
-    token=None,
-    ncores=2,
-    compute_uuids=False,
-    dbgap_study_id=None,
-    recompute_file_extension=False,
-    debug=False,
-):
+    hubmap_id: str,
+    dbgap_study_id: str | None,
+    token: str | None,
+    ncores: int = 2,
+    compute_uuids: bool = False,
+    recompute_file_extension: bool = False,
+    debug: bool = False,
+) -> pd.DataFrame:
     """
     Main function that creates an inventory.
 
@@ -140,11 +143,11 @@ def create(
     ###############################################################################################################
     __pprint("Get file extensions")
 
-    def __get_relative_path(full_path):
+    def __get_relative_path(full_path: str) -> str:
         answer = str(full_path).replace(f"{directory}/", "")
         return answer
 
-    def __get_file_extension(filename):
+    def __get_file_extension(filename: str) -> str:
         extension = Path(filename).suffix
 
         if extension == ".tiff" or extension == ".tif":
@@ -178,7 +181,7 @@ def create(
     ###############################################################################################################
     __pprint("Get file names")
 
-    def get_filename(filename):
+    def get_filename(filename: str) -> str:
         return Path(filename).stem + Path(filename).suffix
 
     if "filename" not in df.keys():
@@ -199,7 +202,7 @@ def create(
     ###############################################################################################################
     __pprint("Computing file types")
 
-    def __get_file_type(extension):
+    def __get_file_type(extension: str) -> str:
         try:
             images = {
                 ".tiff",
@@ -243,7 +246,7 @@ def create(
     ###############################################################################################################
     __pprint("Get file creation date")
 
-    def __get_file_creation_date(filename):
+    def __get_file_creation_date(filename: str) -> str:
         t = os.path.getmtime(str(filename))
         return str(datetime.datetime.fromtimestamp(t))
 
@@ -271,7 +274,7 @@ def create(
     ###############################################################################################################
     __pprint("Get file size")
 
-    def __get_file_size(filename):
+    def __get_file_size(filename: str) -> int:
         return Path(filename).stat().st_size
 
     if "size" not in df.keys():
@@ -292,7 +295,7 @@ def create(
     ###############################################################################################################
     __pprint("Get mime-type")
 
-    def __get_mime_type(filename):
+    def __get_mime_type(filename: str) -> str:
         mime = magic.Magic(mime=True)
         return mime.from_file(filename)
 
@@ -314,7 +317,7 @@ def create(
     ###############################################################################################################
     __pprint("Get download link for each file")
 
-    def __get_url(filename):
+    def __get_url(filename: str) -> str:
         filename = str(filename)
         return filename.replace(
             "/hive/hubmap/data/public", "https://g-d00e7b.09193a.5898.dn.glob.us"
@@ -350,7 +353,7 @@ def create(
 
     __pprint("Computing MD5 checksums")
 
-    def __compute_md5sum(filename):
+    def __compute_md5sum(filename: str) -> str:
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -422,7 +425,7 @@ def create(
     ###############################################################################################################
     __pprint("Computing SHA256 checksums")
 
-    def __compute_sha256sum(filename):
+    def __compute_sha256sum(filename: str) -> str:
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -497,7 +500,13 @@ def create(
     ###############################################################################################################
     import requests
 
-    def __generate(hubmap_id, df, instance="prod", token=None, debug=False):
+    def __generate(
+        hubmap_id: str,
+        df: pd.DataFrame,
+        token: str | None,
+        instance: str = "prod",
+        debug: bool = False,
+    ) -> pd.DataFrame:
         """
         Main function that generates UUIDs using the uuid-api.
         """
@@ -512,7 +521,6 @@ def create(
         )
 
         URL = "https://uuid.api.hubmapconsortium.org/hmuuid/"
-        # URL = 'https://uuid-api.test.hubmapconsortium.org/hmuuid/'
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0",
             "Authorization": "Bearer " + token,
@@ -604,7 +612,9 @@ def create(
 
         return df
 
-    def __populate_local_file_with_remote_uuids(df, uuids):
+    def __populate_local_file_with_remote_uuids(
+        df: pd.DataFrame, uuids: dict
+    ) -> pd.DataFrame:
         """
         Helper function that populates (but does not generate) a local pickle file with remote UUIDs.
         """
@@ -687,7 +697,7 @@ def create(
     ###############################################################################################################
     __pprint(f"Populating file format with EDAM ontology")
 
-    def __get_file_format(extension):
+    def __get_file_format(extension: str) -> str | None:
         fileformats = {
             ".ome.tiff": "http://edamontology.org/format_3727",
             ".ome.tif": "http://edamontology.org/format_3727",
@@ -757,10 +767,10 @@ def create(
     __pprint("Computing dataset level statistics")
     import humanize
 
-    def get_url(filename):
+    def get_url(filename: str) -> str:
         return filename.replace("/bil/data/", "https://download.brainimagelibrary.org/")
 
-    def get_dataset_type(hubmap_id, instance="prod", token=None):
+    def __get_dataset_type(hubmap_id: str, token: None | str, instance: str = "prod"):
         metadata = hubmapbags.apis.get_dataset_info(
             hubmap_id, instance="prod", token=token
         )
@@ -772,7 +782,7 @@ def create(
         else:
             return "Unknown"
 
-    def generate_dataset_uuid(directory):
+    def generate_dataset_uuid(directory: str) -> str:
         if directory[-1] == "/":
             directory = directory[:-1]
 
@@ -782,7 +792,9 @@ def create(
     dataset["hubmap_id"] = hubmap_id
     dataset["uuid"] = metadata["uuid"]
     dataset["status"] = metadata["status"]
-    dataset["dataset_type"] = get_dataset_type(hubmap_id, instance="prod", token=token)
+    dataset["dataset_type"] = __get_dataset_type(
+        hubmap_id, instance="prod", token=token
+    )
     dataset["is_protected"] = is_protected
     dataset["directory"] = directory
 
