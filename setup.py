@@ -15,7 +15,6 @@ setup(
         "tqdm",
         "numpyencoder",
         "python-magic",
-        "gzip",
     ],
     packages=["hubmapinventory"],
 )
