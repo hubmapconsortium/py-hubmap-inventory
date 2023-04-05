@@ -1,4 +1,4 @@
-# hubmap-inventory
+# py-hubmap-inventory
 Python package that creates an inventory for HuBMAP datasets.
 
 The inventory is composed of three files
