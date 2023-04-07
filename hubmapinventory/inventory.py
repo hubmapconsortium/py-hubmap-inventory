@@ -45,8 +45,8 @@ def __update_dataframe(
 ###############################################################################################################
 def create(
     hubmap_id: str,
-    dbgap_study_id: str | None,
-    token: str | None,
+    dbgap_study_id: str,
+    token: str,
     ncores: int = 2,
     compute_uuids: bool = False,
     recompute_file_extension: bool = False,
