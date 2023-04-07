@@ -50,6 +50,7 @@ def create(
     ncores: int = 2,
     compute_uuids: bool = False,
     recompute_file_extension: bool = False,
+    backup: bool = True,
     debug: bool = False,
 ) -> pd.DataFrame:
     """
@@ -832,6 +833,25 @@ def create(
     # compressed
     with gzip.open(f"{output_filename}.gz", "wt") as f:
         f.write(str(dataset))
+
+    backup_destination = "/hive/hubmap/bdbags/inventory"
+    if backup and Path(backup_destination).exists():
+        print(f"Backing up to {backup_destination}")
+        output_filename = f'{backup_destination}/{metadata["uuid"]}.json'
+        print(f"Saving results to {output_filename}")
+        with open(output_filename, "w") as ofile:
+            json.dump(
+                dataset,
+                ofile,
+                indent=4,
+                sort_keys=True,
+                ensure_ascii=False,
+                cls=NumpyEncoder,
+            )
+
+        # compressed
+        with gzip.open(f"{output_filename}.gz", "wt") as f:
+            f.write(str(dataset))
 
     print("\nDone\n")
 
