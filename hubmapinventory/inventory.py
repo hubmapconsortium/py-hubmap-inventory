@@ -698,7 +698,7 @@ def create(
     ###############################################################################################################
     __pprint(f"Populating file format with EDAM ontology")
 
-    def __get_file_format(extension: str) -> str | None:
+    def __get_file_format(extension: str) -> str:
         fileformats = {
             ".ome.tiff": "http://edamontology.org/format_3727",
             ".ome.tif": "http://edamontology.org/format_3727",
@@ -771,7 +771,7 @@ def create(
     def get_url(filename: str) -> str:
         return filename.replace("/bil/data/", "https://download.brainimagelibrary.org/")
 
-    def __get_dataset_type(hubmap_id: str, token: None | str, instance: str = "prod"):
+    def __get_dataset_type(hubmap_id: str, token: str, instance: str = "prod"):
         metadata = hubmapbags.apis.get_dataset_info(
             hubmap_id, instance="prod", token=token
         )
