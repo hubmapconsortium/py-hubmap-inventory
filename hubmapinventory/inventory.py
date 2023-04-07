@@ -837,7 +837,7 @@ def create(
     backup_destination = "/hive/hubmap/bdbags/inventory"
     if backup and Path(backup_destination).exists():
         print(f"Backing up to {backup_destination}")
-        output_filename = f'{data_directory}/{metadata["uuid"]}.tsv'
+        output_filename = f'{backup_destination}/{metadata["uuid"]}.tsv'
         df.to_csv(output_filename, sep="\t", index=False)
 
         output_filename = f'{backup_destination}/{metadata["uuid"]}.json'
