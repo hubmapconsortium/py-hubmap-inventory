@@ -504,7 +504,7 @@ def create(
     def __generate(
         hubmap_id: str,
         df: pd.DataFrame,
-        token: str | None,
+        token: str,
         instance: str = "prod",
         debug: bool = False,
     ) -> pd.DataFrame:
