@@ -43,6 +43,27 @@ def __update_dataframe(
 
 
 ###############################################################################################################
+def get(
+    hubmap_id: str,
+    token: str,
+) -> pd.DataFrame:
+    metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
+    file = f'{metadata["uuid"]}.tsv'
+
+    directory = ".data"
+    filename = f"{directory}/{file}"
+    if Path(filename).exists():
+        return pd.read_csv(filename, sep="\t", low_memory=False)
+
+    directory = ".data"
+    filename = f"{directory}/{file}"
+    if Path(filename).exists():
+        return pd.read_csv(filename, sep="\t", low_memory=False)
+
+    return pd.DataFrame()
+
+
+###############################################################################################################
 def create(
     hubmap_id: str,
     dbgap_study_id: str,
