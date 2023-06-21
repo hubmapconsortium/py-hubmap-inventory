@@ -25,6 +25,39 @@ try:
 except:
     warnings.filterwarnings("ignore")
 
+###############################################################################################################
+def evaluate(hubmap_id: str,
+    token: str,
+    debug: bool,
+) -> pd.DataFrame:)
+    '''
+    Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
+    '''
+    raise NotImplementedError
+
+    #either a dataframe or a JSON block with data
+    data = get(hubmap_id, token)
+
+    #create empty container
+    features = []
+
+    #computes first feature
+    features.append(__get_number_of_files(data))
+
+    return features
+
+#this is a metric of FAIRness
+def __get_number_of_files(data):
+    return None
+
+def __get_number_of_images(data):
+    return None
+
+def __get_number_of_sequences(data):
+    return None
+
+def __get_data_type(data):
+    return None
 
 ###############################################################################################################
 def __pprint(msg: str):
