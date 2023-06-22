@@ -28,8 +28,7 @@ except:
 ###############################################################################################################
 def evaluate(hubmap_id: str,
     token: str,
-    debug: bool,
-) -> pd.DataFrame:)
+    debug: bool)-> pd.DataFrame:
     '''
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
     '''
