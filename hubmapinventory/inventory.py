@@ -127,6 +127,15 @@ def __update_dataframe(
 
 
 ###############################################################################################################
+def today():
+    filename = '/hive/hubmap/bdbags/reports/today.tsv'
+    if Path(filename).exists():
+       df = pd.read_csv(filename, sep='\t')
+    else:
+       df = pd.DataFrame()
+
+    return df
+
 def get(hubmap_id: str, token: str,) -> pd.DataFrame:
     """
     Get a DataFrame from HubMap by its ID.
