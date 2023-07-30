@@ -5,10 +5,14 @@ import json
 import os
 import os.path
 import shutil
-import typing
 import uuid
 import warnings
 from pathlib import Path
+
+import humanize
+import requests
+
+warnings.filterwarnings("ignore")
 
 import hubmapbags
 import magic  # pyton-magic
@@ -538,10 +542,6 @@ def create(
         df["download_url"] = None
 
     ###############################################################################################################
-    import warnings
-
-    warnings.filterwarnings("ignore")
-
     __pprint("Computing MD5 checksums")
 
     def __compute_md5sum(filename: str) -> str:
@@ -770,8 +770,6 @@ def create(
             print("No files left to process")
 
     ###############################################################################################################
-    import requests
-
     def __generate(
         hubmap_id: str,
         df: pd.DataFrame,
@@ -1121,7 +1119,6 @@ def create(
 
     ###############################################################################################################
     __pprint("Computing dataset level statistics")
-    import humanize
 
     def __get_dataset_type(hubmap_id: str, token: str, instance: str = "prod"):
         """
