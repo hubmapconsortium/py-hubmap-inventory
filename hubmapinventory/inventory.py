@@ -545,6 +545,26 @@ def create(
     __pprint("Computing MD5 checksums")
 
     def __compute_md5sum(filename: str) -> str:
+        """
+        Compute the MD5 checksum of a file.
+
+        This method computes the MD5 checksum of the contents of the file specified
+        by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The MD5 checksum of the file as a hexadecimal string.
+        :rtype: str
+
+        :Example:
+
+        >>> file_path = "/path/to/file/example.txt"
+        >>> md5_checksum = __compute_md5sum(file_path)
+        >>> print(md5_checksum)
+        5eb63bbbe01eeed093cb22bb8f5acdc3
+        """
+
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -561,6 +581,27 @@ def create(
         return md5.hexdigest()
 
     def __get_chunk_size(dataframe):
+        """
+        Get the chunk size based on the length of a DataFrame.
+
+        This method returns a chunk size based on the length of the input 'dataframe'.
+        The chunk size is chosen to optimize processing performance.
+
+        :param dataframe: The DataFrame for which the chunk size is calculated.
+        :type dataframe: pandas.DataFrame
+
+        :return: The chunk size to be used for processing the DataFrame.
+        :rtype: int
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+        >>> chunk_size = __get_chunk_size(df)
+        >>> print(chunk_size)
+        10
+        """
+
         if len(dataframe) < 1000:
             return 10
         elif len(dataframe) < 10000:
