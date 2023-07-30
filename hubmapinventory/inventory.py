@@ -658,6 +658,26 @@ def create(
     __pprint("Computing SHA256 checksums")
 
     def __compute_sha256sum(filename: str) -> str:
+        """
+        Compute the SHA-256 checksum of a file.
+
+        This method computes the SHA-256 checksum of the contents of the file specified
+        by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The SHA-256 checksum of the file as a hexadecimal string.
+        :rtype: str
+
+        :Example:
+
+        >>> file_path = "/path/to/file/example.txt"
+        >>> sha256_checksum = __compute_sha256sum(file_path)
+        >>> print(sha256_checksum)
+        a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6
+        """
+
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -673,6 +693,26 @@ def create(
         return sha256.hexdigest()
 
     def __get_chunk_size(dataframe):
+        """
+        Get the chunk size based on the length of a DataFrame.
+
+        This method returns a chunk size based on the length of the input 'dataframe'.
+        The chunk size is chosen to optimize processing performance.
+
+        :param dataframe: The DataFrame for which the chunk size is calculated.
+        :type dataframe: pandas.DataFrame
+
+        :return: The chunk size to be used for processing the DataFrame.
+        :rtype: int
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+        >>> chunk_size = __get_chunk_size(df)
+        >>> print(chunk_size)
+        10
+        """
         if len(dataframe) < 1000:
             return 10
         elif len(dataframe) < 10000:
