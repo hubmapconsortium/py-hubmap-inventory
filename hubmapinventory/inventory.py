@@ -1123,10 +1123,35 @@ def create(
     __pprint("Computing dataset level statistics")
     import humanize
 
-    def get_url(filename: str) -> str:
-        return filename.replace("/bil/data/", "https://download.brainimagelibrary.org/")
-
     def __get_dataset_type(hubmap_id: str, token: str, instance: str = "prod"):
+        """
+        Get the dataset type (Primary, Derived, or Unknown) based on the HubMap ID.
+
+        This method retrieves the dataset information for the given 'hubmap_id' using the
+        HubMap APIs with the provided 'token' and 'instance'. It then determines the dataset
+        type based on the entity type of its direct ancestor.
+
+        :param hubmap_id: The ID of the HubMap dataset.
+        :type hubmap_id: str
+
+        :param token: The access token for authentication with the HubMap APIs.
+        :type token: str
+
+        :param instance: The instance to use for retrieving dataset information (default is "prod").
+        :type instance: str, optional
+
+        :return: The dataset type (Primary, Derived, or Unknown).
+        :rtype: str
+
+        :Example:
+
+        >>> hubmap_id = "abc123"
+        >>> token = "your_access_token"
+        >>> dataset_type = __get_dataset_type(hubmap_id, token)
+        >>> print(dataset_type)
+        Primary
+        """
+
         metadata = hubmapbags.apis.get_dataset_info(
             hubmap_id, instance="prod", token=token
         )
@@ -1139,6 +1164,25 @@ def create(
             return "Unknown"
 
     def generate_dataset_uuid(directory: str) -> str:
+        """
+        Generate a dataset UUID based on the directory path.
+
+        This method generates a dataset UUID using the uuid.uuid5 function with the
+        uuid.NAMESPACE_DNS namespace and the provided 'directory' path.
+
+        :param directory: The directory path for which the UUID will be generated.
+        :type directory: str
+
+        :return: The generated dataset UUID.
+        :rtype: str
+
+        :Example:
+
+        >>> directory_path = "/path/to/dataset/"
+        >>> dataset_uuid = generate_dataset_uuid(directory_path)
+        >>> print(dataset_uuid)
+        ddc3b1be-3aa6-537b-9f6c-5c03af02f7a5
+        """
         if directory[-1] == "/":
             directory = directory[:-1]
 
