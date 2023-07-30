@@ -464,6 +464,17 @@ def create(
     __pprint("Get mime-type")
 
     def __get_mime_type(filename: str) -> str:
+        """
+        Get the MIME type of a file.
+
+        This method retrieves the MIME type of a file specified by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The MIME type of the file.
+        :rtype: str
+        """
         mime = magic.Magic(mime=True)
         return mime.from_file(filename)
 
@@ -486,6 +497,18 @@ def create(
     __pprint("Get download link for each file")
 
     def __get_url(filename: str) -> str:
+        """
+        Get the URL corresponding to a filename.
+
+        This method converts a given 'filename' to its corresponding URL.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The URL corresponding to the file.
+        :rtype: str
+        """
+
         filename = str(filename)
         return filename.replace(
             "/hive/hubmap/data/public", "https://g-d00e7b.09193a.5898.dn.glob.us"
