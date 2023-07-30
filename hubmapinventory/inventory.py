@@ -431,6 +431,18 @@ def create(
     __pprint("Get file size")
 
     def __get_file_size(filename: str) -> int:
+        """
+        Get the size of a file in bytes.
+
+        This method retrieves the size of a file specified by its 'filename' in bytes.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The size of the file in bytes.
+        :rtype: int
+        """
+
         return Path(filename).stat().st_size
 
     if "size" not in df.keys():
