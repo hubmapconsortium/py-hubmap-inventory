@@ -1,16 +1,17 @@
 import datetime
+import gzip
 import hashlib
 import json
 import os
 import os.path
 import shutil
+import typing
 import uuid
 import warnings
-import typing
 from pathlib import Path
+
 import hubmapbags
 import magic  # pyton-magic
-import gzip
 import numpy as np
 import pandas as pd
 import tabulate
@@ -26,38 +27,40 @@ except:
     warnings.filterwarnings("ignore")
 
 ###############################################################################################################
-def evaluate(hubmap_id: str,
-    token: str,
-    debug: bool,
-) -> pd.DataFrame:)
-    '''
+def evaluate(hubmap_id: str, token: str, debug: bool,) -> pd.DataFrame:
+    """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
-    '''
+    """
     raise NotImplementedError
 
-    #either a dataframe or a JSON block with data
+    # either a dataframe or a JSON block with data
     data = get(hubmap_id, token)
 
-    #create empty container
+    # create empty container
     features = []
 
-    #computes first feature
+    # computes first feature
     features.append(__get_number_of_files(data))
 
     return features
 
-#this is a metric of FAIRness
+
+# this is a metric of FAIRness
 def __get_number_of_files(data):
     return None
+
 
 def __get_number_of_images(data):
     return None
 
+
 def __get_number_of_sequences(data):
     return None
 
+
 def __get_data_type(data):
     return None
+
 
 ###############################################################################################################
 def __pprint(msg: str):
@@ -70,16 +73,58 @@ def __pprint(msg: str):
 def __update_dataframe(
     dataset: pd.DataFrame, temp: pd.DataFrame, key: str
 ) -> pd.DataFrame:
+    """
+    Update a DataFrame with values from another DataFrame.
+
+    :param dataset: The DataFrame to be updated.
+    :type dataset: pd.DataFrame
+    :param temp: The DataFrame containing new values.
+    :type temp: pd.DataFrame
+    :param key: The column key to use for updating the 'dataset'.
+    :type key: str
+
+    :return: The updated DataFrame.
+    :rtype: pd.DataFrame
+
+    :Example:
+
+    >>> df1 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+    >>> df2 = pd.DataFrame({'B': [7, 8, 9]})
+    >>> key_column = 'B'
+    >>> updated_df = __update_dataframe(df1, df2, key_column)
+    >>> print(updated_df)
+       A  B
+    0  1  7
+    1  2  8
+    2  3  9
+    """
+
     for index, datum in temp.iterrows():
         dataset.loc[index, key] = temp.loc[index, key]
     return dataset
 
 
 ###############################################################################################################
-def get(
-    hubmap_id: str,
-    token: str,
-) -> pd.DataFrame:
+def get(hubmap_id: str, token: str,) -> pd.DataFrame:
+    """
+    Get a DataFrame from HubMap by its ID.
+
+    This function retrieves a DataFrame from the HubMap API using the provided
+    'hubmap_id' and 'token' for authentication. The DataFrame is cached locally
+    to improve subsequent retrieval speed.
+
+    :param hubmap_id: The ID of the HubMap dataset to retrieve.
+    :type hubmap_id: str
+
+    :param token: The access token for authentication with the HubMap API.
+    :type token: str
+
+    :return: The retrieved DataFrame.
+    :rtype: pd.DataFrame
+
+    :raises FileNotFoundError: If the requested file does not exist in the local cache.
+    """
+
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
     file = f'{metadata["uuid"]}.tsv'
 
