@@ -128,13 +128,32 @@ def __update_dataframe(
 
 ###############################################################################################################
 def today():
-    filename = '/hive/hubmap/bdbags/reports/today.tsv'
+    """
+    Read data from the 'today.tsv' file and return as a DataFrame.
+
+    This function reads data from the TSV file located at '/hive/hubmap/bdbags/reports/today.tsv'.
+    If the file exists, it reads its contents into a Pandas DataFrame; otherwise, it returns an empty DataFrame.
+
+    :return: The DataFrame containing data from the 'today.tsv' file (or an empty DataFrame if the file does not exist).
+    :rtype: pd.DataFrame
+
+    :Example:
+
+    >>> df = today()
+    >>> print(df)
+      Column1 Column2 Column3
+    0  value1  value2  value3
+    1  value4  value5  value6
+    """
+
+    filename = "/hive/hubmap/bdbags/reports/today.tsv"
     if Path(filename).exists():
-       df = pd.read_csv(filename, sep='\t')
+        df = pd.read_csv(filename, sep="\t")
     else:
-       df = pd.DataFrame()
+        df = pd.DataFrame()
 
     return df
+
 
 def get(hubmap_id: str, token: str,) -> pd.DataFrame:
     """
