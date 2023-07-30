@@ -925,7 +925,35 @@ def create(
         df: pd.DataFrame, uuids: dict
     ) -> pd.DataFrame:
         """
-        Helper function that populates (but does not generate) a local pickle file with remote UUIDs.
+        Populate (but does not generate) a local DataFrame with remote UUIDs.
+
+        This helper function populates a local DataFrame 'df' with UUIDs retrieved from
+        the 'uuids' dictionary. The 'uuids' dictionary should have the format:
+        {'file_uuid': ['uuid_1', 'uuid_2', ...], 'path': ['/path/to/file1.txt', '/path/to/file2.txt', ...]}
+
+        :param df: The DataFrame to be populated with UUIDs.
+        :type df: pd.DataFrame
+
+        :param uuids: A dictionary containing 'file_uuid' and 'path' keys with UUIDs and corresponding file paths.
+        :type uuids: dict
+
+        :return: The DataFrame with 'file_uuid' column populated with remote UUIDs (or None if 'uuids' is empty).
+        :rtype: pd.DataFrame or None
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'relative_path': ['file1.txt', 'file2.txt', 'file3.txt'],
+        ...                    'size': [100, 200, 300],
+        ...                    'sha256': ['sha256_1', 'sha256_2', 'sha256_3']})
+        >>> uuids = {'file_uuid': ['uuid_1', 'uuid_2', 'uuid_3'],
+        ...          'path': ['/path/to/file1.txt', '/path/to/file2.txt', '/path/to/file3.txt']}
+        >>> populated_df = __populate_local_file_with_remote_uuids(df, uuids)
+        >>> print(populated_df)
+        file_uuid full_path relative_path filename extension  file_type  size mime_type modification_time      md5      sha256 download_url
+        0   uuid_1    NaN       file1.txt    NaN      NaN       NaN        100  NaN       NaN                NaN      NaN   sha256_1    NaN
+        1   uuid_2    NaN       file2.txt    NaN      NaN       NaN        200  NaN       NaN                NaN      NaN   sha256_2    NaN
+        2   uuid_3    NaN       file3.txt    NaN      NaN       NaN        300  NaN       NaN                NaN      NaN   sha256_3    NaN
         """
 
         uuids = pd.DataFrame.from_dict(uuids)
@@ -1007,6 +1035,25 @@ def create(
     __pprint(f"Populating file format with EDAM ontology")
 
     def __get_file_format(extension: str) -> str:
+        """
+        Get the file format URL based on the file extension.
+
+        This method returns the URL representing the format of a file based on its 'extension'.
+
+        :param extension: The file extension (e.g., ".tif", ".csv", ".json").
+        :type extension: str
+
+        :return: The URL representing the format of the file (or None if the format is not recognized).
+        :rtype: str or None
+
+        :Example:
+
+        >>> extension = ".csv"
+        >>> format_url = __get_file_format(extension)
+        >>> print(format_url)
+        http://edamontology.org/format_3752
+        """
+
         fileformats = {
             ".ome.tiff": "http://edamontology.org/format_3727",
             ".ome.tif": "http://edamontology.org/format_3727",
