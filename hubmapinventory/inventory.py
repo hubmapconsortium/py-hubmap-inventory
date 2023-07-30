@@ -64,6 +64,24 @@ def __get_data_type(data):
 
 ###############################################################################################################
 def __pprint(msg: str):
+    """
+    Pretty-print a message enclosed in a horizontal line.
+
+    This method prints the input 'msg' with a horizontal line above and below
+    it to make it visually separated.
+
+    :param msg: The message to be pretty-printed.
+    :type msg: str
+
+    :Example:
+
+    >>> message = "Hello, Sphinx!"
+    >>> __pprint(message)
+    +--------------+
+    |Hello, Sphinx!|
+    +--------------+
+    """
+
     row = len(msg)
     h = "".join(["+"] + ["-" * row] + ["+"])
     result = "\n" + h + "\n" "|" + msg + "|" "\n" + h
@@ -282,6 +300,19 @@ def create(
     __pprint("Get file names")
 
     def get_filename(filename: str) -> str:
+        """
+        Get the base filename (without the directory path) from a given filename.
+
+        This method takes a full filename (including the directory path) as input
+        and returns only the base filename (i.e., without the directory path).
+
+        :param filename: The full filename including the directory path.
+        :type filename: str
+
+        :return: The base filename without the directory path.
+        :rtype: str
+        """
+
         return Path(filename).stem + Path(filename).suffix
 
     if "filename" not in df.keys():
@@ -303,6 +334,19 @@ def create(
     __pprint("Computing file types")
 
     def __get_file_type(extension: str) -> str:
+        """
+        Get the type of file based on its extension.
+
+        This method determines the type of file based on its extension.
+        It categorizes files as "images", "sequence", or "other".
+
+        :param extension: The file extension (e.g., ".jpg", ".txt").
+        :type extension: str
+
+        :return: The type of file ("images", "sequence", or "other").
+        :rtype: str
+        """
+
         try:
             images = {
                 ".tiff",
@@ -347,6 +391,18 @@ def create(
     __pprint("Get file creation date")
 
     def __get_file_creation_date(filename: str) -> str:
+        """
+        Get the creation date of a file.
+
+        This method retrieves the creation date of a file specified by its 'filename'.
+        The creation date is returned as a formatted string representing the date and time.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The creation date of the file as a formatted string.
+        :rtype: str
+        """
         t = os.path.getmtime(str(filename))
         return str(datetime.datetime.fromtimestamp(t))
 
