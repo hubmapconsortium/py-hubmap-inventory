@@ -780,7 +780,44 @@ def create(
         debug: bool = False,
     ) -> pd.DataFrame:
         """
-        Main function that generates UUIDs using the uuid-api.
+        Generate UUIDs using the uuid-api.
+
+        This method generates UUIDs for files in the input DataFrame 'df' that have
+        'file_uuid' values as NaN (null). The generated UUIDs are added to the DataFrame.
+
+        :param hubmap_id: The ID of the HubMap dataset.
+        :type hubmap_id: str
+
+        :param df: The DataFrame containing file information with 'file_uuid' column.
+        :type df: pd.DataFrame
+
+        :param token: The access token for authentication with the uuid-api.
+        :type token: str
+
+        :param instance: The instance to use for generating UUIDs (default is "prod").
+        :type instance: str, optional
+
+        :param debug: Enable debug mode for additional information (default is False).
+        :type debug: bool, optional
+
+        :return: The DataFrame with generated UUIDs added (or None if nothing to generate).
+        :rtype: pd.DataFrame or None
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'file_uuid': [None, None, None],
+        ...                    'relative_path': ['file1.txt', 'file2.txt', 'file3.txt'],
+        ...                    'size': [100, 200, 300],
+        ...                    'sha256': ['sha256_1', 'sha256_2', 'sha256_3']})
+        >>> hubmap_id = "abc123"
+        >>> token = "your_access_token"
+        >>> generated_df = __generate(hubmap_id, df, token)
+        >>> print(generated_df)
+        file_uuid relative_path  size    sha256
+        0   uuid_1    file1.txt     100     sha256_1
+        1   uuid_2    file2.txt     200     sha256_2
+        2   uuid_3    file3.txt     300     sha256_3
         """
 
         df = df[df["file_uuid"].isnull()]
