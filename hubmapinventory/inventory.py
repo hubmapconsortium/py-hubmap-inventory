@@ -18,10 +18,8 @@ import hubmapbags
 import magic  # pyton-magic
 import numpy as np
 import pandas as pd
-import tabulate
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
-from tqdm import tqdm
 
 try:
     from pandas.core.common import SettingWithCopyWarning
@@ -189,6 +187,20 @@ def get(hubmap_id: str, token: str,) -> pd.DataFrame:
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
     return pd.DataFrame()
+
+
+###############################################################################################################
+def get_sample_data():
+    """
+    Fetches sample data from a remote URL and returns it as a pandas DataFrame.
+
+    :return: The sample data in a DataFrame format.
+    :rtype: pandas.DataFrame
+    """
+
+    url = "https://raw.githubusercontent.com/hubmapconsortium/py-hubmap-inventory/master/data/today.tsv"
+    df = pd.read_csv(url, sep="\t")
+    return df
 
 
 ###############################################################################################################
