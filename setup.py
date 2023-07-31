@@ -14,7 +14,8 @@ setup(
         "pandarallel",
         "tqdm",
         "numpyencoder",
-        "python-magic",
+        "python-magic"
+        "humanize",
     ],
     packages=["hubmapinventory"],
 )
