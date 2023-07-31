@@ -1295,3 +1295,27 @@ def create(
     print("\nDone\n")
 
     return df
+    
+def get_data_type_frequency(df, other_limit=30):
+    '''
+    Input: data frame
+    Output: bar graph
+    '''
+    data_type_dict = df['data_type'].value_counts().to_dict()
+    other_value = sum(x for x in data_type_dict.values() if x < other_limit)
+
+    filtered_data_type_dict = {key: value for key, value in data_type_dict.items() if value >= other_limit}
+    filtered_data_type_dict['Others'] = other_value
+
+    return filtered_data_type_dict
+
+result = get_data_type_frequency(df)
+
+data_type_counts = pd.Series(result)
+plt.bar(data_type_counts.index, data_type_counts.values)
+plt.xlabel('Data Type')
+plt.ylabel('Frequency')
+plt.title('Frequency of Data Types')
+plt.xticks(rotation=90, fontsize=8)
+plt.figure(figsize=(40,24))
+plt.show()
