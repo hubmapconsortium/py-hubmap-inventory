@@ -1295,3 +1295,20 @@ def create(
     print("\nDone\n")
 
     return df
+
+def has_repeated_values(df, column_name):
+    """
+    Check if there are any repeated values in the specified column of a DataFrame.
+
+    Parameters:
+        df: The DataFrame to check.
+        column_name (str): The name of the column to check for repeated values.
+
+    Returns:
+        bool: True if there are any repeated values, False otherwise.
+    """
+
+    if column_name not in df.columns:
+        raise ValueError(f"Column '{column_name}' does not exist in the DataFrame.")
+
+    return df.duplicated(subset=[column_name]).any()
