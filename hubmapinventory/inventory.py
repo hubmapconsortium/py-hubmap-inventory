@@ -1294,4 +1294,7 @@ def create(
 
     print("\nDone\n")
 
+    def get_status_frequency(df)
+        status_counts = df['status'].value_counts().to_dict()
+        
     return df
