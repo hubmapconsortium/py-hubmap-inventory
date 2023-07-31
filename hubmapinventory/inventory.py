@@ -18,6 +18,9 @@ import hubmapbags
 import magic  # pyton-magic
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from datetime import date
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
 
@@ -1295,3 +1298,54 @@ def create(
     print("\nDone\n")
 
     return df
+###############################################################################################################
+frequency_dict = df['group_name'].value_counts().to_dict()
+
+def create_pie_chart(frequency_dict):
+    """
+    this function creates a visualization (pie chart) of the various contribution percentages from those listed in the group_name column.
+
+    """
+    labels = list(frequency_dict.keys())
+    values = list(frequency_dict.values())
+
+    # Calculate the total sum of values
+    total = sum(values)
+
+    # Calculate the percentage for each value
+    percentages = [(value / total) * 100 for value in values]
+
+    # Create a list to store labels and values for slices above 2%
+    labels_above_threshold = []
+    values_above_threshold = []
+
+    # Create a variable to store the sum of values below 2%
+    sum_below_threshold = 0
+
+    # Iterate over labels, values, and percentages
+    for label, value, percentage in zip(labels, values, percentages):
+        if percentage >= 2:
+            labels_above_threshold.append(label)
+            values_above_threshold.append(value)
+        else:
+            sum_below_threshold += value
+
+    # Append "Other" label and value for slices below 2%
+    if sum_below_threshold > 0:
+        labels_above_threshold.append("Other")
+        values_above_threshold.append(sum_below_threshold)
+
+    # Plot the pie chart with labels and values above the threshold using Seaborn
+    plt.figure(figsize=(8, 6))
+    sns.set_palette("pastel")
+    plt.pie(values_above_threshold, labels=labels_above_threshold, autopct='%1.1f%%', textprops={'fontsize': 7})
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
+    plt.title('Group Contribution Percentage')
+
+    today = date.today()
+    output_path = f'pie-chart-{today.strftime("%Y%m%d")}.png'
+    plt.savefig(output_path)
+    plt.show()
+
+# Call the function with your actual 'contributors' data
+create_pie_chart(frequency_dict)
