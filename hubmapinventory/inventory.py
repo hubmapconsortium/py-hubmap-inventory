@@ -130,7 +130,55 @@ def __update_dataframe(
     for index, datum in temp.iterrows():
         dataset.loc[index, key] = temp.loc[index, key]
     return dataset
+#############################################################################################################
 
+def create_group_name_chart(df):
+    frequency_dict = df["group_name"].value_counts().to_dict()
+def create_group_name_chart(df):
+    """
+    Generates a chart displaying the distribution of group names within the given DataFrame.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+def create_group_name_chart(df):
+    """
+    Generates a visual chart to showcase the distribution of group names within the provided DataFrame.
+
+    This function creates a bar chart displaying the frequency of each unique group name in the DataFrame.
+    The chart provides insight into the composition of groups present in the dataset.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be visualized.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+def create_group_name_chart(df):
+    """
+    Generate a bar chart displaying the distribution of group names within the given DataFrame.
+
+    This function creates a bar chart that visually represents the frequency of each unique group name
+    present in the provided DataFrame. It helps to visualize the distribution of groups in the dataset.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
+
+    Returns:
+    None
+
+    Example:
+    >>> data = pd.DataFrame({'Group': ['A', 'B', 'A', 'C', 'B', 'B', 'A', 'C']})
+    >>> create_group_name_chart(data)
+    """
+    # Implementation code here
+
+##################################################################################################################
 
 ###############################################################################################################
 def today():
