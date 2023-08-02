@@ -130,11 +130,15 @@ def __update_dataframe(
     for index, datum in temp.iterrows():
         dataset.loc[index, key] = temp.loc[index, key]
     return dataset
+
+
 #############################################################################################################
+
 
 def create_group_name_chart(df):
     frequency_dict = df["group_name"].value_counts().to_dict()
-    
+
+
 def create_group_name_chart(df):
     """
     Generates a chart displaying the distribution of group names within the given DataFrame.
@@ -146,6 +150,8 @@ def create_group_name_chart(df):
     None
     """
     # Implementation code here
+
+
 def create_group_name_chart(df):
     """
     Generates a visual chart to showcase the distribution of group names within the provided DataFrame.
@@ -160,6 +166,8 @@ def create_group_name_chart(df):
     None
     """
     # Implementation code here
+
+
 def create_group_name_chart(df):
     """
     Generate a bar chart displaying the distribution of group names within the given DataFrame.
@@ -179,6 +187,7 @@ def create_group_name_chart(df):
     """
     # Implementation code here
 
+
 ##################################################################################################################
 def create_data_type_plot(df, other_limit=30):
     result = get_data_type_frequency(df, other_limit=other_limit)
@@ -196,6 +205,7 @@ def create_data_type_plot(df, other_limit=30):
     plt.savefig(output_path)
     plt.show()
 
+
 def create_data_type_plot(df, other_limit=30):
     """
     Creates a plot to visualize the distribution of data types within the given DataFrame.
@@ -212,6 +222,7 @@ def create_data_type_plot(df, other_limit=30):
     """
     # Implementation code here
 
+
 def create_data_type_plot(df, other_limit=30):
     """
     Creates a bar plot to visualize the distribution of data types within the provided DataFrame.
@@ -227,6 +238,7 @@ def create_data_type_plot(df, other_limit=30):
     None
     """
     # Implementation code here
+
 
 def create_data_type_plot(df, other_limit=30):
     """
@@ -247,6 +259,7 @@ def create_data_type_plot(df, other_limit=30):
     >>> create_data_type_plot(data)
     """
     # Implementation code here
+
 
 ###############################################################################################################
 def today():
@@ -1495,7 +1508,6 @@ def get_data_type_frequency(df, other_limit=30):
     }
     filtered_data_type_dict["Others"] = other_value
     return filtered_data_type_dict
-
 
     labels = list(frequency_dict.keys())
     values = list(frequency_dict.values())
