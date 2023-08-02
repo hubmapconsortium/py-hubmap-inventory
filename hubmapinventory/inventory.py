@@ -18,6 +18,9 @@ import hubmapbags
 import magic  # pyton-magic
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from datetime import date
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
 
@@ -28,8 +31,13 @@ try:
 except:
     warnings.filterwarnings("ignore")
 
+
 ###############################################################################################################
-def evaluate(hubmap_id: str, token: str, debug: bool,) -> pd.DataFrame:
+def evaluate(
+    hubmap_id: str,
+    token: str,
+    debug: bool,
+) -> pd.DataFrame:
     """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
     """
@@ -153,7 +161,10 @@ def today():
     return df
 
 
-def get(hubmap_id: str, token: str,) -> pd.DataFrame:
+def get(
+    hubmap_id: str,
+    token: str,
+) -> pd.DataFrame:
     """
     Get a DataFrame from HubMap by its ID.
 
@@ -1292,30 +1303,82 @@ def create(
         with gzip.open(f"{output_filename}.gz", "wt") as f:
             f.write(str(dataset))
 
+    # Call the function with your actual 'contributors' data
+    create_group_name_chart(df)
     print("\nDone\n")
 
+    def get_status_frequency(df)
+        status_counts = df['status'].value_counts().to_dict()
+        
     return df
-    
+
+###############################################################################################################
 def get_data_type_frequency(df, other_limit=30):
-    '''
-    Input: data frame
-    Output: bar graph
-    '''
     data_type_dict = df['data_type'].value_counts().to_dict()
     other_value = sum(x for x in data_type_dict.values() if x < other_limit)
 
     filtered_data_type_dict = {key: value for key, value in data_type_dict.items() if value >= other_limit}
     filtered_data_type_dict['Others'] = other_value
+    
+     return filtered_data_type_dict
 
-    return filtered_data_type_dict
+def create_data_type_plot(df, other_limit=30):
+    result = get_data_type_frequency(df, other_limit=other_limit)
 
-result = get_data_type_frequency(df)
+    data_type_counts = pd.Series(result)
+    plt.bar(data_type_counts.index, data_type_counts.values)
+    plt.xlabel('Data Type')
+    plt.ylabel('Frequency')
+    plt.title('Frequency of Data Types')
+    plt.xticks(rotation=90, fontsize=8)
+    plt.figure(figsize=(40,24))
+    plt.show()
 
-data_type_counts = pd.Series(result)
-plt.bar(data_type_counts.index, data_type_counts.values)
-plt.xlabel('Data Type')
-plt.ylabel('Frequency')
-plt.title('Frequency of Data Types')
-plt.xticks(rotation=90, fontsize=8)
-plt.figure(figsize=(40,24))
-plt.show()
+def create_group_name_chart(df):
+    frequency_dict = df["group_name"].value_counts().to_dict()
+
+    labels = list(frequency_dict.keys())
+    values = list(frequency_dict.values())
+
+    # Calculate the total sum of values
+    total = sum(values)
+
+    # Calculate the percentage for each value
+    percentages = [(value / total) * 100 for value in values]
+
+    # Create a list to store labels and values for slices above 2%
+    labels_above_threshold = []
+    values_above_threshold = []
+
+    # Create a variable to store the sum of values below 2%
+    sum_below_threshold = 0
+
+    # Iterate over labels, values, and percentages
+    for label, value, percentage in zip(labels, values, percentages):
+        if percentage >= 2:
+            labels_above_threshold.append(label)
+            values_above_threshold.append(value)
+        else:
+            sum_below_threshold += value
+
+    # Append "Other" label and value for slices below 2%
+    if sum_below_threshold > 0:
+        labels_above_threshold.append("Other")
+        values_above_threshold.append(sum_below_threshold)
+
+    # Plot the pie chart with labels and values above the threshold using Seaborn
+    plt.figure(figsize=(8, 6))
+    sns.set_palette("pastel")
+    plt.pie(
+        values_above_threshold,
+        labels=labels_above_threshold,
+        autopct="%1.1f%%",
+        textprops={"fontsize": 7},
+    )
+    plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
+    plt.title("Group Contribution Percentage")
+
+    today = date.today()
+    output_path = f'pie-chart-{today.strftime("%Y%m%d")}.png'
+    plt.savefig(output_path)
+    plt.show()
