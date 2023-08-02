@@ -11,4 +11,4 @@ tqdm
 isort
 flake8
 coverage
-
+humanize
