@@ -134,6 +134,7 @@ def __update_dataframe(
 
 def create_group_name_chart(df):
     frequency_dict = df["group_name"].value_counts().to_dict()
+    
 def create_group_name_chart(df):
     """
     Generates a chart displaying the distribution of group names within the given DataFrame.
@@ -1428,26 +1429,6 @@ def get_data_type_frequency(df, other_limit=30):
     filtered_data_type_dict["Others"] = other_value
     return filtered_data_type_dict
 
-
-def create_data_type_plot(df, other_limit=30):
-    result = get_data_type_frequency(df, other_limit=other_limit)
-
-    data_type_counts = pd.Series(result)
-    plt.bar(data_type_counts.index, data_type_counts.values)
-    plt.xlabel("Data Type")
-    plt.ylabel("Frequency")
-    plt.title("Frequency of Data Types")
-    plt.xticks(rotation=90, fontsize=8)
-    plt.figure(figsize=(40, 24))
-
-    today = date.today()
-    output_path = f'data_type_frequency-{today.strftime("%Y%m%d")}.png'
-    plt.savefig(output_path)
-    plt.show()
-
-
-def create_group_name_chart(df):
-    frequency_dict = df["group_name"].value_counts().to_dict()
 
     labels = list(frequency_dict.keys())
     values = list(frequency_dict.values())
