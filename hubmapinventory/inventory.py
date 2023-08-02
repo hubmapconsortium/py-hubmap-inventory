@@ -1337,6 +1337,10 @@ def create_data_type_plot(df, other_limit=30):
     plt.title("Frequency of Data Types")
     plt.xticks(rotation=90, fontsize=8)
     plt.figure(figsize=(40, 24))
+
+    today = date.today()
+    output_path = f'data_type_frequency-{today.strftime("%Y%m%d")}.png'
+    plt.savefig(output_path)
     plt.show()
 
 
