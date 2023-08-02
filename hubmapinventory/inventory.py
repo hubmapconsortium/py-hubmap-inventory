@@ -1312,11 +1312,65 @@ def create(
 
 ###############################################################################################################
 def get_status_frequency(df):
+    """
+    Get a dictionary containing the count of occurrences of each unique status.
+
+    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
+    unique value in the "status" column. The result is returned as a dictionary, where the keys
+    represent unique status values, and the values represent the count of occurrences for each status.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The input DataFrame containing status information.
+
+    Returns:
+    --------
+    dict
+        A dictionary where the keys represent unique status values, and the values represent
+        the count of occurrences for each status.
+
+    Note:
+    -----
+    The input DataFrame `df` should have a column named "status" containing categorical data
+    representing different status values. The function calculates the occurrences of each unique
+    status value and returns the result as a dictionary.
+    """
     status_counts = df["status"].value_counts().to_dict()
 
 
 ###############################################################################################################
 def get_data_type_frequency(df, other_limit=30):
+    """
+    Get a filtered dictionary of data type counts from the input DataFrame.
+
+    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
+    unique data type in the "data_type" column. The function allows specifying an `other_limit`
+    parameter to set a threshold below which data types are grouped as "Others" in the result
+    dictionary.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The input DataFrame containing data type information.
+
+    other_limit : int, optional
+        The threshold value below which data types are grouped as "Others". Defaults to 30.
+
+    Returns:
+    --------
+    dict
+        A filtered dictionary where the keys represent unique data types and the values represent
+        the count of occurrences for each data type. Data types occurring less than `other_limit`
+        times are grouped under "Others".
+
+    Note:
+    -----
+    The input DataFrame `df` should have a column named "data_type" containing categorical data
+    representing different data types. The function calculates the occurrences of each unique data type
+    value and returns a filtered dictionary where data types with occurrences less than `other_limit`
+    are grouped under "Others".
+    """
     data_type_dict = df["data_type"].value_counts().to_dict()
     other_value = sum(x for x in data_type_dict.values() if x < other_limit)
 
