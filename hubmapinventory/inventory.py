@@ -31,8 +31,13 @@ try:
 except:
     warnings.filterwarnings("ignore")
 
+
 ###############################################################################################################
-def evaluate(hubmap_id: str, token: str, debug: bool,) -> pd.DataFrame:
+def evaluate(
+    hubmap_id: str,
+    token: str,
+    debug: bool,
+) -> pd.DataFrame:
     """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
     """
@@ -156,7 +161,10 @@ def today():
     return df
 
 
-def get(hubmap_id: str, token: str,) -> pd.DataFrame:
+def get(
+    hubmap_id: str,
+    token: str,
+) -> pd.DataFrame:
     """
     Get a DataFrame from HubMap by its ID.
 
@@ -1295,17 +1303,17 @@ def create(
         with gzip.open(f"{output_filename}.gz", "wt") as f:
             f.write(str(dataset))
 
+    # Call the function with your actual 'contributors' data
+    create_group_name_chart(df)
     print("\nDone\n")
 
     return df
+
+
 ###############################################################################################################
-frequency_dict = df['group_name'].value_counts().to_dict()
+def create_group_name_chart(df):
+    frequency_dict = df["group_name"].value_counts().to_dict()
 
-def create_pie_chart(frequency_dict):
-    """
-    this function creates a visualization (pie chart) of the various contribution percentages from those listed in the group_name column.
-
-    """
     labels = list(frequency_dict.keys())
     values = list(frequency_dict.values())
 
@@ -1338,14 +1346,16 @@ def create_pie_chart(frequency_dict):
     # Plot the pie chart with labels and values above the threshold using Seaborn
     plt.figure(figsize=(8, 6))
     sns.set_palette("pastel")
-    plt.pie(values_above_threshold, labels=labels_above_threshold, autopct='%1.1f%%', textprops={'fontsize': 7})
-    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
-    plt.title('Group Contribution Percentage')
+    plt.pie(
+        values_above_threshold,
+        labels=labels_above_threshold,
+        autopct="%1.1f%%",
+        textprops={"fontsize": 7},
+    )
+    plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
+    plt.title("Group Contribution Percentage")
 
     today = date.today()
     output_path = f'pie-chart-{today.strftime("%Y%m%d")}.png'
     plt.savefig(output_path)
     plt.show()
-
-# Call the function with your actual 'contributors' data
-create_pie_chart(frequency_dict)
