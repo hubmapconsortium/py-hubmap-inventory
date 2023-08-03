@@ -1,4 +1,5 @@
 import datetime
+import gzip
 import hashlib
 import json
 import os
@@ -6,17 +7,22 @@ import os.path
 import shutil
 import uuid
 import warnings
-import typing
 from pathlib import Path
+
+import humanize
+import requests
+
+warnings.filterwarnings("ignore")
+
 import hubmapbags
 import magic  # pyton-magic
-import gzip
 import numpy as np
 import pandas as pd
-import tabulate
+import seaborn as sns
+import matplotlib.pyplot as plt
+from datetime import date
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
-from tqdm import tqdm
 
 try:
     from pandas.core.common import SettingWithCopyWarning
@@ -25,41 +31,67 @@ try:
 except:
     warnings.filterwarnings("ignore")
 
+
 ###############################################################################################################
-def evaluate(hubmap_id: str,
+def evaluate(
+    hubmap_id: str,
     token: str,
-    debug: bool)-> pd.DataFrame:
-    '''
+    debug: bool,
+) -> pd.DataFrame:
+    """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
-    '''
+    """
     raise NotImplementedError
 
-    #either a dataframe or a JSON block with data
+    # either a dataframe or a JSON block with data
     data = get(hubmap_id, token)
 
-    #create empty container
+    # create empty container
     features = []
 
-    #computes first feature
+    # computes first feature
     features.append(__get_number_of_files(data))
 
     return features
 
-#this is a metric of FAIRness
+
+# this is a metric of FAIRness
 def __get_number_of_files(data):
     return None
+
 
 def __get_number_of_images(data):
     return None
 
+
 def __get_number_of_sequences(data):
     return None
+
 
 def __get_data_type(data):
     return None
 
+
 ###############################################################################################################
 def __pprint(msg: str):
+    """
+    Pretty-print a message enclosed in a horizontal line.
+
+    This method prints the input 'msg' with a horizontal line above and below
+    it to make it visually separated.
+
+    :param msg: The message to be pretty-printed.
+    :type msg: str
+
+    :Example:
+
+    >>> message = "Hello, Sphinx!"
+    >>> __pprint(message)
+    +--------------+
+    |Hello, Sphinx!|
+    +--------------+
+    """
+
     row = len(msg)
     h = "".join(["+"] + ["-" * row] + ["+"])
     result = "\n" + h + "\n" "|" + msg + "|" "\n" + h
@@ -69,16 +101,218 @@ def __pprint(msg: str):
 def __update_dataframe(
     dataset: pd.DataFrame, temp: pd.DataFrame, key: str
 ) -> pd.DataFrame:
+    """
+    Update a DataFrame with values from another DataFrame.
+
+    :param dataset: The DataFrame to be updated.
+    :type dataset: pd.DataFrame
+    :param temp: The DataFrame containing new values.
+    :type temp: pd.DataFrame
+    :param key: The column key to use for updating the 'dataset'.
+    :type key: str
+
+    :return: The updated DataFrame.
+    :rtype: pd.DataFrame
+
+    :Example:
+
+    >>> df1 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+    >>> df2 = pd.DataFrame({'B': [7, 8, 9]})
+    >>> key_column = 'B'
+    >>> updated_df = __update_dataframe(df1, df2, key_column)
+    >>> print(updated_df)
+       A  B
+    0  1  7
+    1  2  8
+    2  3  9
+    """
+
     for index, datum in temp.iterrows():
         dataset.loc[index, key] = temp.loc[index, key]
     return dataset
 
 
+#############################################################################################################
+
+
+def create_group_name_chart(df):
+    frequency_dict = df["group_name"].value_counts().to_dict()
+
+
+def create_group_name_chart(df):
+    """
+    Generates a chart displaying the distribution of group names within the given DataFrame.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+
+
+def create_group_name_chart(df):
+    """
+    Generates a visual chart to showcase the distribution of group names within the provided DataFrame.
+
+    This function creates a bar chart displaying the frequency of each unique group name in the DataFrame.
+    The chart provides insight into the composition of groups present in the dataset.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be visualized.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+
+
+def create_group_name_chart(df):
+    """
+    Generate a bar chart displaying the distribution of group names within the given DataFrame.
+
+    This function creates a bar chart that visually represents the frequency of each unique group name
+    present in the provided DataFrame. It helps to visualize the distribution of groups in the dataset.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
+
+    Returns:
+    None
+
+    Example:
+    >>> data = pd.DataFrame({'Group': ['A', 'B', 'A', 'C', 'B', 'B', 'A', 'C']})
+    >>> create_group_name_chart(data)
+    """
+    # Implementation code here
+
+
+##################################################################################################################
+def create_data_type_plot(df, other_limit=30):
+    result = get_data_type_frequency(df, other_limit=other_limit)
+
+    data_type_counts = pd.Series(result)
+    plt.bar(data_type_counts.index, data_type_counts.values)
+    plt.xlabel("Data Type")
+    plt.ylabel("Frequency")
+    plt.title("Frequency of Data Types")
+    plt.xticks(rotation=90, fontsize=8)
+    plt.figure(figsize=(40, 24))
+
+    today = date.today()
+    output_path = f'data_type_frequency-{today.strftime("%Y%m%d")}.png'
+    plt.savefig(output_path)
+    plt.show()
+
+
+def create_data_type_plot(df, other_limit=30):
+    """
+    Creates a plot to visualize the distribution of data types within the given DataFrame.
+
+    This function generates a bar plot showing the count of each data type present in the DataFrame.
+    Data types with counts below the 'other_limit' threshold are grouped under the 'Other' category in the plot.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
+    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+
+
+def create_data_type_plot(df, other_limit=30):
+    """
+    Creates a bar plot to visualize the distribution of data types within the provided DataFrame.
+
+    This function generates a bar plot that illustrates the count of each data type present in the DataFrame.
+    Data types with counts below the specified 'other_limit' threshold are grouped under the 'Other' category in the plot.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
+    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
+
+    Returns:
+    None
+    """
+    # Implementation code here
+
+
+def create_data_type_plot(df, other_limit=30):
+    """
+    Generate a bar plot to visualize the distribution of data types within the given DataFrame.
+
+    This function creates a bar plot that displays the count of each data type present in the DataFrame.
+    Data types with counts below the specified 'other_limit' threshold are grouped under the 'Other' category in the plot.
+
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
+    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
+
+    Returns:
+    None
+
+    Example:
+    >>> data = pd.DataFrame({'Column1': [1, 2, 3], 'Column2': ['A', 'B', 'C'], 'Column3': [True, False, True]})
+    >>> create_data_type_plot(data)
+    """
+    # Implementation code here
+
+
 ###############################################################################################################
+def today():
+    """
+    Read data from the 'today.tsv' file and return as a DataFrame.
+
+    This function reads data from the TSV file located at '/hive/hubmap/bdbags/reports/today.tsv'.
+    If the file exists, it reads its contents into a Pandas DataFrame; otherwise, it returns an empty DataFrame.
+
+    :return: The DataFrame containing data from the 'today.tsv' file (or an empty DataFrame if the file does not exist).
+    :rtype: pd.DataFrame
+
+    :Example:
+
+    >>> df = today()
+    >>> print(df)
+      Column1 Column2 Column3
+    0  value1  value2  value3
+    1  value4  value5  value6
+    """
+
+    filename = "/hive/hubmap/bdbags/reports/today.tsv"
+    if Path(filename).exists():
+        df = pd.read_csv(filename, sep="\t")
+    else:
+        df = pd.DataFrame()
+
+    return df
+
+
 def get(
     hubmap_id: str,
     token: str,
 ) -> pd.DataFrame:
+    """
+    Get a DataFrame from HubMap by its ID.
+
+    This function retrieves a DataFrame from the HubMap API using the provided
+    'hubmap_id' and 'token' for authentication. The DataFrame is cached locally
+    to improve subsequent retrieval speed.
+
+    :param hubmap_id: The ID of the HubMap dataset to retrieve.
+    :type hubmap_id: str
+
+    :param token: The access token for authentication with the HubMap API.
+    :type token: str
+
+    :return: The retrieved DataFrame.
+    :rtype: pd.DataFrame
+
+    :raises FileNotFoundError: If the requested file does not exist in the local cache.
+    """
+
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
     file = f'{metadata["uuid"]}.tsv'
 
@@ -93,6 +327,20 @@ def get(
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
     return pd.DataFrame()
+
+
+###############################################################################################################
+def get_sample_data():
+    """
+    Fetches sample data from a remote URL and returns it as a pandas DataFrame.
+
+    :return: The sample data in a DataFrame format.
+    :rtype: pandas.DataFrame
+    """
+
+    url = "https://raw.githubusercontent.com/hubmapconsortium/py-hubmap-inventory/master/data/today.tsv"
+    df = pd.read_csv(url, sep="\t")
+    return df
 
 
 ###############################################################################################################
@@ -236,6 +484,19 @@ def create(
     __pprint("Get file names")
 
     def get_filename(filename: str) -> str:
+        """
+        Get the base filename (without the directory path) from a given filename.
+
+        This method takes a full filename (including the directory path) as input
+        and returns only the base filename (i.e., without the directory path).
+
+        :param filename: The full filename including the directory path.
+        :type filename: str
+
+        :return: The base filename without the directory path.
+        :rtype: str
+        """
+
         return Path(filename).stem + Path(filename).suffix
 
     if "filename" not in df.keys():
@@ -257,6 +518,19 @@ def create(
     __pprint("Computing file types")
 
     def __get_file_type(extension: str) -> str:
+        """
+        Get the type of file based on its extension.
+
+        This method determines the type of file based on its extension.
+        It categorizes files as "images", "sequence", or "other".
+
+        :param extension: The file extension (e.g., ".jpg", ".txt").
+        :type extension: str
+
+        :return: The type of file ("images", "sequence", or "other").
+        :rtype: str
+        """
+
         try:
             images = {
                 ".tiff",
@@ -301,6 +575,18 @@ def create(
     __pprint("Get file creation date")
 
     def __get_file_creation_date(filename: str) -> str:
+        """
+        Get the creation date of a file.
+
+        This method retrieves the creation date of a file specified by its 'filename'.
+        The creation date is returned as a formatted string representing the date and time.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The creation date of the file as a formatted string.
+        :rtype: str
+        """
         t = os.path.getmtime(str(filename))
         return str(datetime.datetime.fromtimestamp(t))
 
@@ -329,6 +615,18 @@ def create(
     __pprint("Get file size")
 
     def __get_file_size(filename: str) -> int:
+        """
+        Get the size of a file in bytes.
+
+        This method retrieves the size of a file specified by its 'filename' in bytes.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The size of the file in bytes.
+        :rtype: int
+        """
+
         return Path(filename).stat().st_size
 
     if "size" not in df.keys():
@@ -350,6 +648,17 @@ def create(
     __pprint("Get mime-type")
 
     def __get_mime_type(filename: str) -> str:
+        """
+        Get the MIME type of a file.
+
+        This method retrieves the MIME type of a file specified by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The MIME type of the file.
+        :rtype: str
+        """
         mime = magic.Magic(mime=True)
         return mime.from_file(filename)
 
@@ -372,6 +681,18 @@ def create(
     __pprint("Get download link for each file")
 
     def __get_url(filename: str) -> str:
+        """
+        Get the URL corresponding to a filename.
+
+        This method converts a given 'filename' to its corresponding URL.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The URL corresponding to the file.
+        :rtype: str
+        """
+
         filename = str(filename)
         return filename.replace(
             "/hive/hubmap/data/public", "https://g-d00e7b.09193a.5898.dn.glob.us"
@@ -401,13 +722,29 @@ def create(
         df["download_url"] = None
 
     ###############################################################################################################
-    import warnings
-
-    warnings.filterwarnings("ignore")
-
     __pprint("Computing MD5 checksums")
 
     def __compute_md5sum(filename: str) -> str:
+        """
+        Compute the MD5 checksum of a file.
+
+        This method computes the MD5 checksum of the contents of the file specified
+        by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The MD5 checksum of the file as a hexadecimal string.
+        :rtype: str
+
+        :Example:
+
+        >>> file_path = "/path/to/file/example.txt"
+        >>> md5_checksum = __compute_md5sum(file_path)
+        >>> print(md5_checksum)
+        5eb63bbbe01eeed093cb22bb8f5acdc3
+        """
+
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -424,6 +761,27 @@ def create(
         return md5.hexdigest()
 
     def __get_chunk_size(dataframe):
+        """
+        Get the chunk size based on the length of a DataFrame.
+
+        This method returns a chunk size based on the length of the input 'dataframe'.
+        The chunk size is chosen to optimize processing performance.
+
+        :param dataframe: The DataFrame for which the chunk size is calculated.
+        :type dataframe: pandas.DataFrame
+
+        :return: The chunk size to be used for processing the DataFrame.
+        :rtype: int
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+        >>> chunk_size = __get_chunk_size(df)
+        >>> print(chunk_size)
+        10
+        """
+
         if len(dataframe) < 1000:
             return 10
         elif len(dataframe) < 10000:
@@ -480,6 +838,26 @@ def create(
     __pprint("Computing SHA256 checksums")
 
     def __compute_sha256sum(filename: str) -> str:
+        """
+        Compute the SHA-256 checksum of a file.
+
+        This method computes the SHA-256 checksum of the contents of the file specified
+        by its 'filename'.
+
+        :param filename: The full path of the file.
+        :type filename: str
+
+        :return: The SHA-256 checksum of the file as a hexadecimal string.
+        :rtype: str
+
+        :Example:
+
+        >>> file_path = "/path/to/file/example.txt"
+        >>> sha256_checksum = __compute_sha256sum(file_path)
+        >>> print(sha256_checksum)
+        a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6
+        """
+
         # BUF_SIZE is totally arbitrary, change for your app!
         BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -495,6 +873,26 @@ def create(
         return sha256.hexdigest()
 
     def __get_chunk_size(dataframe):
+        """
+        Get the chunk size based on the length of a DataFrame.
+
+        This method returns a chunk size based on the length of the input 'dataframe'.
+        The chunk size is chosen to optimize processing performance.
+
+        :param dataframe: The DataFrame for which the chunk size is calculated.
+        :type dataframe: pandas.DataFrame
+
+        :return: The chunk size to be used for processing the DataFrame.
+        :rtype: int
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'A': [1, 2, 3, 4, 5]})
+        >>> chunk_size = __get_chunk_size(df)
+        >>> print(chunk_size)
+        10
+        """
         if len(dataframe) < 1000:
             return 10
         elif len(dataframe) < 10000:
@@ -552,8 +950,6 @@ def create(
             print("No files left to process")
 
     ###############################################################################################################
-    import requests
-
     def __generate(
         hubmap_id: str,
         df: pd.DataFrame,
@@ -562,7 +958,44 @@ def create(
         debug: bool = False,
     ) -> pd.DataFrame:
         """
-        Main function that generates UUIDs using the uuid-api.
+        Generate UUIDs using the uuid-api.
+
+        This method generates UUIDs for files in the input DataFrame 'df' that have
+        'file_uuid' values as NaN (null). The generated UUIDs are added to the DataFrame.
+
+        :param hubmap_id: The ID of the HubMap dataset.
+        :type hubmap_id: str
+
+        :param df: The DataFrame containing file information with 'file_uuid' column.
+        :type df: pd.DataFrame
+
+        :param token: The access token for authentication with the uuid-api.
+        :type token: str
+
+        :param instance: The instance to use for generating UUIDs (default is "prod").
+        :type instance: str, optional
+
+        :param debug: Enable debug mode for additional information (default is False).
+        :type debug: bool, optional
+
+        :return: The DataFrame with generated UUIDs added (or None if nothing to generate).
+        :rtype: pd.DataFrame or None
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'file_uuid': [None, None, None],
+        ...                    'relative_path': ['file1.txt', 'file2.txt', 'file3.txt'],
+        ...                    'size': [100, 200, 300],
+        ...                    'sha256': ['sha256_1', 'sha256_2', 'sha256_3']})
+        >>> hubmap_id = "abc123"
+        >>> token = "your_access_token"
+        >>> generated_df = __generate(hubmap_id, df, token)
+        >>> print(generated_df)
+        file_uuid relative_path  size    sha256
+        0   uuid_1    file1.txt     100     sha256_1
+        1   uuid_2    file2.txt     200     sha256_2
+        2   uuid_3    file3.txt     300     sha256_3
         """
 
         df = df[df["file_uuid"].isnull()]
@@ -670,7 +1103,35 @@ def create(
         df: pd.DataFrame, uuids: dict
     ) -> pd.DataFrame:
         """
-        Helper function that populates (but does not generate) a local pickle file with remote UUIDs.
+        Populate (but does not generate) a local DataFrame with remote UUIDs.
+
+        This helper function populates a local DataFrame 'df' with UUIDs retrieved from
+        the 'uuids' dictionary. The 'uuids' dictionary should have the format:
+        {'file_uuid': ['uuid_1', 'uuid_2', ...], 'path': ['/path/to/file1.txt', '/path/to/file2.txt', ...]}
+
+        :param df: The DataFrame to be populated with UUIDs.
+        :type df: pd.DataFrame
+
+        :param uuids: A dictionary containing 'file_uuid' and 'path' keys with UUIDs and corresponding file paths.
+        :type uuids: dict
+
+        :return: The DataFrame with 'file_uuid' column populated with remote UUIDs (or None if 'uuids' is empty).
+        :rtype: pd.DataFrame or None
+
+        :Example:
+
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'relative_path': ['file1.txt', 'file2.txt', 'file3.txt'],
+        ...                    'size': [100, 200, 300],
+        ...                    'sha256': ['sha256_1', 'sha256_2', 'sha256_3']})
+        >>> uuids = {'file_uuid': ['uuid_1', 'uuid_2', 'uuid_3'],
+        ...          'path': ['/path/to/file1.txt', '/path/to/file2.txt', '/path/to/file3.txt']}
+        >>> populated_df = __populate_local_file_with_remote_uuids(df, uuids)
+        >>> print(populated_df)
+        file_uuid full_path relative_path filename extension  file_type  size mime_type modification_time      md5      sha256 download_url
+        0   uuid_1    NaN       file1.txt    NaN      NaN       NaN        100  NaN       NaN                NaN      NaN   sha256_1    NaN
+        1   uuid_2    NaN       file2.txt    NaN      NaN       NaN        200  NaN       NaN                NaN      NaN   sha256_2    NaN
+        2   uuid_3    NaN       file3.txt    NaN      NaN       NaN        300  NaN       NaN                NaN      NaN   sha256_3    NaN
         """
 
         uuids = pd.DataFrame.from_dict(uuids)
@@ -752,6 +1213,25 @@ def create(
     __pprint(f"Populating file format with EDAM ontology")
 
     def __get_file_format(extension: str) -> str:
+        """
+        Get the file format URL based on the file extension.
+
+        This method returns the URL representing the format of a file based on its 'extension'.
+
+        :param extension: The file extension (e.g., ".tif", ".csv", ".json").
+        :type extension: str
+
+        :return: The URL representing the format of the file (or None if the format is not recognized).
+        :rtype: str or None
+
+        :Example:
+
+        >>> extension = ".csv"
+        >>> format_url = __get_file_format(extension)
+        >>> print(format_url)
+        http://edamontology.org/format_3752
+        """
+
         fileformats = {
             ".ome.tiff": "http://edamontology.org/format_3727",
             ".ome.tif": "http://edamontology.org/format_3727",
@@ -819,12 +1299,36 @@ def create(
 
     ###############################################################################################################
     __pprint("Computing dataset level statistics")
-    import humanize
-
-    def get_url(filename: str) -> str:
-        return filename.replace("/bil/data/", "https://download.brainimagelibrary.org/")
 
     def __get_dataset_type(hubmap_id: str, token: str, instance: str = "prod"):
+        """
+        Get the dataset type (Primary, Derived, or Unknown) based on the HubMap ID.
+
+        This method retrieves the dataset information for the given 'hubmap_id' using the
+        HubMap APIs with the provided 'token' and 'instance'. It then determines the dataset
+        type based on the entity type of its direct ancestor.
+
+        :param hubmap_id: The ID of the HubMap dataset.
+        :type hubmap_id: str
+
+        :param token: The access token for authentication with the HubMap APIs.
+        :type token: str
+
+        :param instance: The instance to use for retrieving dataset information (default is "prod").
+        :type instance: str, optional
+
+        :return: The dataset type (Primary, Derived, or Unknown).
+        :rtype: str
+
+        :Example:
+
+        >>> hubmap_id = "abc123"
+        >>> token = "your_access_token"
+        >>> dataset_type = __get_dataset_type(hubmap_id, token)
+        >>> print(dataset_type)
+        Primary
+        """
+
         metadata = hubmapbags.apis.get_dataset_info(
             hubmap_id, instance="prod", token=token
         )
@@ -837,6 +1341,25 @@ def create(
             return "Unknown"
 
     def generate_dataset_uuid(directory: str) -> str:
+        """
+        Generate a dataset UUID based on the directory path.
+
+        This method generates a dataset UUID using the uuid.uuid5 function with the
+        uuid.NAMESPACE_DNS namespace and the provided 'directory' path.
+
+        :param directory: The directory path for which the UUID will be generated.
+        :type directory: str
+
+        :return: The generated dataset UUID.
+        :rtype: str
+
+        :Example:
+
+        >>> directory_path = "/path/to/dataset/"
+        >>> dataset_uuid = generate_dataset_uuid(directory_path)
+        >>> print(dataset_uuid)
+        ddc3b1be-3aa6-537b-9f6c-5c03af02f7a5
+        """
         if directory[-1] == "/":
             directory = directory[:-1]
 
@@ -909,6 +1432,125 @@ def create(
         with gzip.open(f"{output_filename}.gz", "wt") as f:
             f.write(str(dataset))
 
+    # Call the function with your actual 'contributors' data
+    create_group_name_chart(df)
     print("\nDone\n")
 
     return df
+
+
+###############################################################################################################
+def get_status_frequency(df):
+    """
+    Get a dictionary containing the count of occurrences of each unique status.
+
+    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
+    unique value in the "status" column. The result is returned as a dictionary, where the keys
+    represent unique status values, and the values represent the count of occurrences for each status.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The input DataFrame containing status information.
+
+    Returns:
+    --------
+    dict
+        A dictionary where the keys represent unique status values, and the values represent
+        the count of occurrences for each status.
+
+    Note:
+    -----
+    The input DataFrame `df` should have a column named "status" containing categorical data
+    representing different status values. The function calculates the occurrences of each unique
+    status value and returns the result as a dictionary.
+    """
+    status_counts = df["status"].value_counts().to_dict()
+
+
+###############################################################################################################
+def get_data_type_frequency(df, other_limit=30):
+    """
+    Get a filtered dictionary of data type counts from the input DataFrame.
+
+    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
+    unique data type in the "data_type" column. The function allows specifying an `other_limit`
+    parameter to set a threshold below which data types are grouped as "Others" in the result
+    dictionary.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The input DataFrame containing data type information.
+
+    other_limit : int, optional
+        The threshold value below which data types are grouped as "Others". Defaults to 30.
+
+    Returns:
+    --------
+    dict
+        A filtered dictionary where the keys represent unique data types and the values represent
+        the count of occurrences for each data type. Data types occurring less than `other_limit`
+        times are grouped under "Others".
+
+    Note:
+    -----
+    The input DataFrame `df` should have a column named "data_type" containing categorical data
+    representing different data types. The function calculates the occurrences of each unique data type
+    value and returns a filtered dictionary where data types with occurrences less than `other_limit`
+    are grouped under "Others".
+    """
+    data_type_dict = df["data_type"].value_counts().to_dict()
+    other_value = sum(x for x in data_type_dict.values() if x < other_limit)
+
+    filtered_data_type_dict = {
+        key: value for key, value in data_type_dict.items() if value >= other_limit
+    }
+    filtered_data_type_dict["Others"] = other_value
+    return filtered_data_type_dict
+
+    labels = list(frequency_dict.keys())
+    values = list(frequency_dict.values())
+
+    # Calculate the total sum of values
+    total = sum(values)
+
+    # Calculate the percentage for each value
+    percentages = [(value / total) * 100 for value in values]
+
+    # Create a list to store labels and values for slices above 2%
+    labels_above_threshold = []
+    values_above_threshold = []
+
+    # Create a variable to store the sum of values below 2%
+    sum_below_threshold = 0
+
+    # Iterate over labels, values, and percentages
+    for label, value, percentage in zip(labels, values, percentages):
+        if percentage >= 2:
+            labels_above_threshold.append(label)
+            values_above_threshold.append(value)
+        else:
+            sum_below_threshold += value
+
+    # Append "Other" label and value for slices below 2%
+    if sum_below_threshold > 0:
+        labels_above_threshold.append("Other")
+        values_above_threshold.append(sum_below_threshold)
+
+    # Plot the pie chart with labels and values above the threshold using Seaborn
+    plt.figure(figsize=(8, 6))
+    sns.set_palette("pastel")
+    plt.pie(
+        values_above_threshold,
+        labels=labels_above_threshold,
+        autopct="%1.1f%%",
+        textprops={"fontsize": 7},
+    )
+    plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
+    plt.title("Group Contribution Percentage")
+
+    today = date.today()
+    output_path = f'pie-chart-{today.strftime("%Y%m%d")}.png'
+    plt.savefig(output_path)
+    plt.show()
