@@ -133,12 +133,6 @@ def __update_dataframe(
 
 
 #############################################################################################################
-
-
-def create_group_name_chart(df):
-    frequency_dict = df["group_name"].value_counts().to_dict()
-
-
 def create_group_name_chart(df):
     """
     Generates a chart displaying the distribution of group names within the given DataFrame.
@@ -190,6 +184,27 @@ def create_group_name_chart(df):
 
 ##################################################################################################################
 def create_data_type_plot(df, other_limit=30):
+    """
+    Create a bar plot displaying the frequency of different data types in a DataFrame.
+
+    Generates a bar plot to visualize the frequency of various data types present in
+    the provided DataFrame. The data type counts are obtained using the
+    `get_data_type_frequency` function, and the plot is saved as an image file.
+
+    :param df: The DataFrame for which the data type frequency plot will be generated.
+    :type df: pd.DataFrame
+    :param other_limit: The threshold below which less frequent data types will be
+                       grouped as "Other". Data types with counts lower than this
+                       limit will be grouped together as "Other". Default is 30.
+    :type other_limit: int, optional
+    :return: None
+    :rtype: None
+    :raises: None
+
+    Example:
+    >>> create_data_type_plot(my_dataframe)
+    """
+    
     result = get_data_type_frequency(df, other_limit=other_limit)
 
     data_type_counts = pd.Series(result)
@@ -289,7 +304,7 @@ def today():
 
     return df
 
-
+###############################################################################################################
 def get(
     hubmap_id: str,
     token: str,
@@ -1500,6 +1515,7 @@ def get_data_type_frequency(df, other_limit=30):
     value and returns a filtered dictionary where data types with occurrences less than `other_limit`
     are grouped under "Others".
     """
+
     data_type_dict = df["data_type"].value_counts().to_dict()
     other_value = sum(x for x in data_type_dict.values() if x < other_limit)
 
@@ -1507,7 +1523,6 @@ def get_data_type_frequency(df, other_limit=30):
         key: value for key, value in data_type_dict.items() if value >= other_limit
     }
     filtered_data_type_dict["Others"] = other_value
-    return filtered_data_type_dict
 
     labels = list(frequency_dict.keys())
     values = list(frequency_dict.values())
