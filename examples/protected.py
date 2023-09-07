@@ -23,6 +23,7 @@ for assay_type in assay_types:
                     dataset["hubmap_id"],
                     token=token,
                     ncores=ncores,
+                    dbgap_study_id=None,
                     compute_uuids=compute_uuids,
                     recompute_file_extension=True,
                 )

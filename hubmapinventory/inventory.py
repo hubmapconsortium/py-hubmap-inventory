@@ -204,7 +204,7 @@ def create_data_type_plot(df, other_limit=30):
     Example:
     >>> create_data_type_plot(my_dataframe)
     """
-    
+
     result = get_data_type_frequency(df, other_limit=other_limit)
 
     data_type_counts = pd.Series(result)
@@ -304,6 +304,7 @@ def today():
 
     return df
 
+
 ###############################################################################################################
 def get(
     hubmap_id: str,
@@ -336,7 +337,7 @@ def get(
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
-    directory = ".data"
+    directory = "/hive/hubmap/bdbags/inventory"
     filename = f"{directory}/{file}"
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
