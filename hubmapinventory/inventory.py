@@ -41,36 +41,7 @@ def evaluate(
     """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
     """
-    raise NotImplementedError
-
-    # either a dataframe or a JSON block with data
-    data = get(hubmap_id, token)
-
-    # create empty container
-    features = []
-
-    # computes first feature
-    features.append(__get_number_of_files(data))
-
-    return features
-
-
-# this is a metric of FAIRness
-def __get_number_of_files(data):
-    return None
-
-
-def __get_number_of_images(data):
-    return None
-
-
-def __get_number_of_sequences(data):
-    return None
-
-
-def __get_data_type(data):
-    return None
-
+    raise NotImplementedError()
 
 ###############################################################################################################
 def __pprint(msg: str):
@@ -143,8 +114,7 @@ def create_group_name_chart(df):
     Returns:
     None
     """
-    # Implementation code here
-
+    raise NotImplementedError()
 
 def create_group_name_chart(df):
     """
@@ -159,8 +129,7 @@ def create_group_name_chart(df):
     Returns:
     None
     """
-    # Implementation code here
-
+    raise NotImplementedError()
 
 def create_group_name_chart(df):
     """
@@ -179,7 +148,7 @@ def create_group_name_chart(df):
     >>> data = pd.DataFrame({'Group': ['A', 'B', 'A', 'C', 'B', 'B', 'A', 'C']})
     >>> create_group_name_chart(data)
     """
-    # Implementation code here
+    raise NotImplementedError()
 
 
 ##################################################################################################################
@@ -235,7 +204,7 @@ def create_data_type_plot(df, other_limit=30):
     Returns:
     None
     """
-    # Implementation code here
+    raise NotImplementedError()
 
 
 def create_data_type_plot(df, other_limit=30):
@@ -252,7 +221,7 @@ def create_data_type_plot(df, other_limit=30):
     Returns:
     None
     """
-    # Implementation code here
+    raise NotImplementedError()
 
 
 def create_data_type_plot(df, other_limit=30):
@@ -273,7 +242,7 @@ def create_data_type_plot(df, other_limit=30):
     >>> data = pd.DataFrame({'Column1': [1, 2, 3], 'Column2': ['A', 'B', 'C'], 'Column3': [True, False, True]})
     >>> create_data_type_plot(data)
     """
-    # Implementation code here
+    raise NotImplementedError()
 
 
 ###############################################################################################################
