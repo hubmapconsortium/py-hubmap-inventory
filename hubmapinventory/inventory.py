@@ -43,6 +43,7 @@ def evaluate(
     """
     raise NotImplementedError()
 
+
 ###############################################################################################################
 def __pprint(msg: str):
     """
@@ -106,18 +107,6 @@ def __update_dataframe(
 #############################################################################################################
 def create_group_name_chart(df):
     """
-    Generates a chart displaying the distribution of group names within the given DataFrame.
-
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
-
-    Returns:
-    None
-    """
-    raise NotImplementedError()
-
-def create_group_name_chart(df):
-    """
     Generates a visual chart to showcase the distribution of group names within the provided DataFrame.
 
     This function creates a bar chart displaying the frequency of each unique group name in the DataFrame.
@@ -129,26 +118,20 @@ def create_group_name_chart(df):
     Returns:
     None
     """
-    raise NotImplementedError()
 
-def create_group_name_chart(df):
-    """
-    Generate a bar chart displaying the distribution of group names within the given DataFrame.
+    pivot_df = df.pivot_table(
+        index="group_name", columns="status", aggfunc="size", fill_value=0
+    )
 
-    This function creates a bar chart that visually represents the frequency of each unique group name
-    present in the provided DataFrame. It helps to visualize the distribution of groups in the dataset.
+    ax = pivot_df.plot(kind="bar", stacked=True, figsize=(12, 6))
 
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing group names to be analyzed.
+    plt.title("Status Distribution for Each Group")
+    plt.xlabel("Group Name")
+    plt.ylabel("Count")
+    plt.xticks(rotation=45, ha="right")
 
-    Returns:
-    None
-
-    Example:
-    >>> data = pd.DataFrame({'Group': ['A', 'B', 'A', 'C', 'B', 'B', 'A', 'C']})
-    >>> create_group_name_chart(data)
-    """
-    raise NotImplementedError()
+    plt.tight_layout()
+    plt.show()
 
 
 ##################################################################################################################
