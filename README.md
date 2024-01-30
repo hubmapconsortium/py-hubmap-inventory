@@ -1,50 +1,54 @@
-# py-hubmap-inventory
-Python package that creates an inventory for HuBMAP datasets.
+# HuBMAP Inventory Python Package
 
-The inventory is composed of three files
+This Python package, `py-hubmap-inventory`, is designed to generate an inventory for HuBMAP datasets. The inventory consists of three files:
 
-* a TSV with all file level features
-* a JSON file with basic metadata information and file manifest
-* a compressed JSON file
+1. A TSV file containing all file-level features.
+2. A JSON file with basic metadata information and a file manifest.
+3. A compressed JSON file.
 
-## Before you continue...
-Read this
+## Prerequisites
 
-* this package needs access to the file system.
-* protected and public published datasets can be processed on `HIVE` by the `hive` user
-* public published datasets can be processed on `Bridges2` by any user (data is public)
-* there is a bottleneck associated with the maximum number of files that can be processed at once. The magic number is `ncores = 25`.
-## About the JSON file
-The JSON file is a dictionary style structure with dataset and file level information. The keys of this dictionary are
+Before using this package, please note the following:
 
-* `data_type` - CODEX, AF, etc.
-* `directory` - directory path on Hive
-* `doi_url` - the DOI URL, if any
-* `frequencies` - frequencies of file extensions in this dataset. Useful for building histograms
-* `hubmap_id` - dataset HuBMAP ID
-* `is_protected` - True if protected, False otherwise
-* `manifest` - a dictionary with file level statistics for each file in this dataset
-* `number_of_files`
-* `pretty_size` - an easy to read string representing the size of the data directory
-* `size` - size in bytes of the data directory
-* `status` - Published, etc.
-* `uuid` - dataset UUID
+- The package requires access to the file system.
+- Both protected and public published datasets can be processed on `HIVE` by the `hive` user.
+- Public published datasets can be processed on `Bridges2` by any user who is part of the project, as the data is public.
+- There is a processing limit associated with the maximum number of files that can be processed at once. The optimal number of cores for processing is `25`.
 
-The `manifest` key in the dictionary above is a list of dictionaries as well. Each dictionary has file level information about a file in the dataset. The list as a long as there are files in the dataset. The keys of each dictionary in the list are
+## JSON File Structure
 
-* `download_url` - Globus direct download URL. Does not apply for protected datasets.
-* `extension`
-* `filename`
-* `filetype` - image, sequence or other
-* `fullpath`
-* `md5` - checksum
-* `mime-type`
-* `modification_time`
-* `sha256` - checksum
-* `size` - size in bytes
+The JSON file is structured as a dictionary with dataset and file-level information. The keys of this dictionary include:
+
+- `data_type`: The type of data (e.g., CODEX, AF, etc.).
+- `directory`: The directory path on Hive.
+- `doi_url`: The DOI URL, if applicable.
+- `frequencies`: The frequencies of file extensions in this dataset. This is useful for building histograms.
+- `hubmap_id`: The dataset's HuBMAP ID.
+- `is_protected`: A boolean value indicating whether the dataset is protected.
+- `manifest`: A dictionary containing file-level statistics for each file in this dataset.
+- `number_of_files`: The total number of files in the dataset.
+- `pretty_size`: A human-readable string representing the size of the data directory.
+- `size`: The size of the data directory in bytes.
+- `status`: The status of the dataset (e.g., Published, etc.).
+- `uuid`: The dataset's UUID.
+
+The `manifest` key in the dictionary is a list of dictionaries, each containing file-level information about a file in the dataset. The keys of each dictionary in the list include:
+
+- `download_url`: The Globus direct download URL. This does not apply for protected datasets.
+- `extension`: The file extension.
+- `filename`: The name of the file.
+- `filetype`: The type of file (e.g., image, sequence, or other).
+- `fullpath`: The full path to the file.
+- `md5`: The file's MD5 checksum.
+- `mime-type`: The file's MIME type.
+- `modification_time`: The file's last modification time.
+- `sha256`: The file's SHA256 checksum.
+- `size`: The size of the file in bytes.
 
 ## Examples
-See `examples` folder for Jupyter Notebooks and simple scripts.
+
+Please refer to the `examples` folder for Jupyter Notebooks and simple scripts demonstrating how to use this package.
 
 ---
-Copyright © 2020-2023 HuBMAP.
+
+Copyright © 2020-2024 HuBMAP.
