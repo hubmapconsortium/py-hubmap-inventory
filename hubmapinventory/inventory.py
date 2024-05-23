@@ -356,7 +356,7 @@ def create(
     hubmap_uuid = metadata["uuid"]
 
     if directory[-1] == "/":
-        directory = directory[:-1]
+        directory = directory[:-1]hubmapbags
 
     data_directory = "data"
     print(f"Data directory set to {data_directory}.")
@@ -1136,11 +1136,11 @@ def create(
     )
     if compute_uuids:
         __pprint("Generating or pulling UUIDs from HuBMAP UUID service")
-        if provenance["dataset_data_types"][0].find("[Salmon]") >= 0:
+        if 'dataset_data_types' in provenance and provenance["dataset_data_types"][0].find("[Salmon]") >= 0:
             print(
                 "This derived dataset is the result from running Salmon. Avoiding computation of zarr files."
             )
-        elif provenance["dataset_data_types"][0].find("[Cytokit + SPRM]") >= 0:
+        elif 'dataset_data_types' in provenance and provenance["dataset_data_types"][0].find("[Cytokit + SPRM]") >= 0:
             print(
                 "This derived dataset is the result from running Cytokit + SPRM. Avoiding computation of zarr files."
             )
