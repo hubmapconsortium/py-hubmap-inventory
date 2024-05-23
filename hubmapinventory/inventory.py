@@ -356,7 +356,7 @@ def create(
     hubmap_uuid = metadata["uuid"]
 
     if directory[-1] == "/":
-        directory = directory[:-1]hubmapbags
+        directory = directory[:-1]
 
     data_directory = "data"
     print(f"Data directory set to {data_directory}.")
