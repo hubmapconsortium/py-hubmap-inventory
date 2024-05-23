@@ -1359,6 +1359,7 @@ def create(
         dataset["data_type"] = provenance["dataset_data_types"][0]
     except:
         dataset["data_type"] = None
+    
     dataset["creation_date"] = provenance["dataset_date_time_created"]
     dataset["group_name"] = provenance["dataset_group_name"]
 
