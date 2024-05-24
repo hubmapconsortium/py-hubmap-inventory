@@ -1405,12 +1405,7 @@ def create(
         with gzip.open(f"{output_filename}.gz", "wt") as f:
             f.write(str(dataset))
 
-    # Call the function with your actual 'contributors' data
-    try:
-        create_group_name_chart(df)
-    except:
-        print('Unable to create plot.')
-    print("\nDone\n")
+    print("\nDone")
 
     return df
 
