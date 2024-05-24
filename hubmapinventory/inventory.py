@@ -1406,7 +1406,10 @@ def create(
             f.write(str(dataset))
 
     # Call the function with your actual 'contributors' data
-    create_group_name_chart(df)
+    try:
+        create_group_name_chart(df)
+    except:
+        print('Unable to create plot.')
     print("\nDone\n")
 
     return df
