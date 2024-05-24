@@ -435,14 +435,14 @@ def create(
 
     if "extension" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["extension"] = df["relative_path"].parallel_apply(__get_file_extension)
+        df["extension"] = df["relative_path"].apply(__get_file_extension)
     else:
         temp = df[df["extension"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["extension"] = temp["full_path"].apply(__get_file_extension)
         else:
-            temp["extension"] = temp["full_path"].parallel_apply(__get_file_extension)
+            temp["extension"] = temp["full_path"].apply(__get_file_extension)
 
         df = __update_dataframe(df, temp, "extension")
 
@@ -469,14 +469,14 @@ def create(
 
     if "filename" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["filename"] = df["full_path"].parallel_apply(get_filename)
+        df["filename"] = df["full_path"].apply(get_filename)
     else:
         temp = df[df["filename"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["filename"] = temp["full_path"].apply(get_filename)
         else:
-            temp["filename"] = temp["full_path"].parallel_apply(get_filename)
+            temp["filename"] = temp["full_path"].apply(get_filename)
 
         df = __update_dataframe(df, temp, "filename")
 
@@ -526,14 +526,14 @@ def create(
 
     if "file_type" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["file_type"] = df["extension"].parallel_apply(__get_file_type)
+        df["file_type"] = df["extension"].apply(__get_file_type)
     else:
         temp = df[df["file_type"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["file_type"] = temp["extension"].apply(__get_file_type)
         else:
-            temp["file_type"] = temp["extension"].parallel_apply(__get_file_type)
+            temp["file_type"] = temp["extension"].apply(__get_file_type)
 
         df = __update_dataframe(df, temp, "file_type")
 
@@ -560,7 +560,7 @@ def create(
 
     if "modification_time" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["modification_time"] = df["full_path"].parallel_apply(
+        df["modification_time"] = df["full_path"].apply(
             __get_file_creation_date
         )
     else:
@@ -571,7 +571,7 @@ def create(
                 __get_file_creation_date
             )
         else:
-            temp["modification_time"] = temp["full_path"].parallel_apply(
+            temp["modification_time"] = temp["full_path"].apply(
                 __get_file_creation_date
             )
 
@@ -599,14 +599,14 @@ def create(
 
     if "size" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["size"] = df["full_path"].parallel_apply(__get_file_size)
+        df["size"] = df["full_path"].apply(__get_file_size)
     else:
         temp = df[df["size"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["size"] = temp["full_path"].apply(__get_file_size)
         else:
-            temp["size"] = temp["full_path"].parallel_apply__(get_file_size)
+            temp["size"] = temp["full_path"].apply__(get_file_size)
 
         df = __update_dataframe(df, temp, "size")
 
@@ -632,14 +632,14 @@ def create(
 
     if "mime_type" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["mime_type"] = df["full_path"].parallel_apply(__get_mime_type)
+        df["mime_type"] = df["full_path"].apply(__get_mime_type)
     else:
         temp = df[df["mime_type"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["mime_type"] = temp["full_path"].apply(__get_mime_type)
         else:
-            temp["mime_type"] = temp["full_path"].parallel_apply(__get_mime_type)
+            temp["mime_type"] = temp["full_path"].apply(__get_mime_type)
 
         df = __update_dataframe(df, temp, "mime_type")
 
@@ -672,7 +672,7 @@ def create(
             if is_protected:
                 df["download_url"] = None
             else:
-                df["download_url"] = df["full_path"].parallel_apply(__get_url)
+                df["download_url"] = df["full_path"].apply(__get_url)
             df.to_csv(output_filename, sep="\t", index=False)
         else:
             temp = df[df["download_url"].isnull()]
@@ -680,7 +680,7 @@ def create(
             if len(temp) < ncores:
                 temp["download_url"] = temp["full_path"].apply(__get_url)
             else:
-                temp["download_url"] = temp["full_path"].parallel_apply(__get_url)
+                temp["download_url"] = temp["full_path"].apply(__get_url)
 
             df = __update_dataframe(df, temp, "download_url")
 
@@ -769,7 +769,7 @@ def create(
         print(f"Number of files to process is {str(len(files))}")
 
         if len(files) > 0:
-            files["md5"] = files["full_path"].parallel_apply(__compute_md5sum)
+            files["md5"] = files["full_path"].apply(__compute_md5sum)
             df = __update_dataframe(df, files, "md5")
             df.to_csv(output_filename, sep="\t", index=False)
     else:
@@ -782,7 +782,7 @@ def create(
             n = __get_chunk_size(files)
             print(f"Number of files to process is {str(len(files))}")
             if n < 25:
-                files["md5"] = files["full_path"].parallel_apply(__compute_md5sum)
+                files["md5"] = files["full_path"].apply(__compute_md5sum)
                 df = __update_dataframe(df, files, "md5")
                 df.to_csv(output_filename, sep="\t", index=False)
             else:
@@ -792,7 +792,7 @@ def create(
                     print(
                         f"\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}"
                     )
-                    chunk["md5"] = chunk["full_path"].parallel_apply(__compute_md5sum)
+                    chunk["md5"] = chunk["full_path"].apply(__compute_md5sum)
                     df = __update_dataframe(df, chunk, "md5")
                     chunk_counter = chunk_counter + 1
 
@@ -880,7 +880,7 @@ def create(
         print(f"Number of files to process is {str(len(files))}")
 
         if len(files) > 0:
-            files["sha256"] = files["full_path"].parallel_apply(__compute_sha256sum)
+            files["sha256"] = files["full_path"].apply(__compute_sha256sum)
             df = __update_dataframe(df, files, "sha256")
             df.to_csv(output_filename, sep="\t", index=False)
     else:
@@ -894,7 +894,7 @@ def create(
             print(f"Number of files to process is {str(len(files))}")
 
             if n < 25:
-                files["sha256"] = files["full_path"].parallel_apply(__compute_sha256sum)
+                files["sha256"] = files["full_path"].apply(__compute_sha256sum)
                 df = __update_dataframe(df, files, "sha256")
                 df.to_csv(output_filename, sep="\t", index=False)
             else:
@@ -905,7 +905,7 @@ def create(
                     print(
                         f"\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}"
                     )
-                    chunk["sha256"] = chunk["full_path"].parallel_apply(
+                    chunk["sha256"] = chunk["full_path"].apply(
                         __compute_sha256sum
                     )
                     df = __update_dataframe(df, chunk, "sha256")
@@ -1238,14 +1238,14 @@ def create(
 
     if "file_format" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["file_format"] = df["extension"].parallel_apply(__get_file_format)
+        df["file_format"] = df["extension"].apply(__get_file_format)
     else:
         temp = df[df["file_format"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
         if len(temp) < ncores:
             temp["file_format"] = temp["full_path"].apply(__get_file_format)
         else:
-            temp["file_format"] = temp["full_path"].parallel_apply(__get_file_format)
+            temp["file_format"] = temp["full_path"].apply(__get_file_format)
 
         df = __update_dataframe(df, temp, "file_format")
 
