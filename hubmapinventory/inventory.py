@@ -18,9 +18,6 @@ import hubmapbags
 import magic  # pyton-magic
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from datetime import date
 from numpyencoder import NumpyEncoder
 from pandarallel import pandarallel
 
@@ -41,7 +38,35 @@ def evaluate(
     """
     Returns FAIRness assessment of a particular dataset given a HuBMAP ID.
     """
-    raise NotImplementedError()
+    raise NotImplementedError
+
+    # either a dataframe or a JSON block with data
+    data = get(hubmap_id, token)
+
+    # create empty container
+    features = []
+
+    # computes first feature
+    features.append(__get_number_of_files(data))
+
+    return features
+
+
+# this is a metric of FAIRness
+def __get_number_of_files(data):
+    return None
+
+
+def __get_number_of_images(data):
+    return None
+
+
+def __get_number_of_sequences(data):
+    return None
+
+
+def __get_data_type(data):
+    return None
 
 
 ###############################################################################################################
@@ -104,130 +129,6 @@ def __update_dataframe(
     return dataset
 
 
-#############################################################################################################
-def create_group_name_chart(df):
-    """
-    Generates a visual chart to showcase the distribution of group names within the provided DataFrame.
-
-    This function creates a bar chart displaying the frequency of each unique group name in the DataFrame.
-    The chart provides insight into the composition of groups present in the dataset.
-
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing group names to be visualized.
-
-    Returns:
-    None
-    """
-
-    pivot_df = df.pivot_table(
-        index="group_name", columns="status", aggfunc="size", fill_value=0
-    )
-
-    ax = pivot_df.plot(kind="bar", stacked=True, figsize=(12, 6))
-
-    plt.title("Status Distribution for Each Group")
-    plt.xlabel("Group Name")
-    plt.ylabel("Count")
-    plt.xticks(rotation=45, ha="right")
-
-    plt.tight_layout()
-    plt.show()
-
-
-##################################################################################################################
-def create_data_type_plot(df, other_limit=30):
-    """
-    Create a bar plot displaying the frequency of different data types in a DataFrame.
-
-    Generates a bar plot to visualize the frequency of various data types present in
-    the provided DataFrame. The data type counts are obtained using the
-    `get_data_type_frequency` function, and the plot is saved as an image file.
-
-    :param df: The DataFrame for which the data type frequency plot will be generated.
-    :type df: pd.DataFrame
-    :param other_limit: The threshold below which less frequent data types will be
-                       grouped as "Other". Data types with counts lower than this
-                       limit will be grouped together as "Other". Default is 30.
-    :type other_limit: int, optional
-    :return: None
-    :rtype: None
-    :raises: None
-
-    Example:
-    >>> create_data_type_plot(my_dataframe)
-    """
-
-    result = get_data_type_frequency(df, other_limit=other_limit)
-
-    data_type_counts = pd.Series(result)
-    plt.bar(data_type_counts.index, data_type_counts.values)
-    plt.xlabel("Data Type")
-    plt.ylabel("Frequency")
-    plt.title("Frequency of Data Types")
-    plt.xticks(rotation=90, fontsize=8)
-    plt.figure(figsize=(40, 24))
-
-    today = date.today()
-    output_path = f'data_type_frequency-{today.strftime("%Y%m%d")}.png'
-    plt.savefig(output_path)
-    plt.show()
-
-
-def create_data_type_plot(df, other_limit=30):
-    """
-    Creates a plot to visualize the distribution of data types within the given DataFrame.
-
-    This function generates a bar plot showing the count of each data type present in the DataFrame.
-    Data types with counts below the 'other_limit' threshold are grouped under the 'Other' category in the plot.
-
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
-    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
-
-    Returns:
-    None
-    """
-    raise NotImplementedError()
-
-
-def create_data_type_plot(df, other_limit=30):
-    """
-    Creates a bar plot to visualize the distribution of data types within the provided DataFrame.
-
-    This function generates a bar plot that illustrates the count of each data type present in the DataFrame.
-    Data types with counts below the specified 'other_limit' threshold are grouped under the 'Other' category in the plot.
-
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
-    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
-
-    Returns:
-    None
-    """
-    raise NotImplementedError()
-
-
-def create_data_type_plot(df, other_limit=30):
-    """
-    Generate a bar plot to visualize the distribution of data types within the given DataFrame.
-
-    This function creates a bar plot that displays the count of each data type present in the DataFrame.
-    Data types with counts below the specified 'other_limit' threshold are grouped under the 'Other' category in the plot.
-
-    Parameters:
-    df (pandas.DataFrame): The DataFrame containing data to be analyzed.
-    other_limit (int, optional): The count threshold below which data types are grouped as 'Other'. Default is 30.
-
-    Returns:
-    None
-
-    Example:
-    >>> data = pd.DataFrame({'Column1': [1, 2, 3], 'Column2': ['A', 'B', 'C'], 'Column3': [True, False, True]})
-    >>> create_data_type_plot(data)
-    """
-    raise NotImplementedError()
-
-
 ###############################################################################################################
 def today():
     """
@@ -257,7 +158,6 @@ def today():
     return df
 
 
-###############################################################################################################
 def get(
     hubmap_id: str,
     token: str,
@@ -289,7 +189,7 @@ def get(
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
-    directory = "/hive/hubmap/bdbags/inventory"
+    directory = ".data"
     filename = f"{directory}/{file}"
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
@@ -374,7 +274,7 @@ def create(
             Path(temp_directory).mkdir()
     print(f"Temp directory set to {temp_directory}.")
 
-    if Path(temp_directory + output_filename).exists():
+    if Path(f"{temp_directory}{output_filename}").exists():
         shutil.copyfile(temp_directory + output_filename, output_filename)
         print(
             f"Found existing temp file {temp_directory + output_filename}. Reusing file."
@@ -1136,11 +1036,17 @@ def create(
     )
     if compute_uuids:
         __pprint("Generating or pulling UUIDs from HuBMAP UUID service")
-        if 'dataset_data_types' in provenance and provenance["dataset_data_types"][0].find("[Salmon]") >= 0:
+        if (
+            "dataset_data_types" in provenance.keys()
+            and provenance["dataset_data_types"][0].find("[Salmon]") >= 0
+        ):
             print(
                 "This derived dataset is the result from running Salmon. Avoiding computation of zarr files."
             )
-        elif 'dataset_data_types' in provenance and provenance["dataset_data_types"][0].find("[Cytokit + SPRM]") >= 0:
+        elif (
+            "dataset_data_types" in provenance.keys()
+            and provenance["dataset_data_types"][0].find("[Cytokit + SPRM]") >= 0
+        ):
             print(
                 "This derived dataset is the result from running Cytokit + SPRM. Avoiding computation of zarr files."
             )
@@ -1355,11 +1261,8 @@ def create(
         hubmap_id, instance="prod", token=token
     )
 
-    try:
+    if "dataset_data_types" in provenance.keys():
         dataset["data_type"] = provenance["dataset_data_types"][0]
-    except:
-        dataset["data_type"] = None
-    
     dataset["creation_date"] = provenance["dataset_date_time_created"]
     dataset["group_name"] = provenance["dataset_group_name"]
 
@@ -1405,125 +1308,6 @@ def create(
         with gzip.open(f"{output_filename}.gz", "wt") as f:
             f.write(str(dataset))
 
-    # Call the function with your actual 'contributors' data
-    create_group_name_chart(df)
     print("\nDone\n")
 
     return df
-
-
-###############################################################################################################
-def get_status_frequency(df):
-    """
-    Get a dictionary containing the count of occurrences of each unique status.
-
-    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
-    unique value in the "status" column. The result is returned as a dictionary, where the keys
-    represent unique status values, and the values represent the count of occurrences for each status.
-
-    Parameters:
-    -----------
-    df : pandas DataFrame
-        The input DataFrame containing status information.
-
-    Returns:
-    --------
-    dict
-        A dictionary where the keys represent unique status values, and the values represent
-        the count of occurrences for each status.
-
-    Note:
-    -----
-    The input DataFrame `df` should have a column named "status" containing categorical data
-    representing different status values. The function calculates the occurrences of each unique
-    status value and returns the result as a dictionary.
-    """
-    status_counts = df["status"].value_counts().to_dict()
-
-
-###############################################################################################################
-def get_data_type_frequency(df, other_limit=30):
-    """
-    Get a filtered dictionary of data type counts from the input DataFrame.
-
-    This function takes a pandas DataFrame `df` as input and calculates the occurrences of each
-    unique data type in the "data_type" column. The function allows specifying an `other_limit`
-    parameter to set a threshold below which data types are grouped as "Others" in the result
-    dictionary.
-
-    Parameters:
-    -----------
-    df : pandas DataFrame
-        The input DataFrame containing data type information.
-
-    other_limit : int, optional
-        The threshold value below which data types are grouped as "Others". Defaults to 30.
-
-    Returns:
-    --------
-    dict
-        A filtered dictionary where the keys represent unique data types and the values represent
-        the count of occurrences for each data type. Data types occurring less than `other_limit`
-        times are grouped under "Others".
-
-    Note:
-    -----
-    The input DataFrame `df` should have a column named "data_type" containing categorical data
-    representing different data types. The function calculates the occurrences of each unique data type
-    value and returns a filtered dictionary where data types with occurrences less than `other_limit`
-    are grouped under "Others".
-    """
-
-    data_type_dict = df["data_type"].value_counts().to_dict()
-    other_value = sum(x for x in data_type_dict.values() if x < other_limit)
-
-    filtered_data_type_dict = {
-        key: value for key, value in data_type_dict.items() if value >= other_limit
-    }
-    filtered_data_type_dict["Others"] = other_value
-
-    labels = list(frequency_dict.keys())
-    values = list(frequency_dict.values())
-
-    # Calculate the total sum of values
-    total = sum(values)
-
-    # Calculate the percentage for each value
-    percentages = [(value / total) * 100 for value in values]
-
-    # Create a list to store labels and values for slices above 2%
-    labels_above_threshold = []
-    values_above_threshold = []
-
-    # Create a variable to store the sum of values below 2%
-    sum_below_threshold = 0
-
-    # Iterate over labels, values, and percentages
-    for label, value, percentage in zip(labels, values, percentages):
-        if percentage >= 2:
-            labels_above_threshold.append(label)
-            values_above_threshold.append(value)
-        else:
-            sum_below_threshold += value
-
-    # Append "Other" label and value for slices below 2%
-    if sum_below_threshold > 0:
-        labels_above_threshold.append("Other")
-        values_above_threshold.append(sum_below_threshold)
-
-    # Plot the pie chart with labels and values above the threshold using Seaborn
-    plt.figure(figsize=(8, 6))
-    sns.set_palette("pastel")
-    plt.pie(
-        values_above_threshold,
-        labels=labels_above_threshold,
-        autopct="%1.1f%%",
-        textprops={"fontsize": 7},
-    )
-    plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
-    plt.title("Group Contribution Percentage")
-
-    today = date.today()
-    output_path = f'pie-chart-{today.strftime("%Y%m%d")}.png'
-    plt.savefig(output_path)
-    plt.show()
