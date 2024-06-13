@@ -280,6 +280,12 @@ def create(
             f"Found existing temp file {temp_directory + output_filename}. Reusing file."
         )
 
+    if Path(f"{data_directory}{output_filename}").exists():
+        shutil.copyfile(data_directory + output_filename, output_filename)
+        print(
+            f"Found existing file {data_directory + output_filename}. Reusing file."
+        )
+
     if Path(output_filename).exists():
         print(f"Loading dataframe in file {output_filename}.")
         df = pd.read_csv(output_filename, sep="\t", low_memory=False)
