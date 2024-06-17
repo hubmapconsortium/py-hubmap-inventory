@@ -252,7 +252,7 @@ def create(
 
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
 
-    if dbgap_study_url in metadata.keys():
+    if "dbgap_study_url" in metadata.keys():
         dbgap_study_id = metadata["dbgap_study_url"].replace(
             "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=", ""
         )
