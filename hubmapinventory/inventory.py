@@ -1301,10 +1301,12 @@ def create(
     with gzip.open(f"{output_filename}.gz", "wt") as f:
         f.write(str(dataset))
 
+    # this is meant to backup to /hive
     backup_destination = "/hive/hubmap/bdbags/inventory"
     if backup and Path(backup_destination).exists():
         print(f"Backing up to {backup_destination}")
         output_filename = f'{backup_destination}/{metadata["uuid"]}.tsv'
+        print(f"Saving results to {output_filename}")
         df.to_csv(output_filename, sep="\t", index=False)
 
         output_filename = f'{backup_destination}/{metadata["uuid"]}.json'
