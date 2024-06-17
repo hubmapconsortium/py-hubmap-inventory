@@ -218,6 +218,7 @@ def create(
     token: str,
     ncores: int = 2,
     compute_uuids: bool = False,
+    update_local_file: bool = False,
     recompute_file_extension: bool = False,
     backup: bool = True,
     debug: bool = False,
@@ -280,11 +281,12 @@ def create(
             f"Found existing temp file {temp_directory + output_filename}. Reusing file."
         )
 
-    if Path(f"{data_directory}{output_filename}").exists():
-        shutil.copyfile(data_directory + output_filename, output_filename)
-        print(
-            f"Found existing file {data_directory + output_filename}. Reusing file."
-        )
+    if update_local_file:
+        if Path(f"{data_directory}{output_filename}").exists():
+            shutil.copyfile(data_directory + output_filename, output_filename)
+            print(
+                f"Found existing file {data_directory + output_filename}. Reusing file."
+            )
 
     if Path(output_filename).exists():
         print(f"Loading dataframe in file {output_filename}.")
@@ -466,9 +468,7 @@ def create(
 
     if "modification_time" not in df.keys():
         print(f"Processing {str(len(df))} files in directory")
-        df["modification_time"] = df["full_path"].apply(
-            __get_file_creation_date
-        )
+        df["modification_time"] = df["full_path"].apply(__get_file_creation_date)
     else:
         temp = df[df["modification_time"].isnull()]
         print(f"Processing {str(len(temp))} files of {str(len(df))} files")
@@ -811,9 +811,7 @@ def create(
                     print(
                         f"\nProcessing chunk {str(chunk_counter)} of {str(len(chunks))}"
                     )
-                    chunk["sha256"] = chunk["full_path"].apply(
-                        __compute_sha256sum
-                    )
+                    chunk["sha256"] = chunk["full_path"].apply(__compute_sha256sum)
                     df = __update_dataframe(df, chunk, "sha256")
                     chunk_counter = chunk_counter + 1
 
