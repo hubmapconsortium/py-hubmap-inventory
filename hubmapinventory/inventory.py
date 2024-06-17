@@ -234,8 +234,8 @@ def create(
     :rtype ncores: int
     :param compute_uuids: True if file UUIDs are to be computed
     :rtype compute_uuids: bool
-    :param dbgap_study_id: a valid dbGaP study ID
-    :rtype dbgap_study_id: string
+    :param update_local_id: Allows updating a local file if present
+    :rtype update_local_id: bool
     :param recompute_file_extension: True if file extensions are to be recomputed
     :rtype recompute_file_extension: bool
     :param debug: debug flag
@@ -251,6 +251,15 @@ def create(
     pandarallel.initialize(progress_bar=True, nb_workers=ncores)
 
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
+
+    if dbgap_study_url in metadata.keys():
+        dbgap_study_id = metadata["dbgap_study_url"].replace(
+            "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=", ""
+        )
+        print(f"dbGap study ID set to {dbgap_study_id}.")
+    else:
+        dbgap_study_id = None
+
     global directory
     directory = hubmapbags.get_directory(hubmap_id, instance="prod", token=token)
     is_protected = hubmapbags.apis.is_protected(hubmap_id, instance="prod", token=token)
@@ -264,10 +273,12 @@ def create(
     if not Path(data_directory).exists():
         Path(data_directory).mkdir()
 
+    #
     file = directory.replace("/", "_")
     output_filename = f'{data_directory}/{metadata["uuid"]}.tsv'
     print(f"Saving results to {output_filename}")
 
+    # setting temp directory. IO is /local is fast than ./tmp
     temp_directory = "/local/"
     if not Path(temp_directory).exists():
         temp_directory = ".tmp/"
@@ -275,18 +286,18 @@ def create(
             Path(temp_directory).mkdir()
     print(f"Temp directory set to {temp_directory}.")
 
+    # check if temp file exists on disk to avoid recalculation
     if Path(f"{temp_directory}{output_filename}").exists():
-        shutil.copyfile(temp_directory + output_filename, output_filename)
-        print(
-            f"Found existing temp file {temp_directory + output_filename}. Reusing file."
-        )
+        temp_filename = output_filename.replace(data_directory, temp_directory)
+        shutil.copyfile(temp_filename, output_filename)
+        print(f"Found existing temp file {temp_filename}. Reusing file.")
 
+    # this block allows updating legacy files
     if update_local_file:
         if Path(f"{data_directory}{output_filename}").exists():
-            shutil.copyfile(data_directory + output_filename, output_filename)
-            print(
-                f"Found existing file {data_directory + output_filename}. Reusing file."
-            )
+            temp_filename = output_filename.replace(data_directory, temp_directory)
+            shutil.copyfile(temp_filename, output_filename)
+            print(f"Found existing file {temp_filename}. Reusing file.")
 
     if Path(output_filename).exists():
         print(f"Loading dataframe in file {output_filename}.")
