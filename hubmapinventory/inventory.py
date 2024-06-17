@@ -1310,7 +1310,7 @@ def create(
         df.to_csv(output_filename, sep="\t", index=False)
 
         output_filename = f'{backup_destination}/{metadata["uuid"]}.json'
-        print(f"Saving results to {output_filename}.")
+        print(f"Saving results to {output_filename}")
         with open(output_filename, "w") as ofile:
             json.dump(
                 dataset,
