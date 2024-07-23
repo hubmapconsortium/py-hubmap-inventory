@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="hubmap-inventory",
-    version="2024.01",
+    version="2024.03",
     description="Inventory data exploration for HuBMAP datasets",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -20,13 +20,13 @@ setup(
     keywords='HuBMAP, inventory, datasets',
     packages=find_packages(),
     install_requires=[
-        "matplotlib==3.7.2",
-        "numpy==1.25.2",
-        "pandarallel==1.6.5",
-        "pandas==2.0.3",
+        "matplotlib>=3.7.2",
+        "numpy>=1.25.2",
+        "pandarallel>=1.6.5",
+        "pandas>=2.0.3",
         "setuptools==67.8.0",
-        "tabulate==0.9.0",
-        "tqdm==4.65.0",
+        "tabulate>=0.9.0",
+        "tqdm>=4.65.0",
         "numpyencoder==0.3.0",
         "python-magic==0.4.27",
         "humanize==4.9.0",
