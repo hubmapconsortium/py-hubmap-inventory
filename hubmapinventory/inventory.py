@@ -159,27 +159,8 @@ def today():
 
 
 def get(
-    hubmap_id: str,
-    token: str,
+    hubmap_id: str, token: str, data_directory="/hive/hubmap/bdbags/inventory"
 ) -> pd.DataFrame:
-    """
-    Get a DataFrame from HubMap by its ID.
-
-    This function retrieves a DataFrame from the HubMap API using the provided
-    'hubmap_id' and 'token' for authentication. The DataFrame is cached locally
-    to improve subsequent retrieval speed.
-
-    :param hubmap_id: The ID of the HubMap dataset to retrieve.
-    :type hubmap_id: str
-
-    :param token: The access token for authentication with the HubMap API.
-    :type token: str
-
-    :return: The retrieved DataFrame.
-    :rtype: pd.DataFrame
-
-    :raises FileNotFoundError: If the requested file does not exist in the local cache.
-    """
 
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
     file = f'{metadata["uuid"]}.tsv'
@@ -189,8 +170,7 @@ def get(
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
-    directory = ".data"
-    filename = f"{directory}/{file}"
+    filename = f"{data_directory}/{file}"
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
@@ -282,9 +262,7 @@ def create(
 
     if Path(f"{data_directory}{output_filename}").exists():
         shutil.copyfile(data_directory + output_filename, output_filename)
-        print(
-            f"Found existing file {data_directory + output_filename}. Reusing file."
-        )
+        print(f"Found existing file {data_directory + output_filename}. Reusing file.")
 
     if Path(output_filename).exists():
         print(f"Loading dataframe in file {output_filename}.")
