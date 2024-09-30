@@ -159,7 +159,7 @@ def today():
 
 
 def get(
-    hubmap_id: str, token: str, data_directory="/hive/hubmap/bdbags/inventory"
+    hubmap_id: str, token: str, inventory_directory="/hive/hubmap/bdbags/inventory"
 ) -> pd.DataFrame:
 
     metadata = hubmapbags.apis.get_dataset_info(hubmap_id, instance="prod", token=token)
@@ -170,8 +170,9 @@ def get(
     if Path(filename).exists():
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
-    filename = f"{data_directory}/{file}"
+    filename = f"{inventory_directory}/{file}"
     if Path(filename).exists():
+        print(f'Loading file {filename}')
         return pd.read_csv(filename, sep="\t", low_memory=False)
 
     return pd.DataFrame()
