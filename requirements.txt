@@ -8,3 +8,4 @@ tqdm>=4.66.3
 numpyencoder==0.3.0
 python-magic==0.4.27
 humanize>=4.9.0
+requests
